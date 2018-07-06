@@ -8,4 +8,8 @@ Handle the objective-c crash exception
 
 ## KVO
 
-## Zombie pointer
+## Zombie Pointer
+
+## NSTimer
+
+## NSNotification
