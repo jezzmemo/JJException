@@ -47,9 +47,8 @@
 - (id) hookObjectAtIndex:(NSUInteger)index {
     if (index < self.count) {
         return [self hookObjectAtIndex:index];
-    }else{
-        handleCrashException(@"HookObjectAtIndex invalid index");
     }
+    handleCrashException(@"HookObjectAtIndex invalid index");
     return nil;
 }
 - (id) hookObjectAtIndexedSubscript:(NSInteger)index {
