@@ -7,6 +7,21 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "JJException.h"
+
+@interface TestZombie : NSObject
+
+- (void)test;
+
+@end
+
+@implementation TestZombie
+
+- (void)test{
+    
+}
+
+@end
 
 @interface JJExceptionTests : XCTestCase
 
@@ -63,6 +78,14 @@
     
     NSString* key = nil;
     [testDic removeObjectForKey:key];
+}
+
+- (void)testZombieException{
+    [JJException addZombieObjectArray:@[TestZombie.class]];
+    
+    TestZombie* test = [TestZombie new];
+    [test release];
+    [test test];
 }
 
 @end

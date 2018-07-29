@@ -14,14 +14,15 @@
 		61196D5220F261CC00022DDC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61196D5020F261CC00022DDC /* LaunchScreen.storyboard */; };
 		61196D5520F261CC00022DDC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 61196D5420F261CC00022DDC /* main.m */; };
 		61372D2020F50615001A9A10 /* NSObject+SwizzleHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61372D1F20F50615001A9A10 /* NSObject+SwizzleHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		61BC3FB520F6544600D8C791 /* NSObject+UnrecognizedSelectorHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BC3FB420F6544600D8C791 /* NSObject+UnrecognizedSelectorHook.m */; };
+		61BC3FB520F6544600D8C791 /* NSObject+UnrecognizedSelectorHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BC3FB420F6544600D8C791 /* NSObject+UnrecognizedSelectorHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		61BC3FB820F65D0E00D8C791 /* NSArray+ArrayHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BC3FB720F65D0E00D8C791 /* NSArray+ArrayHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		61BC3FC720F7ACE500D8C791 /* JJExceptionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BC3FC620F7ACE500D8C791 /* JJExceptionTests.m */; };
+		61BC3FC720F7ACE500D8C791 /* JJExceptionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BC3FC620F7ACE500D8C791 /* JJExceptionTests.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		61BE9AC420FAF2C700715C09 /* NSMutableArray+MutableArrayHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BE9AC320FAF2C700715C09 /* NSMutableArray+MutableArrayHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		61BE9AC720FB1E9500715C09 /* NSDictionary+DictionaryHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BE9AC620FB1E9500715C09 /* NSDictionary+DictionaryHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		61BE9ACA20FB219D00715C09 /* NSMutableDictionary+MutableDictionaryHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BE9AC920FB219D00715C09 /* NSMutableDictionary+MutableDictionaryHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		61CAC35F210385D400B89B0E /* JJException.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CAC35E210385D400B89B0E /* JJException.m */; };
 		61CAC362210432A400B89B0E /* JJExceptionProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CAC361210432A400B89B0E /* JJExceptionProxy.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		61CAC3912109E68C00B89B0E /* NSObject+ZombieHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CAC3902109E68C00B89B0E /* NSObject+ZombieHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,8 @@
 		61CAC35E210385D400B89B0E /* JJException.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JJException.m; sourceTree = "<group>"; };
 		61CAC360210432A400B89B0E /* JJExceptionProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JJExceptionProxy.h; sourceTree = "<group>"; };
 		61CAC361210432A400B89B0E /* JJExceptionProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JJExceptionProxy.m; sourceTree = "<group>"; };
+		61CAC38F2109E68C00B89B0E /* NSObject+ZombieHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+ZombieHook.h"; sourceTree = "<group>"; };
+		61CAC3902109E68C00B89B0E /* NSObject+ZombieHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ZombieHook.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +141,8 @@
 				61CAC35E210385D400B89B0E /* JJException.m */,
 				61CAC360210432A400B89B0E /* JJExceptionProxy.h */,
 				61CAC361210432A400B89B0E /* JJExceptionProxy.m */,
+				61CAC38F2109E68C00B89B0E /* NSObject+ZombieHook.h */,
+				61CAC3902109E68C00B89B0E /* NSObject+ZombieHook.m */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -260,6 +265,7 @@
 				61BC3FB820F65D0E00D8C791 /* NSArray+ArrayHook.m in Sources */,
 				61BC3FB520F6544600D8C791 /* NSObject+UnrecognizedSelectorHook.m in Sources */,
 				61BE9ACA20FB219D00715C09 /* NSMutableDictionary+MutableDictionaryHook.m in Sources */,
+				61CAC3912109E68C00B89B0E /* NSObject+ZombieHook.m in Sources */,
 				61196D4720F261C800022DDC /* AppDelegate.m in Sources */,
 				61CAC35F210385D400B89B0E /* JJException.m in Sources */,
 			);

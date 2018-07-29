@@ -12,12 +12,12 @@
 #import "JJExceptionProxy.h"
 
 
-
 @interface UnrecognizedSelectorHandle : NSObject
 
 @property(nonatomic,readwrite,weak)id fromObject;
 
 @end
+
 
 @implementation UnrecognizedSelectorHandle
 
@@ -40,7 +40,7 @@ void unrecognizedSelector(UnrecognizedSelectorHandle* self, SEL _cmd){
 - (id)forwardingTargetForSelectorSwizzled:(SEL)selector{
     NSMethodSignature* sign = [self methodSignatureForSelector:selector];
     if (!sign) {
-        id stub = [UnrecognizedSelectorHandle new];
+        id stub = [[UnrecognizedSelectorHandle new] autorelease];
         [stub setFromObject:self];
         class_addMethod([stub class], selector, (IMP)unrecognizedSelector, "v@:");
         return stub;

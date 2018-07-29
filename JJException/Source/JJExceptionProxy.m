@@ -9,7 +9,7 @@
 #import "JJExceptionProxy.h"
 
 void handleCrashException(NSString* exceptionMessage){
-    [[JJExceptionProxy shareExceptionProxy] handleCrashException:exceptionMessage];
+    [[JJExceptionProxy shareExceptionProxy] handleCrashException:exceptionMessage extraInfo:@{}];
 }
 
 @implementation JJExceptionProxy
@@ -23,19 +23,58 @@ void handleCrashException(NSString* exceptionMessage){
     return exceptionProxy;
 }
 
-- (void)handleCrashException:(NSString *)exceptionMessage{
+- (void)handleCrashException:(NSString *)exceptionMessage extraInfo:(nullable NSDictionary *)info{
     if (!exceptionMessage) {
         return;
     }
-    if (![self.delegate respondsToSelector:@selector(handleCrashException:)]){
-        return;
-    }
+    
     NSArray* callStack = [NSThread callStackSymbols];
     NSString* callStackString = [NSString stringWithFormat:@"%@",callStack];
     
     NSString* exceptionResult = [NSString stringWithFormat:@"%@\n%@",exceptionMessage,callStackString];
     
-    [self.delegate handleCrashException:exceptionResult];
+#ifdef DEBUG
+    NSLog(@"================================JJException Start==================================");
+    NSLog(@"%@",exceptionResult);
+    NSLog(@"================================JJException End====================================");
+#endif
+    
+    if (![self.delegate respondsToSelector:@selector(handleCrashException:extraInfo:)]){
+        return;
+    }
+    
+    [self.delegate handleCrashException:exceptionResult extraInfo:info];
+}
+
+- (void)addZombieObjectArray:(NSArray*)objects{
+    if (!objects) {
+        return;
+    }
+    [self.blackClassesSet addObjectsFromArray:objects];
+}
+
+- (NSMutableSet*)blackClassesSet{
+    if (_blackClassesSet) {
+        return _blackClassesSet;
+    }
+    _blackClassesSet = [NSMutableSet new];
+    return _blackClassesSet;
+}
+
+- (NSMutableSet*)currentClassesSet{
+    if (_currentClassesSet) {
+        return _currentClassesSet;
+    }
+    _currentClassesSet = [NSMutableSet new];
+    return _currentClassesSet;
+}
+
+- (id)objectFromCurrentClassesSet{
+    NSEnumerator* objectEnum = [_currentClassesSet objectEnumerator];
+    for (id object in objectEnum) {
+        return object;
+    }
+    return nil;
 }
 
 @end

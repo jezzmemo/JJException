@@ -20,8 +20,8 @@
     [JJException registerExceptionHandle:self];
 }
 
-- (void)handleCrashException:(NSString *)exceptionMessage{
-    NSLog(@"%@",exceptionMessage);
+- (void)handleCrashException:(NSString*)exceptionMessage extraInfo:(NSDictionary*)info{
+    
 }
 
 @end

@@ -15,4 +15,8 @@
     [JJExceptionProxy shareExceptionProxy].delegate = exceptionHandle;
 }
 
++ (void)addZombieObjectArray:(NSArray*)objects{
+    [[JJExceptionProxy shareExceptionProxy] addZombieObjectArray:objects];
+}
+
 @end
