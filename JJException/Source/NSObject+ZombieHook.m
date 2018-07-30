@@ -59,23 +59,24 @@ void unrecognizedSelectorZombie(ZombieSelectorHandle* self, SEL _cmd){
 - (void)hookDealloc{
     Class currentClass = self.class;
     
+    //Check black list
+    if (![[[JJExceptionProxy shareExceptionProxy] blackClassesSet] containsObject:currentClass]) {
+        [self hookDealloc];
+        return;
+    }
+    
     //Check the array max size
+    //TODO:Real remove less than MAX_ARRAY_SIZE
     if ([JJExceptionProxy shareExceptionProxy].currentClassSize > MAX_ARRAY_SIZE) {
         id object = [[JJExceptionProxy shareExceptionProxy] objectFromCurrentClassesSet];
         [[JJExceptionProxy shareExceptionProxy].currentClassesSet removeObject:object];
-        free(object);
+        object?free(object):nil;
     }
     
-    //Check black list
-    if ([[[JJExceptionProxy shareExceptionProxy] blackClassesSet] containsObject:currentClass]) {
-        objc_destructInstance(self);
-        object_setClass(self, [JJZombieSub class]);
-        [[JJExceptionProxy shareExceptionProxy].currentClassesSet addObject:self];
-        [[JJExceptionProxy shareExceptionProxy] setCurrentClassSize:[JJExceptionProxy shareExceptionProxy].currentClassSize + class_getInstanceSize(self.class)];
-    }else{
-        //Invoke origin method
-        [self hookDealloc];
-    }
+    objc_destructInstance(self);
+    object_setClass(self, [JJZombieSub class]);
+    [[JJExceptionProxy shareExceptionProxy].currentClassesSet addObject:self];
+    [[JJExceptionProxy shareExceptionProxy] setCurrentClassSize:[JJExceptionProxy shareExceptionProxy].currentClassSize + class_getInstanceSize(self.class)];
 }
 
 @end

@@ -138,7 +138,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JJException/Source/NSObject+ZombieHook.m"
-            timestampString = "554541401.674415"
+            timestampString = "554614078.8567359"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "60"

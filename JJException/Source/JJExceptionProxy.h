@@ -32,7 +32,7 @@ void handleCrashException(NSString* exceptionMessage);
 /**
  Hold the JJExceptionHandle interface object
  */
-@property(nonatomic,readwrite,strong)id<JJExceptionHandle> delegate;
+@property(nonatomic,readwrite,weak)id<JJExceptionHandle> delegate;
 
 #pragma mark - Zombie collection
 
