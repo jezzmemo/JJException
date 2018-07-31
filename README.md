@@ -2,14 +2,14 @@
 
 Handle the objective-c crash exception
 
-## Unrecognized Selector Sent to Instance
+- [x] Unrecognized Selector Sent to Instance
 
-## NSArray,NSDictonary
+- [x] NSArray,NSDictonary
 
-## KVO
+- [-] KVO
 
-## Zombie Pointer
+- [x] Zombie Pointer
 
-## NSTimer
+- [-] NSTimer
 
-## NSNotification
+- [-] NSNotification
