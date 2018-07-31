@@ -16,13 +16,13 @@ __源码在内部测试阶段，后续通过测试后，会放出来__
 
 - [ ] NSNotification
 
-## Installation
+## 如何安装
 
 ```
 pod 'JJException'
 ```
 
-## Usage
+## 如何使用
 
 * 由于是无侵入式的，所以只要引入代码即可工作
 
@@ -37,3 +37,5 @@ pod 'JJException'
     
 }
 ```
+
+## 工作原理
