@@ -6,10 +6,14 @@ Handle the objective-c crash exception
 
 - [x] NSArray,NSDictonary
 
-- [-] KVO
+- [ ] KVO
 
 - [x] Zombie Pointer
 
-- [-] NSTimer
+- [ ] NSTimer
 
-- [-] NSNotification
+- [ ] NSNotification
+
+## Installation
+
+## Usage
