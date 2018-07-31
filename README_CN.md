@@ -28,6 +28,12 @@ pod 'JJException'
 
 * 如果需要记录日志，只需要实现`JJExceptionHandle`协议，并注册:
 ```
+@interface ViewController ()<JJExceptionHandle>
+
+@end
+
+@implementation ViewController
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [JJException registerExceptionHandle:self];
