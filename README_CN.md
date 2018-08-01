@@ -44,4 +44,9 @@ pod 'JJException'
 }
 ```
 
+* Zombie使用黑名单机制，只有加入这个名单的才有作用,示例如下:
+```
+[JJException addZombieObjectArray:@[TestZombie.class]];
+```
+
 ## 工作原理
