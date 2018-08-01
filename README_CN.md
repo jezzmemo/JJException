@@ -51,7 +51,7 @@ pod 'JJException'
 ## 工作原理
 
 ### Unrecognized Selector Sent to Instance
-由于Objective-c是Message机制，而且对象在转换的时候，会有拿到的对象和预期不一致，所以会有方法找不到的情况，在找不到方法时会有三次补救的机会，所以我们要解决这个问题，在这三次均可以解决这个问题
+由于Objective-c是Message机制，而且对象在转换的时候，会有拿到的对象和预期不一致，所以会有方法找不到的情况，在找不到方法时，查找方法将会进入方法Forward流程,系统给了三次补救的机会，所以我们要解决这个问题，在这三次均可以解决这个问题
 
 * resolveInstanceMethod:(SEL)sel
 * forwardingTargetForSelector:(SEL)aSelector
