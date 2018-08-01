@@ -6,7 +6,7 @@ __源码在内部测试阶段，后续通过测试后，会放出来__
 
 - [x] Unrecognized Selector Sent to Instance
 
-- [x] NSArray,NSDictonary
+- [x] NSArray,NSMutableArray,NSDictonary,NSMutableDictionary
 
 - [ ] KVO
 
@@ -57,6 +57,6 @@ pod 'JJException'
 * forwardingTargetForSelector:(SEL)aSelector
 * forwardInvocation:(NSInvocation *)anInvocation
 
-### NSArray,NSDictonary
+### NSArray,NSMutableArray,NSDictonary,NSMutableDictionary
 
 ### Zombie Pointer
