@@ -56,3 +56,7 @@ pod 'JJException'
 * resolveInstanceMethod:(SEL)sel
 * forwardingTargetForSelector:(SEL)aSelector
 * forwardInvocation:(NSInvocation *)anInvocation
+
+### NSArray,NSDictonary
+
+### Zombie Pointer
