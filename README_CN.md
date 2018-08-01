@@ -48,5 +48,7 @@ pod 'JJException'
 ```
 [JJException addZombieObjectArray:@[TestZombie.class]];
 ```
-
 ## 工作原理
+
+### Unrecognized Selector Sent to Instance
+由于Objective-c是Message机制，而且对象在转换的时候，会有拿到的对象和预期不一致，所以会有方法找不到的情况
