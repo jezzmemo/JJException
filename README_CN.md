@@ -57,8 +57,7 @@ pod 'JJException'
 
 * resolveInstanceMethod:(SEL)sel
 这是实例化方法没有找到方法，最先执行的函数，首先会流转到这里来，返回值是BOOL,没有找到就是NO,找到就返回YES,如果要解决就需要再当前的实例中加入不存在的Selector,并绑定IMP，示例如下:
-```
-
+```objc
 static void xxxInstanceName(id self, SEL cmd, id value) {
     NSLog(@"resolveInstanceMethod %@", value);
 }
