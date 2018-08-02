@@ -27,7 +27,7 @@ pod 'JJException'
 * 由于是无侵入式的，所以只要引入代码即可工作
 
 * 如果需要记录日志，只需要实现`JJExceptionHandle`协议，并注册:
-```
+```objc
 @interface ViewController ()<JJExceptionHandle>
 
 @end
@@ -45,7 +45,7 @@ pod 'JJException'
 ```
 
 * Zombie使用黑名单机制，只有加入这个名单的才有作用,示例如下:
-```
+```objc
 [JJException addZombieObjectArray:@[TestZombie.class]];
 ```
 ## 工作原理
