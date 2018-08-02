@@ -56,9 +56,28 @@ pod 'JJException'
 ![forward](https://upload-images.jianshu.io/upload_images/1654054-5e5737afb54d4654.png)
 
 * resolveInstanceMethod:(SEL)sel
+这是实例化方法没有找到方法，最先执行的函数，首先会流转到这里来，返回值是BOOL,没有找到就是NO,找到就返回YES,如果要解决就需要再当前的实例中加入不存在的Selector,并绑定IMP，示例如下:
+```
+
+static void xxxInstanceName(id self, SEL cmd, id value) {
+    NSLog(@"resolveInstanceMethod %@", value);
+}
+
++ (BOOL)resolveInstanceMethod:(SEL)sel
+{
+    NSLog(@"resolveInstanceMethod");
+    
+    NSMethodSignature* sign = [self methodSignatureForSelector:selector];
+    if (!sign) {
+        class_addMethod([self class], sel, (IMP)xxxInstanceName, "v@:@");
+        return YES;
+    }
+    return [super resolveInstanceMethod:sel];
+}
+```
+
 * forwardingTargetForSelector:(SEL)aSelector
 * forwardInvocation:(NSInvocation *)anInvocation
-
 ### NSArray,NSMutableArray,NSDictonary,NSMutableDictionary
 
 ### Zombie Pointer
