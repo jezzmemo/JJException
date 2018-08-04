@@ -76,6 +76,20 @@ static void xxxInstanceName(id self, SEL cmd, id value) {
 ```
 
 * forwardingTargetForSelector:(SEL)aSelector
+
+如果resolveInstanceMethod没有处理，将进行到forwardingTargetForSelector这步来，这时候你可以返回nil，你也可以用一个Stub对象来接住，把消息流程流转到了你的Stub那边了，然后在你的Stub里添加不存在的Selector，这样就不会crash了，示例如下:
+```objc
+- (id)forwardingTargetForSelectorSwizzled:(SEL)selector{
+    NSMethodSignature* sign = [self methodSignatureForSelector:selector];
+    if (!sign) {
+        id stub = [[UnrecognizedSelectorHandle new] autorelease];
+        class_addMethod([stub class], selector, (IMP)unrecognizedSelector, "v@:");
+        return stub;
+    }
+    return [self forwardingTargetForSelectorSwizzled:selector];
+}
+```
+
 * forwardInvocation:(NSInvocation *)anInvocation
 ### NSArray,NSMutableArray,NSDictonary,NSMutableDictionary
 
