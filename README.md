@@ -96,12 +96,17 @@ static void xxxInstanceName(id self, SEL cmd, id value) {
 这两个方法一起说，因为他们之间有关联，
 1. 当methodSignatureForSelector返回nil时，会Crash
 2. 如果methodSignatureForSelector返回一个定义好的NSMethodSignature，但是没有实现forwardInvocation，也会闪退，如果实现了forwardInvocation，__会先返回到resolveInstanceMethod然后再才会到forwardInvocation__
-3. 当流转到`forwardInvocation`,通过
+3. 当流转到`forwardInvocation`,通过以下方法:
 ```
 [anInvocation invokeWithTarget:xxxtarget1];
 [anInvocation invokeWithTarget:xxxtarget2];
 ```
-还可以流转到多个对象,[anInvocation invokeWithTarget:xxxtarget2]是为了让不存在的方法有着陆点,实验发现流程2的时候，没有[anInvocation invokeWithTarget:xxxtarget1]也不会闪退
+还可以流转到多个对象,[anInvocation invokeWithTarget:xxxtarget2]是为了让不存在的方法有着陆点
+
+* doesNotRecognizeSelector:(SEL)aSelector
+执行到这里的时候，两种情况:
+1. 当methodSignatureForSelector返回一种任意的方法签名的时候，也会进入doesNotRecognizeSelector，但是不会闪退
+2. 当methodSignatureForSelector返回nil时，进入doesNotRecognizeSelector就会闪退
 
 ### NSArray,NSMutableArray,NSDictonary,NSMutableDictionary
 
