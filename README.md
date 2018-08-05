@@ -134,3 +134,16 @@ swizzleInstanceMethod(NSClassFromString(@"__NSArrayI"), @selector(objectAtIndex:
 ```
 
 ### Zombie Pointer
+
+让野指针不闪退是模仿了XCode debug的Zombie Object，也参考了网易和美团的做法,主要是以下步骤:
+
+1. Hook住dealloc方法
+2. 如果当前示例在黑名单里，就把当年前示例加入集合，并把当前对象`objc_destructInstance`清理引用关系，并未释放内容，并将`object_setClass`设置成自己的中间对象
+3. Hook中间对象的方法，收到的消息都由中间对象来处理
+4. 维护的野指针集合，要么根据个数来维护，要么根据总大小来维护，当满了，就需要真正释放对象
+
+存在的问题:
+
+1. 需要单独的内存那些问题对象
+2. 最后释放内存后，再访问时会闪退，这个方法只是一定程度延迟了闪退时间
+3. 需要后台维护黑名单机制，来指定那些问题对象
