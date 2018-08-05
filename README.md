@@ -114,4 +114,21 @@ static void xxxInstanceName(id self, SEL cmd, id value) {
 
 ### NSArray,NSMutableArray,NSDictonary,NSMutableDictionary
 
+* 类族(Class Cluster)
+NSDictonary，NSArray,NSString等，都使用了类族，这种模式最大的好处就是，可以隐藏抽象基类背后的复杂细节，使用者只需调用基类简单的方法就可以返回不同的子类实例
+
+* Swizzle Hook
+这里就不赘述Swizzle概念了，Google到处都是讲解的，这里给一个典型的例子:
+```
+swizzleInstanceMethod(NSClassFromString(@"__NSArrayI"), @selector(objectAtIndex:), @selector(hookObjectAtIndex:));
+
+- (id) hookObjectAtIndex:(NSUInteger)index {
+    if (index < self.count) {
+        return [self hookObjectAtIndex:index];
+    }
+    handleCrashException(@"HookObjectAtIndex invalid index");
+    return nil;
+}
+```
+
 ### Zombie Pointer
