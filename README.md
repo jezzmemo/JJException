@@ -108,6 +108,10 @@ static void xxxInstanceName(id self, SEL cmd, id value) {
 1. 当methodSignatureForSelector返回一种任意的方法签名的时候，也会进入doesNotRecognizeSelector，但是不会闪退
 2. 当methodSignatureForSelector返回nil时，进入doesNotRecognizeSelector就会闪退
 
+根据以上流程，最终还是选择流程2,原因如下:
+1. resolveInstanceMethod虽然可以解决问题，给不存在的方法增加到示例中去，会污染当前示例
+2. forwardInvocation在三步中式最后一步，会导致流转的周期变长，而且会产生NSInvocation,性能不是最好的选择
+
 ### NSArray,NSMutableArray,NSDictonary,NSMutableDictionary
 
 ### Zombie Pointer
