@@ -95,7 +95,7 @@ static void xxxInstanceName(id self, SEL cmd, id value) {
 
 这两个方法一起说，因为他们之间有关联，
 1. 当methodSignatureForSelector返回nil时，会Crash
-2. 如果methodSignatureForSelector返回一个定义好的NSMethodSignature，但是没有定义forwardInvocation，也会闪退，如果实现了forwardInvocation，会先返回到resolveInstanceMethod然后再才会到forwardInvocation
+2. 如果methodSignatureForSelector返回一个定义好的NSMethodSignature，但是没有实现forwardInvocation，也会闪退，如果实现了forwardInvocation，__会先返回到resolveInstanceMethod然后再才会到forwardInvocation__
 3. 当流转到`forwardInvocation`,通过
 ```
 [anInvocation invokeWithTarget:xxxtarget1];
