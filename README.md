@@ -180,19 +180,17 @@ void *objc_destructInstance(id obj)
 }
 ```
 
-`_object_remove_assocations`会释放所有的用AssociatedObject，所以我们Hook一下方法，只是列举有代表性的，根据自身情况补齐添加的地方
+`_object_remove_assocations`会释放所有的用AssociatedObject，所以我们Hook以下方法，只是列举有代表性的，根据自身情况补齐添加的地方
 
 * KVO(addObserver:forKeyPath)
 
 * NSNotification(addObserver:selector)
 
-objc_setAssociatedObject`给当前对象添加一个中间对象，当前对象释放时，会清理AssociatedObject数据，AssociatedObject的中间对象将被清理释放，中间对象的dealloc方法将被执行，最终清理被遗漏的监听者。
+`objc_setAssociatedObject`给当前对象添加一个中间对象，当前对象释放时，会清理AssociatedObject数据，AssociatedObject的中间对象将被清理释放，中间对象的dealloc方法将被执行，最终清理被遗漏的监听者。
 
 * NSTimer(scheduledTimerWithTimeInterval:target:selector:userInfo:repeats)
 
-
-NSTimer的
-
+NSTimer的问题在于，target默认是强引用，如果用户不手动关闭NSTimer和置空，会存在内存泄漏和异常情况，所以用中间层来持有，用KVO和NSNotification的方法来清理
 
 ### MRC
 
