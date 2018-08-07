@@ -156,3 +156,5 @@ swizzleInstanceMethod(NSClassFromString(@"__NSArrayI"), @selector(objectAtIndex:
 
 * KVO(addObserver:forKeyPath)
 * NSNotification(addObserver:selector)
+
+### MRC
