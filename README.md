@@ -150,7 +150,35 @@ swizzleInstanceMethod(NSClassFromString(@"__NSArrayI"), @selector(objectAtIndex:
 
 ### KVO，NSTimer，NSNotification
 
-这三种放在一起，是因为他们之间有共同的特征，就是创建后，忘记销毁会导致闪退，或者会有一些异常的情况，所以需要一种知道当前创建者啥时候释放，首先会想到dealloc,这样会Hook的NSObject,在一定程度会影响性能，后面发现一种比较优雅的方法:
+这三种放在一起，是因为他们之间有共同的特征，就是创建后，忘记销毁会导致闪退，或者会有一些异常的情况，所以需要一种知道当前创建者啥时候释放，首先会想到dealloc,这样会Hook的NSObject,在一定程度会影响性能，后面发现一种比较优雅的方法,原理来自于Runtime源码:
+```
+/***********************************************************************
+* objc_destructInstance
+* Destroys an instance without freeing memory. 
+* Calls C++ destructors.
+* Calls ARR ivar cleanup.
+* Removes associative references.
+* Returns `obj`. Does nothing if `obj` is nil.
+* Be warned that GC DOES NOT CALL THIS. If you edit this, also edit finalize.
+* CoreFoundation and other clients do call this under GC.
+**********************************************************************/
+void *objc_destructInstance(id obj) 
+{
+    if (obj) {
+        // Read all of the flags at once for performance.
+        bool cxx = obj->hasCxxDtor();
+        bool assoc = !UseGC && obj->hasAssociatedObjects();
+        bool dealloc = !UseGC;
+
+        // This order is important.
+        if (cxx) object_cxxDestruct(obj);
+        if (assoc) _object_remove_assocations(obj);
+        if (dealloc) obj->clearDeallocating();
+    }
+
+    return obj;
+}
+```
 
 用`objc_setAssociatedObject`给当前对象，当前对象释放时，会清理AssociatedObject数据，AssociatedObject对象将被清理释放，AssociatedObject的dealloc方法将被执行，最终清理之前加入的监听。
 
