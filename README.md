@@ -152,4 +152,7 @@ swizzleInstanceMethod(NSClassFromString(@"__NSArrayI"), @selector(objectAtIndex:
 
 这三种放在一起，是因为他们之间有共同的特征，就是创建后，忘记销毁会导致闪退，或者会有一些异常的情况，所以需要一种知道当前创建者啥时候释放，首先会想到dealloc,这样会Hook的NSObject,在一定程度会影响性能，后面发现一种比较优雅的方法:
 
-用`objc_setAssociatedObject`给当前对象，当前对象释放时，会清理AssociatedObject数据，这样就监听对象的dealloc,这样就达到按需监听
+用`objc_setAssociatedObject`给当前对象，当前对象释放时，会清理AssociatedObject数据，AssociatedObject对象将被清理释放，AssociatedObject的dealloc方法将被执行，最终清理之前加入的监听。
+
+* KVO(addObserver:forKeyPath)
+* NSNotification(addObserver:selector)
