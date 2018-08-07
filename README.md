@@ -180,13 +180,23 @@ void *objc_destructInstance(id obj)
 }
 ```
 
-用`objc_setAssociatedObject`给当前对象，当前对象释放时，会清理AssociatedObject数据，AssociatedObject对象将被清理释放，AssociatedObject的dealloc方法将被执行，最终清理之前加入的监听。
+`_object_remove_assocations`会释放所有的用AssociatedObject，所以我们Hook一下方法，只是列举有代表性的，根据自身情况补齐添加的地方
 
 * KVO(addObserver:forKeyPath)
+
 * NSNotification(addObserver:selector)
+
+objc_setAssociatedObject`给当前对象添加一个中间对象，当前对象释放时，会清理AssociatedObject数据，AssociatedObject的中间对象将被清理释放，中间对象的dealloc方法将被执行，最终清理被遗漏的监听者。
+
+* NSTimer(scheduledTimerWithTimeInterval:target:selector:userInfo:repeats)
+
+
+NSTimer的
+
 
 ### MRC
 
 ### 参考资料
 
 [https://github.com/opensource-apple/objc4/blob/master/runtime/objc-runtime-new.mm](https://github.com/opensource-apple/objc4/blob/master/runtime/objc-runtime-new.mm)
+[大白健康系统](https://neyoufan.github.io/2017/01/13/ios/BayMax_HTSafetyGuard/)
