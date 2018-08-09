@@ -34,7 +34,7 @@ void unrecognizedSelectorZombie(ZombieSelectorHandle* self, SEL _cmd){
 
 @implementation JJZombieSub
 
-- (id)forwardingTargetForSelectorSwizzled:(SEL)selector{
+- (id)forwardingTargetForSelector:(SEL)selector{
     NSMethodSignature* sign = [self methodSignatureForSelector:selector];
     if (!sign) {
         id stub = [[ZombieSelectorHandle new] autorelease];
@@ -42,12 +42,14 @@ void unrecognizedSelectorZombie(ZombieSelectorHandle* self, SEL _cmd){
         class_addMethod([stub class], selector, (IMP)unrecognizedSelectorZombie, "v@:");
         return stub;
     }
-    return [self forwardingTargetForSelectorSwizzled:selector];
+    return [super forwardingTargetForSelector:selector];
 }
 
 @end
 
 @implementation NSObject (ZombieHook)
+
+#ifdef ZombieSwitch
 
 + (void)load{
     static dispatch_once_t onceToken;
@@ -55,6 +57,8 @@ void unrecognizedSelectorZombie(ZombieSelectorHandle* self, SEL _cmd){
         [self jj_swizzleInstanceMethod:@selector(dealloc) withSwizzleMethod:@selector(hookDealloc)];
     });
 }
+
+#endif
 
 - (void)hookDealloc{
     Class currentClass = self.class;

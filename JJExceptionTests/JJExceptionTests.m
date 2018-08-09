@@ -86,6 +86,9 @@
     TestZombie* test = [TestZombie new];
     [test release];
     [test test];
+    
+    free(test);
+    
 }
 
 @end
