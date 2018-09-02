@@ -89,7 +89,9 @@ static void xxxInstanceName(id self, SEL cmd, id value) {
 ```
 
 * methodSignatureForSelector:(SEL)aSelector
-* forwardInvocation:(NSInvocation *)anInvocation
+
+* forwardInvocation:(NSInvocation \*)anInvocation
+
 
 这两个方法一起说，因为他们之间有关联，
 1. 当methodSignatureForSelector返回nil时，会Crash
