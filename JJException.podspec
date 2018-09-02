@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "JJException"
-  s.version      = "0.0.2"
+  s.version      = "0.0.1"
   s.summary      = "Handle the objective-c crash exception."
 
   # This description is used to generate tags and improve search results.
@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
                   JJException Handle the objective-c crash exception.
                    DESC
 
-  s.homepage     = "https://gitlab.yeshj.com/HJClass-iOS-Components/JJException"
+  s.homepage     = "https://github.com/jezzmemo/JJException"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -52,7 +52,7 @@ Pod::Spec.new do |s|
   #  profile URL.
   #
 
-  s.author             = { "李杰" => "jezz.li@hujiang.com" }
+  s.author             = { "李杰" => "lijie250@gmail.com" }
   # Or just: s.author    = "李杰"
   # s.authors            = { "李杰" => "jezz.li@hujiang.com" }
   # s.social_media_url   = "http://twitter.com/李杰"
@@ -80,7 +80,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "git@gitlab.yeshj.com:HJClass-iOS-Components/JJException.git", :tag => "#{s.version}" }
+  s.source       = { :git => "git@github.com:jezzmemo/JJException.git", :tag => "#{s.version}" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
