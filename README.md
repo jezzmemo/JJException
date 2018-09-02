@@ -6,7 +6,7 @@
 
 - [x] NSArray,NSMutableArray,NSDictonary,NSMutableDictionary
 
-- [ ] KVO
+- [x] KVO
 
 - [x] Zombie Pointer
 
@@ -206,4 +206,3 @@ NSTimer的问题在于，target默认是强引用，如果用户不手动关闭N
 [https://github.com/opensource-apple/objc4/blob/master/runtime/objc-runtime-new.mm](https://github.com/opensource-apple/objc4/blob/master/runtime/objc-runtime-new.mm)
 
 [大白健康系统](https://neyoufan.github.io/2017/01/13/ios/BayMax_HTSafetyGuard/)
->>>>>>> 294ce667b17f87b5964907d8c7286b781880e8f6
