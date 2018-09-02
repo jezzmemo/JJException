@@ -81,14 +81,23 @@
 }
 
 - (void)testZombieException{
-    [JJException addZombieObjectArray:@[TestZombie.class]];
+//    [JJException addZombieObjectArray:@[TestZombie.class]];
+//    
+//    TestZombie* test = [TestZombie new];
+//    [test release];
+//    [test test];
+//    
+//    free(test);
     
-    TestZombie* test = [TestZombie new];
-    [test release];
-    [test test];
-    
-    free(test);
-    
+}
+
+- (void)testJJExceptionPerformance{
+    [self measureBlock:^{
+        NSArray* array = @[@"112",@"12",@"12",@"12",@"12",@"12",@"12",@"12",@"12",@"12"];
+        for (int i = 0;i < 1000000;i++) {
+            id object = [array objectAtIndex:1];
+        }
+    }];
 }
 
 @end

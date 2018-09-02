@@ -7,9 +7,49 @@
 //
 
 #import "JJExceptionProxy.h"
+#import <mach-o/dyld.h> 
 
-void handleCrashException(NSString* exceptionMessage){
+__attribute__((overloadable)) void handleCrashException(NSString* exceptionMessage){
     [[JJExceptionProxy shareExceptionProxy] handleCrashException:exceptionMessage extraInfo:@{}];
+}
+
+__attribute__((overloadable)) void handleCrashException(NSString* exceptionMessage,NSDictionary* extraInfo){
+    [[JJExceptionProxy shareExceptionProxy] handleCrashException:exceptionMessage extraInfo:extraInfo];
+}
+
+/**
+ Get application base address,the application different base address after started
+ 
+ @return base address
+ */
+uintptr_t get_load_address(void) {
+    const struct mach_header *exe_header = NULL;
+    for (uint32_t i = 0; i < _dyld_image_count(); i++) {
+        const struct mach_header *header = _dyld_get_image_header(i);
+        if (header->filetype == MH_EXECUTE) {
+            exe_header = header;
+            break;
+        }
+    }
+    return (uintptr_t)exe_header;
+}
+
+/**
+ Address Offset,arm64:0x0000000100000000 armv7:0x00004000
+
+ @return slide address
+ */
+uintptr_t get_slide_address(void) {
+    uintptr_t vmaddr_slide = 0;
+    for (uint32_t i = 0; i < _dyld_image_count(); i++) {
+        const struct mach_header *header = _dyld_get_image_header(i);
+        if (header->filetype == MH_EXECUTE) {
+            vmaddr_slide = _dyld_get_image_vmaddr_slide(i);
+            break;
+        }
+    }
+    
+    return (uintptr_t)vmaddr_slide;
 }
 
 @implementation JJExceptionProxy
@@ -33,18 +73,20 @@ void handleCrashException(NSString* exceptionMessage){
     
     NSString* exceptionResult = [NSString stringWithFormat:@"%@\n%@",exceptionMessage,callStackString];
     
+    
+    if ([self.delegate respondsToSelector:@selector(handleCrashException:extraInfo:)]){
+        [self.delegate handleCrashException:exceptionResult extraInfo:info];
+    }
+    
 #ifdef DEBUG
     NSLog(@"================================JJException Start==================================");
-    NSLog(@"%@",exceptionResult);
+    NSAssert(NO, exceptionResult);
     NSLog(@"================================JJException End====================================");
 #endif
     
-    if (![self.delegate respondsToSelector:@selector(handleCrashException:extraInfo:)]){
-        return;
-    }
-    
-    [self.delegate handleCrashException:exceptionResult extraInfo:info];
 }
+
+
 
 - (void)addZombieObjectArray:(NSArray*)objects{
     if (!objects) {

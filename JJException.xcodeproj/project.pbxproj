@@ -14,6 +14,8 @@
 		61196D5220F261CC00022DDC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61196D5020F261CC00022DDC /* LaunchScreen.storyboard */; };
 		61196D5520F261CC00022DDC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 61196D5420F261CC00022DDC /* main.m */; };
 		61372D2020F50615001A9A10 /* NSObject+SwizzleHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61372D1F20F50615001A9A10 /* NSObject+SwizzleHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		61A7F5142136F95300C87FA1 /* NSObject+KVOCrash.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F5132136F95300C87FA1 /* NSObject+KVOCrash.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		61A7F51C213B859300C87FA1 /* PushViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F51B213B859300C87FA1 /* PushViewController.m */; };
 		61BC3FB520F6544600D8C791 /* NSObject+UnrecognizedSelectorHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BC3FB420F6544600D8C791 /* NSObject+UnrecognizedSelectorHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		61BC3FB820F65D0E00D8C791 /* NSArray+ArrayHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BC3FB720F65D0E00D8C791 /* NSArray+ArrayHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		61BC3FC720F7ACE500D8C791 /* JJExceptionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BC3FC620F7ACE500D8C791 /* JJExceptionTests.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -48,6 +50,10 @@
 		61196D5420F261CC00022DDC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		61372D1E20F50615001A9A10 /* NSObject+SwizzleHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+SwizzleHook.h"; sourceTree = "<group>"; };
 		61372D1F20F50615001A9A10 /* NSObject+SwizzleHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SwizzleHook.m"; sourceTree = "<group>"; };
+		61A7F5122136F95300C87FA1 /* NSObject+KVOCrash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+KVOCrash.h"; sourceTree = "<group>"; };
+		61A7F5132136F95300C87FA1 /* NSObject+KVOCrash.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+KVOCrash.m"; sourceTree = "<group>"; };
+		61A7F51A213B859300C87FA1 /* PushViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PushViewController.h; sourceTree = "<group>"; };
+		61A7F51B213B859300C87FA1 /* PushViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PushViewController.m; sourceTree = "<group>"; };
 		61BC3FB320F6544600D8C791 /* NSObject+UnrecognizedSelectorHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+UnrecognizedSelectorHook.h"; sourceTree = "<group>"; };
 		61BC3FB420F6544600D8C791 /* NSObject+UnrecognizedSelectorHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+UnrecognizedSelectorHook.m"; sourceTree = "<group>"; };
 		61BC3FB620F65D0E00D8C791 /* NSArray+ArrayHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSArray+ArrayHook.h"; sourceTree = "<group>"; };
@@ -118,6 +124,8 @@
 				61196D5020F261CC00022DDC /* LaunchScreen.storyboard */,
 				61196D5320F261CC00022DDC /* Info.plist */,
 				61196D5420F261CC00022DDC /* main.m */,
+				61A7F51A213B859300C87FA1 /* PushViewController.h */,
+				61A7F51B213B859300C87FA1 /* PushViewController.m */,
 			);
 			path = JJException;
 			sourceTree = "<group>";
@@ -143,6 +151,8 @@
 				61CAC361210432A400B89B0E /* JJExceptionProxy.m */,
 				61CAC38F2109E68C00B89B0E /* NSObject+ZombieHook.h */,
 				61CAC3902109E68C00B89B0E /* NSObject+ZombieHook.m */,
+				61A7F5122136F95300C87FA1 /* NSObject+KVOCrash.h */,
+				61A7F5132136F95300C87FA1 /* NSObject+KVOCrash.m */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -256,6 +266,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61A7F5142136F95300C87FA1 /* NSObject+KVOCrash.m in Sources */,
 				61372D2020F50615001A9A10 /* NSObject+SwizzleHook.m in Sources */,
 				61BE9AC720FB1E9500715C09 /* NSDictionary+DictionaryHook.m in Sources */,
 				61196D4A20F261C800022DDC /* ViewController.m in Sources */,
@@ -265,6 +276,7 @@
 				61BC3FB820F65D0E00D8C791 /* NSArray+ArrayHook.m in Sources */,
 				61BC3FB520F6544600D8C791 /* NSObject+UnrecognizedSelectorHook.m in Sources */,
 				61BE9ACA20FB219D00715C09 /* NSMutableDictionary+MutableDictionaryHook.m in Sources */,
+				61A7F51C213B859300C87FA1 /* PushViewController.m in Sources */,
 				61CAC3912109E68C00B89B0E /* NSObject+ZombieHook.m in Sources */,
 				61196D4720F261C800022DDC /* AppDelegate.m in Sources */,
 				61CAC35F210385D400B89B0E /* JJException.m in Sources */,
@@ -426,7 +438,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CS3P4Q373F;
 				INFOPLIST_FILE = JJException/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -444,7 +456,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CS3P4Q373F;
 				INFOPLIST_FILE = JJException/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -460,6 +472,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CS3P4Q373F;
 				INFOPLIST_FILE = JJExceptionTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -478,6 +491,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CS3P4Q373F;
 				INFOPLIST_FILE = JJExceptionTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

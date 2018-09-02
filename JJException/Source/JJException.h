@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol JJExceptionHandle<NSObject>
 
 /**
- Crash message and extra info
+ Crash message and extra info from current thread
 
  @param exceptionMessage crash message
  @param info extraInfo,key and value

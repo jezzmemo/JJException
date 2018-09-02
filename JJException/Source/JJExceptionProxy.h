@@ -16,7 +16,15 @@ NS_ASSUME_NONNULL_BEGIN
 
  @param exceptionMessage crash message
  */
-void handleCrashException(NSString* exceptionMessage);
+__attribute__((overloadable)) void handleCrashException(NSString* exceptionMessage);
+
+/**
+ C style invoke handle crash message,and extra crash info
+
+ @param exceptionMessage crash message
+ @param extraInfo extra crash message
+ */
+__attribute__((overloadable)) void handleCrashException(NSString* exceptionMessage,NSDictionary* extraInfo);
 
 /**
  Exception Proxy
