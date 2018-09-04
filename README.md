@@ -183,6 +183,9 @@ void *objc_destructInstance(id obj)
 `_object_remove_assocations`会释放所有的用AssociatedObject，所以我们Hook以下方法，只是列举有代表性的，根据自身情况补齐添加的地方
 
 * KVO(addObserver:forKeyPath)
+1. 添加监听后没有清除会导致闪退
+2. 清除不存在的key也会闪退
+3. 添加重复的key导致闪退
 
 * NSNotification(addObserver:selector)
 
