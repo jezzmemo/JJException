@@ -50,13 +50,17 @@ static const char DeallocKVOKey;
 
 - (void)addKVOObjectItem:(KVOObjectItem*)item{
     if (item) {
-        [self.kvoObjectSet addObject:item];
+        @synchronized(self){
+            [self.kvoObjectSet addObject:item];
+        }
     }
 }
 
 - (void)removeKVOObjectItem:(KVOObjectItem*)item{
     if (item) {
-        [self.kvoObjectSet removeObject:item];
+        @synchronized(self){
+            [self.kvoObjectSet removeObject:item];
+        }
     }
 }
 
