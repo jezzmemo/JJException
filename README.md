@@ -52,7 +52,7 @@ pod 'JJException'
 ```
 ## 工作原理
 
-[JJException技术原理](https://github.com/jezzmemo/JJException/JJExceptionPrinciple.md)
+[JJException技术原理](https://github.com/jezzmemo/JJException/blob/master/JJExceptionPrinciple.md)
 
 ## License
 JJNetwork is released under the MIT license. See LICENSE for details.
