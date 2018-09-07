@@ -10,9 +10,9 @@
 
 - [x] Zombie Pointer
 
-- [ ] NSTimer
+- [x] NSTimer
 
-- [ ] NSNotification
+- [x] NSNotification
 
 ## 如何安装
 
@@ -182,18 +182,22 @@ void *objc_destructInstance(id obj)
 
 `_object_remove_assocations`会释放所有的用AssociatedObject，所以我们Hook以下方法，只是列举有代表性的，根据自身情况补齐添加的地方
 
-* KVO(addObserver:forKeyPath)
+* KVO(addObserver:forKeyPath:options:context:):
 1. 添加监听后没有清除会导致闪退
 2. 清除不存在的key也会闪退
 3. 添加重复的key导致闪退
 
-* NSNotification(addObserver:selector)
+* NSNotification(addObserver:selector:name:object:):
+1. 添加通知后，没有移除导致Crash的问题，不过在iOS9以后没有这个问题
+
+* NSTimer(scheduledTimerWithTimeInterval:target:selector:userInfo:repeats):
+1. target是强引用，内存泄漏
+2. 不手动invalidate，导致crash
+
 
 `objc_setAssociatedObject`给当前对象添加一个中间对象，当前对象释放时，会清理AssociatedObject数据，AssociatedObject的中间对象将被清理释放，中间对象的dealloc方法将被执行，最终清理被遗漏的监听者。
 
-* NSTimer(scheduledTimerWithTimeInterval:target:selector:userInfo:repeats)
-
-NSTimer的问题在于，target默认是强引用，如果用户不手动关闭NSTimer和置空，会存在内存泄漏和异常情况，所以用中间层来持有，用KVO和NSNotification的方法来清理
+用KVO和NSNotification的方法来清理,NSTimer是通过中间对象来持有，当target为空时，清理NSTimer
 
 ### MRC
 

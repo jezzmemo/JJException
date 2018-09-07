@@ -24,13 +24,13 @@
     [JJException registerExceptionHandle:self];
     
     UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setTitle:@"Push" forState:UIControlStateNormal];
+    [button setTitle:@"Push controller" forState:UIControlStateNormal];
     [button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    button.frame = CGRectMake(100, 100, 100, 50);
+    button.frame = CGRectMake(100, 100, self.view.frame.size.width, 50);
+    button.center = self.view.center;
     [button addTarget:self action:@selector(pushAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
 }
-
 #pragma mark - Delegate
 
 - (void)handleCrashException:(NSString*)exceptionMessage extraInfo:(NSDictionary*)info{

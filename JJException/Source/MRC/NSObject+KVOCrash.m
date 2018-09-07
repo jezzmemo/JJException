@@ -12,6 +12,10 @@
 
 static const char DeallocKVOKey;
 
+/**
+ Record the kvo object
+ Override the isEqual and hash method
+ */
 @interface KVOObjectItem : NSObject
 
 @property(nonatomic,readwrite,unsafe_unretained)NSObject* observer;
@@ -38,11 +42,24 @@ static const char DeallocKVOKey;
 
 @interface KVOObjectContainer : NSObject
 
+/**
+ KVO object array set
+ */
 @property(nonatomic,readwrite,retain)NSMutableSet* kvoObjectSet;
 
+/**
+ Associated owner object
+ */
 @property(nonatomic,readwrite,unsafe_unretained)NSObject* whichObject;
 
+/**
+ NSMutableSet safe-thread
+ */
+@property(nonatomic,readwrite,retain)dispatch_semaphore_t kvoLock;
+
 - (void)addKVOObjectItem:(KVOObjectItem*)item;
+
+- (void)removeKVOObjectItem:(KVOObjectItem*)item;
 
 @end
 
@@ -50,24 +67,37 @@ static const char DeallocKVOKey;
 
 - (void)addKVOObjectItem:(KVOObjectItem*)item{
     if (item) {
-        @synchronized(self){
-            [self.kvoObjectSet addObject:item];
-        }
+        dispatch_semaphore_wait(self.kvoLock, DISPATCH_TIME_FOREVER);
+        [self.kvoObjectSet addObject:item];
+        dispatch_semaphore_signal(self.kvoLock);
     }
 }
 
 - (void)removeKVOObjectItem:(KVOObjectItem*)item{
     if (item) {
-        @synchronized(self){
-            [self.kvoObjectSet removeObject:item];
-        }
+        dispatch_semaphore_wait(self.kvoLock, DISPATCH_TIME_FOREVER);
+        [self.kvoObjectSet removeObject:item];
+        dispatch_semaphore_signal(self.kvoLock);
     }
 }
 
+- (dispatch_semaphore_t)kvoLock{
+    if (!_kvoLock) {
+        _kvoLock = dispatch_semaphore_create(1);
+        return _kvoLock;
+    }
+    return _kvoLock;
+}
+
+/**
+ Clean the kvo object array and temp var
+ release the dispatch_semaphore
+ */
 - (void)dealloc{
     [self clearKVOData];
     [self.kvoObjectSet release];
     self.whichObject = nil;
+    dispatch_release(self.kvoLock);
     [super dealloc];
 }
 

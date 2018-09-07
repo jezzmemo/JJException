@@ -91,10 +91,27 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "JJException/Source/*.{h,m}"
+  s.default_subspec = 'All'
+  s.subspec 'All' do |spec|
+    spec.ios.dependency 'JJException/ARC'
+    spec.ios.dependency 'JJException/MRC'
+  end
+
+  s.subspec 'ARC' do |spec|
+    spec.requires_arc = true
+    s.source_files  = "JJException/Source/*.{h,m}"
+    s.public_header_files = "JJException/Source/JJException.h"
+  end
+
+  s.subspec 'MRC' do |spec|
+    spec.requires_arc = false
+    s.source_files  = "JJException/Source/MRC/*.{h,m}"
+  end
+
+  #s.source_files  = "JJException/Source/*.{h,m}"
 
 
-  s.public_header_files = "JJException/Source/JJException.h"
+  #s.public_header_files = "JJException/Source/JJException.h"
 
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -130,7 +147,7 @@ Pod::Spec.new do |s|
   #  where they will only apply to your library. If you depend on other Podspecs
   #  you can include multiple dependencies to ensure it works.
 
-  s.requires_arc = false
+  #s.requires_arc = false
 
   # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   # s.dependency "JSONKit", "~> 1.4"

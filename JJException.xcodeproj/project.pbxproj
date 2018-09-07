@@ -13,18 +13,20 @@
 		61196D4F20F261CC00022DDC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61196D4E20F261CC00022DDC /* Assets.xcassets */; };
 		61196D5220F261CC00022DDC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61196D5020F261CC00022DDC /* LaunchScreen.storyboard */; };
 		61196D5520F261CC00022DDC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 61196D5420F261CC00022DDC /* main.m */; };
-		61372D2020F50615001A9A10 /* NSObject+SwizzleHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61372D1F20F50615001A9A10 /* NSObject+SwizzleHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		61A7F5142136F95300C87FA1 /* NSObject+KVOCrash.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F5132136F95300C87FA1 /* NSObject+KVOCrash.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		61372D2020F50615001A9A10 /* NSObject+SwizzleHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61372D1F20F50615001A9A10 /* NSObject+SwizzleHook.m */; };
 		61A7F51C213B859300C87FA1 /* PushViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F51B213B859300C87FA1 /* PushViewController.m */; };
-		61BC3FB520F6544600D8C791 /* NSObject+UnrecognizedSelectorHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BC3FB420F6544600D8C791 /* NSObject+UnrecognizedSelectorHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		61BC3FB820F65D0E00D8C791 /* NSArray+ArrayHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BC3FB720F65D0E00D8C791 /* NSArray+ArrayHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		61A7F52E213EDF9400C87FA1 /* NSTimer+CleanTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F52D213EDF9400C87FA1 /* NSTimer+CleanTimer.m */; };
+		61A7F53B2141753000C87FA1 /* NSNotificationCenter+ClearNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F53A2141753000C87FA1 /* NSNotificationCenter+ClearNotification.m */; };
+		61A7F54021427E4100C87FA1 /* NSObject+UnrecognizedSelectorHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F53F21427E4100C87FA1 /* NSObject+UnrecognizedSelectorHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		61A7F54321427E7F00C87FA1 /* NSObject+KVOCrash.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F54221427E7F00C87FA1 /* NSObject+KVOCrash.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		61A7F54C21427EB700C87FA1 /* NSArray+ArrayHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F54421427EB600C87FA1 /* NSArray+ArrayHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		61A7F54D21427EB700C87FA1 /* NSDictionary+DictionaryHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F54621427EB600C87FA1 /* NSDictionary+DictionaryHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		61A7F54E21427EB700C87FA1 /* NSMutableArray+MutableArrayHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F54921427EB600C87FA1 /* NSMutableArray+MutableArrayHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		61A7F54F21427EB700C87FA1 /* NSMutableDictionary+MutableDictionaryHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F54B21427EB700C87FA1 /* NSMutableDictionary+MutableDictionaryHook.m */; };
+		61A7F55221427F5200C87FA1 /* NSObject+ZombieHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F55021427F5100C87FA1 /* NSObject+ZombieHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		61BC3FC720F7ACE500D8C791 /* JJExceptionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BC3FC620F7ACE500D8C791 /* JJExceptionTests.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		61BE9AC420FAF2C700715C09 /* NSMutableArray+MutableArrayHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BE9AC320FAF2C700715C09 /* NSMutableArray+MutableArrayHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		61BE9AC720FB1E9500715C09 /* NSDictionary+DictionaryHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BE9AC620FB1E9500715C09 /* NSDictionary+DictionaryHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		61BE9ACA20FB219D00715C09 /* NSMutableDictionary+MutableDictionaryHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BE9AC920FB219D00715C09 /* NSMutableDictionary+MutableDictionaryHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		61CAC35F210385D400B89B0E /* JJException.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CAC35E210385D400B89B0E /* JJException.m */; };
-		61CAC362210432A400B89B0E /* JJExceptionProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CAC361210432A400B89B0E /* JJExceptionProxy.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		61CAC3912109E68C00B89B0E /* NSObject+ZombieHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CAC3902109E68C00B89B0E /* NSObject+ZombieHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		61CAC362210432A400B89B0E /* JJExceptionProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 61CAC361210432A400B89B0E /* JJExceptionProxy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,29 +52,33 @@
 		61196D5420F261CC00022DDC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		61372D1E20F50615001A9A10 /* NSObject+SwizzleHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+SwizzleHook.h"; sourceTree = "<group>"; };
 		61372D1F20F50615001A9A10 /* NSObject+SwizzleHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SwizzleHook.m"; sourceTree = "<group>"; };
-		61A7F5122136F95300C87FA1 /* NSObject+KVOCrash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+KVOCrash.h"; sourceTree = "<group>"; };
-		61A7F5132136F95300C87FA1 /* NSObject+KVOCrash.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+KVOCrash.m"; sourceTree = "<group>"; };
 		61A7F51A213B859300C87FA1 /* PushViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PushViewController.h; sourceTree = "<group>"; };
 		61A7F51B213B859300C87FA1 /* PushViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PushViewController.m; sourceTree = "<group>"; };
-		61BC3FB320F6544600D8C791 /* NSObject+UnrecognizedSelectorHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+UnrecognizedSelectorHook.h"; sourceTree = "<group>"; };
-		61BC3FB420F6544600D8C791 /* NSObject+UnrecognizedSelectorHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+UnrecognizedSelectorHook.m"; sourceTree = "<group>"; };
-		61BC3FB620F65D0E00D8C791 /* NSArray+ArrayHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSArray+ArrayHook.h"; sourceTree = "<group>"; };
-		61BC3FB720F65D0E00D8C791 /* NSArray+ArrayHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSArray+ArrayHook.m"; sourceTree = "<group>"; };
+		61A7F52C213EDF9400C87FA1 /* NSTimer+CleanTimer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSTimer+CleanTimer.h"; sourceTree = "<group>"; };
+		61A7F52D213EDF9400C87FA1 /* NSTimer+CleanTimer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+CleanTimer.m"; sourceTree = "<group>"; };
+		61A7F5392141753000C87FA1 /* NSNotificationCenter+ClearNotification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSNotificationCenter+ClearNotification.h"; sourceTree = "<group>"; };
+		61A7F53A2141753000C87FA1 /* NSNotificationCenter+ClearNotification.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSNotificationCenter+ClearNotification.m"; sourceTree = "<group>"; };
+		61A7F53E21427E4100C87FA1 /* NSObject+UnrecognizedSelectorHook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+UnrecognizedSelectorHook.h"; sourceTree = "<group>"; };
+		61A7F53F21427E4100C87FA1 /* NSObject+UnrecognizedSelectorHook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+UnrecognizedSelectorHook.m"; sourceTree = "<group>"; };
+		61A7F54121427E7E00C87FA1 /* NSObject+KVOCrash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+KVOCrash.h"; sourceTree = "<group>"; };
+		61A7F54221427E7F00C87FA1 /* NSObject+KVOCrash.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+KVOCrash.m"; sourceTree = "<group>"; };
+		61A7F54421427EB600C87FA1 /* NSArray+ArrayHook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+ArrayHook.m"; sourceTree = "<group>"; };
+		61A7F54521427EB600C87FA1 /* NSMutableDictionary+MutableDictionaryHook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+MutableDictionaryHook.h"; sourceTree = "<group>"; };
+		61A7F54621427EB600C87FA1 /* NSDictionary+DictionaryHook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+DictionaryHook.m"; sourceTree = "<group>"; };
+		61A7F54721427EB600C87FA1 /* NSArray+ArrayHook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+ArrayHook.h"; sourceTree = "<group>"; };
+		61A7F54821427EB600C87FA1 /* NSDictionary+DictionaryHook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+DictionaryHook.h"; sourceTree = "<group>"; };
+		61A7F54921427EB600C87FA1 /* NSMutableArray+MutableArrayHook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+MutableArrayHook.m"; sourceTree = "<group>"; };
+		61A7F54A21427EB600C87FA1 /* NSMutableArray+MutableArrayHook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+MutableArrayHook.h"; sourceTree = "<group>"; };
+		61A7F54B21427EB700C87FA1 /* NSMutableDictionary+MutableDictionaryHook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+MutableDictionaryHook.m"; sourceTree = "<group>"; };
+		61A7F55021427F5100C87FA1 /* NSObject+ZombieHook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ZombieHook.m"; sourceTree = "<group>"; };
+		61A7F55121427F5200C87FA1 /* NSObject+ZombieHook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ZombieHook.h"; sourceTree = "<group>"; };
 		61BC3FC420F7ACE500D8C791 /* JJExceptionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JJExceptionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		61BC3FC620F7ACE500D8C791 /* JJExceptionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JJExceptionTests.m; sourceTree = "<group>"; };
 		61BC3FC820F7ACE500D8C791 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		61BE9AC220FAF2C700715C09 /* NSMutableArray+MutableArrayHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+MutableArrayHook.h"; sourceTree = "<group>"; };
-		61BE9AC320FAF2C700715C09 /* NSMutableArray+MutableArrayHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+MutableArrayHook.m"; sourceTree = "<group>"; };
-		61BE9AC520FB1E9500715C09 /* NSDictionary+DictionaryHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+DictionaryHook.h"; sourceTree = "<group>"; };
-		61BE9AC620FB1E9500715C09 /* NSDictionary+DictionaryHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+DictionaryHook.m"; sourceTree = "<group>"; };
-		61BE9AC820FB219D00715C09 /* NSMutableDictionary+MutableDictionaryHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+MutableDictionaryHook.h"; sourceTree = "<group>"; };
-		61BE9AC920FB219D00715C09 /* NSMutableDictionary+MutableDictionaryHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+MutableDictionaryHook.m"; sourceTree = "<group>"; };
 		61CAC35D210385D400B89B0E /* JJException.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JJException.h; sourceTree = "<group>"; };
 		61CAC35E210385D400B89B0E /* JJException.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JJException.m; sourceTree = "<group>"; };
 		61CAC360210432A400B89B0E /* JJExceptionProxy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JJExceptionProxy.h; sourceTree = "<group>"; };
 		61CAC361210432A400B89B0E /* JJExceptionProxy.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JJExceptionProxy.m; sourceTree = "<group>"; };
-		61CAC38F2109E68C00B89B0E /* NSObject+ZombieHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+ZombieHook.h"; sourceTree = "<group>"; };
-		61CAC3902109E68C00B89B0E /* NSObject+ZombieHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ZombieHook.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,28 +139,40 @@
 		61196D5B20F263F200022DDC /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				61A7F53D21427E4100C87FA1 /* MRC */,
 				61372D1E20F50615001A9A10 /* NSObject+SwizzleHook.h */,
 				61372D1F20F50615001A9A10 /* NSObject+SwizzleHook.m */,
-				61BC3FB320F6544600D8C791 /* NSObject+UnrecognizedSelectorHook.h */,
-				61BC3FB420F6544600D8C791 /* NSObject+UnrecognizedSelectorHook.m */,
-				61BC3FB620F65D0E00D8C791 /* NSArray+ArrayHook.h */,
-				61BC3FB720F65D0E00D8C791 /* NSArray+ArrayHook.m */,
-				61BE9AC220FAF2C700715C09 /* NSMutableArray+MutableArrayHook.h */,
-				61BE9AC320FAF2C700715C09 /* NSMutableArray+MutableArrayHook.m */,
-				61BE9AC520FB1E9500715C09 /* NSDictionary+DictionaryHook.h */,
-				61BE9AC620FB1E9500715C09 /* NSDictionary+DictionaryHook.m */,
-				61BE9AC820FB219D00715C09 /* NSMutableDictionary+MutableDictionaryHook.h */,
-				61BE9AC920FB219D00715C09 /* NSMutableDictionary+MutableDictionaryHook.m */,
 				61CAC35D210385D400B89B0E /* JJException.h */,
 				61CAC35E210385D400B89B0E /* JJException.m */,
 				61CAC360210432A400B89B0E /* JJExceptionProxy.h */,
 				61CAC361210432A400B89B0E /* JJExceptionProxy.m */,
-				61CAC38F2109E68C00B89B0E /* NSObject+ZombieHook.h */,
-				61CAC3902109E68C00B89B0E /* NSObject+ZombieHook.m */,
-				61A7F5122136F95300C87FA1 /* NSObject+KVOCrash.h */,
-				61A7F5132136F95300C87FA1 /* NSObject+KVOCrash.m */,
+				61A7F52C213EDF9400C87FA1 /* NSTimer+CleanTimer.h */,
+				61A7F52D213EDF9400C87FA1 /* NSTimer+CleanTimer.m */,
+				61A7F5392141753000C87FA1 /* NSNotificationCenter+ClearNotification.h */,
+				61A7F53A2141753000C87FA1 /* NSNotificationCenter+ClearNotification.m */,
 			);
 			path = Source;
+			sourceTree = "<group>";
+		};
+		61A7F53D21427E4100C87FA1 /* MRC */ = {
+			isa = PBXGroup;
+			children = (
+				61A7F55121427F5200C87FA1 /* NSObject+ZombieHook.h */,
+				61A7F55021427F5100C87FA1 /* NSObject+ZombieHook.m */,
+				61A7F54721427EB600C87FA1 /* NSArray+ArrayHook.h */,
+				61A7F54421427EB600C87FA1 /* NSArray+ArrayHook.m */,
+				61A7F54821427EB600C87FA1 /* NSDictionary+DictionaryHook.h */,
+				61A7F54621427EB600C87FA1 /* NSDictionary+DictionaryHook.m */,
+				61A7F54A21427EB600C87FA1 /* NSMutableArray+MutableArrayHook.h */,
+				61A7F54921427EB600C87FA1 /* NSMutableArray+MutableArrayHook.m */,
+				61A7F54521427EB600C87FA1 /* NSMutableDictionary+MutableDictionaryHook.h */,
+				61A7F54B21427EB700C87FA1 /* NSMutableDictionary+MutableDictionaryHook.m */,
+				61A7F54121427E7E00C87FA1 /* NSObject+KVOCrash.h */,
+				61A7F54221427E7F00C87FA1 /* NSObject+KVOCrash.m */,
+				61A7F53E21427E4100C87FA1 /* NSObject+UnrecognizedSelectorHook.h */,
+				61A7F53F21427E4100C87FA1 /* NSObject+UnrecognizedSelectorHook.m */,
+			);
+			path = MRC;
 			sourceTree = "<group>";
 		};
 		61BC3FC520F7ACE500D8C791 /* JJExceptionTests */ = {
@@ -266,20 +284,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				61A7F5142136F95300C87FA1 /* NSObject+KVOCrash.m in Sources */,
+				61A7F54021427E4100C87FA1 /* NSObject+UnrecognizedSelectorHook.m in Sources */,
 				61372D2020F50615001A9A10 /* NSObject+SwizzleHook.m in Sources */,
-				61BE9AC720FB1E9500715C09 /* NSDictionary+DictionaryHook.m in Sources */,
+				61A7F54321427E7F00C87FA1 /* NSObject+KVOCrash.m in Sources */,
+				61A7F54F21427EB700C87FA1 /* NSMutableDictionary+MutableDictionaryHook.m in Sources */,
 				61196D4A20F261C800022DDC /* ViewController.m in Sources */,
 				61CAC362210432A400B89B0E /* JJExceptionProxy.m in Sources */,
+				61A7F53B2141753000C87FA1 /* NSNotificationCenter+ClearNotification.m in Sources */,
+				61A7F54C21427EB700C87FA1 /* NSArray+ArrayHook.m in Sources */,
+				61A7F52E213EDF9400C87FA1 /* NSTimer+CleanTimer.m in Sources */,
 				61196D5520F261CC00022DDC /* main.m in Sources */,
-				61BE9AC420FAF2C700715C09 /* NSMutableArray+MutableArrayHook.m in Sources */,
-				61BC3FB820F65D0E00D8C791 /* NSArray+ArrayHook.m in Sources */,
-				61BC3FB520F6544600D8C791 /* NSObject+UnrecognizedSelectorHook.m in Sources */,
-				61BE9ACA20FB219D00715C09 /* NSMutableDictionary+MutableDictionaryHook.m in Sources */,
+				61A7F55221427F5200C87FA1 /* NSObject+ZombieHook.m in Sources */,
 				61A7F51C213B859300C87FA1 /* PushViewController.m in Sources */,
-				61CAC3912109E68C00B89B0E /* NSObject+ZombieHook.m in Sources */,
 				61196D4720F261C800022DDC /* AppDelegate.m in Sources */,
 				61CAC35F210385D400B89B0E /* JJException.m in Sources */,
+				61A7F54E21427EB700C87FA1 /* NSMutableArray+MutableArrayHook.m in Sources */,
+				61A7F54D21427EB700C87FA1 /* NSDictionary+DictionaryHook.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
