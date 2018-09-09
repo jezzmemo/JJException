@@ -54,17 +54,31 @@ __attribute__((overloadable)) void handleCrashException(NSString* exceptionMessa
 /**
  Zombie only process the Set class
  */
-@property(nonatomic,readwrite,strong)NSMutableSet* blackClassesSet;
+@property(nonatomic,readonly,strong)NSSet* blackClassesSet;
 
 /**
  Record the all Set class size
  */
-@property(nonatomic,readwrite,assign)NSInteger currentClassSize;
+@property(nonatomic,readonly,assign)NSInteger currentClassSize;
+
+/**
+ Add object to the currentClassesSet
+ 
+ @param object NSObject
+ */
+- (void)addCurrentZombieClass:(Class)object;
+
+/**
+ Remove object from the currentClassesSet
+
+ @param object NSObject
+ */
+- (void)removeCurrentZombieClass:(Class)object;
 
 /**
  Record the objc_destructInstance instance object
  */
-@property(nonatomic,readwrite,strong)NSMutableSet* currentClassesSet;
+@property(nonatomic,readonly,strong)NSSet* currentClassesSet;
 
 /**
  Random get the object from blackClassesSet

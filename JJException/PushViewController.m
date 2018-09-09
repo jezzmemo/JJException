@@ -7,9 +7,11 @@
 //
 
 #import "PushViewController.h"
+#import "KVOObjectDemo.h"
 
 @interface PushViewController (){
     NSTimer* _t;
+    KVOObjectDemo* _kvoDemo;
 }
 
 @property(nonatomic,readwrite,copy)NSString* test;
@@ -22,6 +24,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    _kvoDemo = [KVOObjectDemo new];
     
     [self testTimer];
     
@@ -50,7 +54,7 @@
 #pragma mark - Test Timer
 
 - (void)testTimer{
-    [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(scheduledMethod) userInfo:nil repeats:YES];
+   _t = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(scheduledMethod) userInfo:nil repeats:YES];
 }
 
 - (void)scheduledMethod{
@@ -61,7 +65,13 @@
 
 - (void)testKVO{
     [self addObserver:self forKeyPath:@"test1" options:NSKeyValueObservingOptionNew context:nil];
-//    [self removeObserver:self forKeyPath:@"test1" context:nil];
+    [self addObserver:self forKeyPath:@"test1" options:NSKeyValueObservingOptionNew context:nil];
+    
+    [self removeObserver:self forKeyPath:@"test0" context:nil];
+    
+    [self addObserver:self forKeyPath:@"test2" options:NSKeyValueObservingOptionNew context:nil];
+    
+    [_kvoDemo addObserver:self forKeyPath:@"demoString" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 
@@ -72,8 +82,6 @@
 #pragma mark - Dealloc
 
 - (void)dealloc{
-    [_t invalidate];
-    _t = nil;
     NSLog(@"PushViewController%s",__FILE__);
 }
 

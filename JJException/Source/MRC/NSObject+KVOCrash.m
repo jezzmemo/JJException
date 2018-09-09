@@ -103,7 +103,11 @@ static const char DeallocKVOKey;
 
 - (void)clearKVOData{
     for (KVOObjectItem* item in self.kvoObjectSet) {
-        [self.whichObject removeObserver:item.observer forKeyPath:item.keyPath context:item.context];
+        //Invoke the origin removeObserver,do not check array
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wundeclared-selector"
+        [self.whichObject performSelector:@selector(hookRemoveObserver:forKeyPath:) withObject:item.observer withObject:item.keyPath];
+        #pragma clang diagnostic pop
     }
 }
 
@@ -123,7 +127,6 @@ static const char DeallocKVOKey;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         swizzleInstanceMethod([self class], @selector(addObserver:forKeyPath:options:context:), @selector(hookAddObserver:forKeyPath:options:context:));
-        swizzleInstanceMethod([self class], @selector(removeObserver:forKeyPath:context:), @selector(hookRemoveObserver:forKeyPath:context:));
         swizzleInstanceMethod([self class], @selector(removeObserver:forKeyPath:), @selector(hookRemoveObserver:forKeyPath:));
     });
 }
@@ -135,9 +138,7 @@ static const char DeallocKVOKey;
         return;
     }
     
-    [self hookAddObserver:observer forKeyPath:keyPath options:options context:context];
-    
-    KVOObjectContainer* object = objc_getAssociatedObject(self, &DeallocKVOKey);
+    KVOObjectContainer* object = objc_getAssociatedObject(self,&DeallocKVOKey);
 
     KVOObjectItem* item = [[KVOObjectItem alloc] init];
     item.observer = observer;
@@ -151,16 +152,16 @@ static const char DeallocKVOKey;
         [objectContainer addKVOObjectItem:item];
         objc_setAssociatedObject(self, &DeallocKVOKey, objectContainer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         [objectContainer release];
+        
+        [self hookAddObserver:observer forKeyPath:keyPath options:options context:context];
     }else{
         if (![object.kvoObjectSet containsObject:item]) {
             [object addKVOObjectItem:item];
+            
+            [self hookAddObserver:observer forKeyPath:keyPath options:options context:context];
         }
     }
     [item release];
-}
-
-- (void)hookRemoveObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath context:(void *)context{
-    [self hookRemoveObserver:observer forKeyPath:keyPath context:context];
 }
 
 - (void)hookRemoveObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath{

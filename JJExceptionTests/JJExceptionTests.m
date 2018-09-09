@@ -81,13 +81,13 @@
 }
 
 - (void)testZombieException{
-//    [JJException addZombieObjectArray:@[TestZombie.class]];
-//    
-//    TestZombie* test = [TestZombie new];
-//    [test release];
-//    [test test];
-//    
-//    free(test);
+    [JJException addZombieObjectArray:@[TestZombie.class]];
+    
+    TestZombie* test = [TestZombie new];
+    [test release];
+    [test test];
+    
+    free(test);
     
 }
 

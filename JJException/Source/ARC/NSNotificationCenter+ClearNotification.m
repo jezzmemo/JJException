@@ -24,7 +24,7 @@ static const char DeallocNotificationCenterStubKey;
 @implementation NotificationCenterStub
 
 /**
- Clean NSNotificationCenter stubObject data
+ Clean NSNotificationCenter StubObject data
  */
 - (void)dealloc{
     if (self.stubObject) {

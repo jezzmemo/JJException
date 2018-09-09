@@ -7,7 +7,8 @@
 //
 
 #import "JJExceptionProxy.h"
-#import <mach-o/dyld.h> 
+#import <mach-o/dyld.h>
+#import <objc/runtime.h>
 
 __attribute__((overloadable)) void handleCrashException(NSString* exceptionMessage){
     [[JJExceptionProxy shareExceptionProxy] handleCrashException:exceptionMessage extraInfo:@{}];
@@ -52,6 +53,15 @@ uintptr_t get_slide_address(void) {
     return (uintptr_t)vmaddr_slide;
 }
 
+@interface JJExceptionProxy(){
+    NSMutableSet* _currentClassesSet;
+    NSMutableSet* _blackClassesSet;
+    NSInteger _currentClassSize;
+    dispatch_semaphore_t _classArrayLock;
+}
+
+@end
+
 @implementation JJExceptionProxy
 
 +(instancetype)shareExceptionProxy{
@@ -61,6 +71,17 @@ uintptr_t get_slide_address(void) {
         exceptionProxy = [[self alloc] init];
     });
     return exceptionProxy;
+}
+
+- (instancetype)init{
+    self = [super init];
+    if (self) {
+        _blackClassesSet = [NSMutableSet new];
+        _currentClassesSet = [NSMutableSet new];
+        _currentClassSize = 0;
+        _classArrayLock = dispatch_semaphore_create(1);
+    }
+    return self;
 }
 
 - (void)handleCrashException:(NSString *)exceptionMessage extraInfo:(nullable NSDictionary *)info{
@@ -92,23 +113,39 @@ uintptr_t get_slide_address(void) {
     if (!objects) {
         return;
     }
-    [self.blackClassesSet addObjectsFromArray:objects];
+    dispatch_semaphore_wait(_classArrayLock, DISPATCH_TIME_FOREVER);
+    [_blackClassesSet addObjectsFromArray:objects];
+    dispatch_semaphore_signal(_classArrayLock);
 }
 
-- (NSMutableSet*)blackClassesSet{
-    if (_blackClassesSet) {
-        return _blackClassesSet;
-    }
-    _blackClassesSet = [NSMutableSet new];
+- (NSSet*)blackClassesSet{
     return _blackClassesSet;
 }
 
-- (NSMutableSet*)currentClassesSet{
-    if (_currentClassesSet) {
-        return _currentClassesSet;
+- (void)addCurrentZombieClass:(Class)object{
+    if (object) {
+        dispatch_semaphore_wait(_classArrayLock, DISPATCH_TIME_FOREVER);
+        _currentClassSize = _currentClassSize + class_getInstanceSize(object);
+        [_currentClassesSet addObject:object];
+        dispatch_semaphore_signal(_classArrayLock);
     }
-    _currentClassesSet = [NSMutableSet new];
+}
+
+- (void)removeCurrentZombieClass:(Class)object{
+    if (object) {
+        dispatch_semaphore_wait(_classArrayLock, DISPATCH_TIME_FOREVER);
+        _currentClassSize = _currentClassSize - class_getInstanceSize(object);
+        [_currentClassesSet removeObject:object];
+        dispatch_semaphore_signal(_classArrayLock);
+    }
+}
+
+- (NSSet*)currentClassesSet{
     return _currentClassesSet;
+}
+
+- (NSInteger)currentClassSize{
+    return _currentClassSize;
 }
 
 - (id)objectFromCurrentClassesSet{

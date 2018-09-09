@@ -1,3 +1,43 @@
+## 如何监听实例化对象什么时候释放
+
+先说下这个知识点，因为在接下来的好几个地方都会用到，会有一些异常的情况，所以需要一种知道当前创建者啥时候释放，首先会想到dealloc,这样会Hook的NSObject,在一定程度会影响性能，后面发现一种比较优雅的方法,原理来自于Runtime源码:
+```
+/***********************************************************************
+* objc_destructInstance
+* Destroys an instance without freeing memory. 
+* Calls C++ destructors.
+* Calls ARR ivar cleanup.
+* Removes associative references.
+* Returns `obj`. Does nothing if `obj` is nil.
+* Be warned that GC DOES NOT CALL THIS. If you edit this, also edit finalize.
+* CoreFoundation and other clients do call this under GC.
+**********************************************************************/
+void *objc_destructInstance(id obj) 
+{
+    if (obj) {
+        // Read all of the flags at once for performance.
+        bool cxx = obj->hasCxxDtor();
+        bool assoc = !UseGC && obj->hasAssociatedObjects();
+        bool dealloc = !UseGC;
+
+        // This order is important.
+        if (cxx) object_cxxDestruct(obj);
+        if (assoc) _object_remove_assocations(obj);
+        if (dealloc) obj->clearDeallocating();
+    }
+
+    return obj;
+}
+```
+
+`_object_remove_assocations`会释放所有的用AssociatedObject，所以我们Hook以下方法，只是列举有代表性的，根据自身情况补齐添加的地方
+
+
+`objc_setAssociatedObject`给当前对象添加一个中间对象，当前对象释放时，会清理AssociatedObject数据，AssociatedObject的中间对象将被清理释放，中间对象的dealloc方法将被执行，最终清理被遗漏的监听者。
+
+用KVO和NSNotification的方法来清理
+
+
 ## Unrecognized Selector Sent to Instance
 由于Objective-c是Message机制，而且对象在转换的时候，会有拿到的对象和预期不一致，所以会有方法找不到的情况，在找不到方法时，查找方法将会进入方法Forward流程,系统给了三次补救的机会，所以我们要解决这个问题，在这三次均可以解决这个问题
 
@@ -98,56 +138,46 @@ swizzleInstanceMethod(NSClassFromString(@"__NSArrayI"), @selector(objectAtIndex:
 2. 最后释放内存后，再访问时会闪退，这个方法只是一定程度延迟了闪退时间
 3. 需要后台维护黑名单机制，来指定那些问题对象
 
-## KVO，NSTimer，NSNotification
+## KVO
 
-这三种放在一起，是因为他们之间有共同的特征，就是创建后，忘记销毁会导致闪退，或者会有一些异常的情况，所以需要一种知道当前创建者啥时候释放，首先会想到dealloc,这样会Hook的NSObject,在一定程度会影响性能，后面发现一种比较优雅的方法,原理来自于Runtime源码:
-```
-/***********************************************************************
-* objc_destructInstance
-* Destroys an instance without freeing memory. 
-* Calls C++ destructors.
-* Calls ARR ivar cleanup.
-* Removes associative references.
-* Returns `obj`. Does nothing if `obj` is nil.
-* Be warned that GC DOES NOT CALL THIS. If you edit this, also edit finalize.
-* CoreFoundation and other clients do call this under GC.
-**********************************************************************/
-void *objc_destructInstance(id obj) 
-{
-    if (obj) {
-        // Read all of the flags at once for performance.
-        bool cxx = obj->hasCxxDtor();
-        bool assoc = !UseGC && obj->hasAssociatedObjects();
-        bool dealloc = !UseGC;
+KVO在以下情况会导致闪退:
+* 添加监听后没有清除会导致闪退
+* 清除不存在的key也会闪退
+* 添加重复的key导致闪退
 
-        // This order is important.
-        if (cxx) object_cxxDestruct(obj);
-        if (assoc) _object_remove_assocations(obj);
-        if (dealloc) obj->clearDeallocating();
-    }
+需要Hook以下方法:
+* addObserver:forKeyPath:options:context:
+* removeObserver:forKeyPath:
 
-    return obj;
-}
-```
+主要解决以下问题:
+* 在注册监听后,中间对象需要维护注册的数据集合，当宿主释放时，清除还在集合中的监听者
+* 保护key不存在的情况
+* 保护重复添加的情况
 
-`_object_remove_assocations`会释放所有的用AssociatedObject，所以我们Hook以下方法，只是列举有代表性的，根据自身情况补齐添加的地方
+## NSTimer
 
-* KVO(addObserver:forKeyPath:options:context:):
-1. 添加监听后没有清除会导致闪退
-2. 清除不存在的key也会闪退
-3. 添加重复的key导致闪退
+NSTimer存在以下问题:
 
-* NSNotification(addObserver:selector:name:object:):
-1. 添加通知后，没有移除导致Crash的问题，不过在iOS9以后没有这个问题
+* Target是强引用，内存泄漏
+* 在宿主不存在的时候，清理NSTimer
 
-* NSTimer(scheduledTimerWithTimeInterval:target:selector:userInfo:repeats):
-1. target是强引用，内存泄漏
-2. 不手动invalidate，导致crash
+Hook以下方法:
+* scheduledTimerWithTimeInterval:target:selector:userInfo:repeats
 
+解决方法:
+1.当repeats为NO时，走原始方法
+2.当repeats为YES时，新建一个对象，声明一个target属性为weak类型，指向参数的target,当中间对象的target为空时，清理NSTimer
 
-`objc_setAssociatedObject`给当前对象添加一个中间对象，当前对象释放时，会清理AssociatedObject数据，AssociatedObject的中间对象将被清理释放，中间对象的dealloc方法将被执行，最终清理被遗漏的监听者。
+## NSNotification
 
-用KVO和NSNotification的方法来清理,NSTimer是通过中间对象来持有，当target为空时，清理NSTimer
+NSNotification的主要问题是:
+* 添加通知后，没有移除导致Crash的问题(不过在iOS9以后没有这个问题,我在真机8.3测试也没有这个问题，不知道iOS8是否有这个问题)
+
+Hook以下方法:
+* addObserver:selector:name:object:
+
+原因和解决办法:
+问题就在在于和assign和weak问题，野指针问题，要么置空指针或者删除空指针的集合
 
 ## MRC
 

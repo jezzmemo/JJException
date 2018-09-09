@@ -69,14 +69,13 @@ void unrecognizedSelectorZombie(ZombieSelectorHandle* self, SEL _cmd){
     //TODO:Real remove less than MAX_ARRAY_SIZE
     if ([JJExceptionProxy shareExceptionProxy].currentClassSize > MAX_ARRAY_SIZE) {
         id object = [[JJExceptionProxy shareExceptionProxy] objectFromCurrentClassesSet];
-        [[JJExceptionProxy shareExceptionProxy].currentClassesSet removeObject:object];
+        [[JJExceptionProxy shareExceptionProxy] removeCurrentZombieClass:object_getClass(object)];
         object?free(object):nil;
     }
     
     objc_destructInstance(self);
     object_setClass(self, [JJZombieSub class]);
-    [[JJExceptionProxy shareExceptionProxy].currentClassesSet addObject:self];
-    [[JJExceptionProxy shareExceptionProxy] setCurrentClassSize:[JJExceptionProxy shareExceptionProxy].currentClassSize + class_getInstanceSize(self.class)];
+    [[JJExceptionProxy shareExceptionProxy] addCurrentZombieClass:currentClass];
 }
 
 @end
