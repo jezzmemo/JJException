@@ -55,4 +55,4 @@ pod 'JJException'
 [JJException技术原理](https://github.com/jezzmemo/JJException/blob/master/JJExceptionPrinciple.md)
 
 ## License
-JJNetwork is released under the MIT license. See LICENSE for details.
+JJException is released under the MIT license. See LICENSE for details.
