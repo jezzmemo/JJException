@@ -54,5 +54,10 @@ pod 'JJException'
 
 [JJException技术原理](https://github.com/jezzmemo/JJException/blob/master/JJExceptionPrinciple.md)
 
+## TODO(大家记得给我星哦)
+* 根据每种异常可自由配置
+* 必须手动开启和关闭
+* 报错信息更加详细
+
 ## License
 JJException is released under the MIT license. See LICENSE for details.
