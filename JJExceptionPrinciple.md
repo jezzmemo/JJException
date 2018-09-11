@@ -30,12 +30,14 @@ void *objc_destructInstance(id obj)
 }
 ```
 
-`_object_remove_assocations`会释放所有的用AssociatedObject，所以我们Hook以下方法，只是列举有代表性的，根据自身情况补齐添加的地方
+`_object_remove_assocations`会释放所有的用AssociatedObject数据。
 
 
-`objc_setAssociatedObject`给当前对象添加一个中间对象，当前对象释放时，会清理AssociatedObject数据，AssociatedObject的中间对象将被清理释放，中间对象的dealloc方法将被执行，最终清理被遗漏的监听者。
+`objc_setAssociatedObject`给当前对象添加一个中间对象，当前对象释放时，会清理AssociatedObject数据，AssociatedObject的中间对象将被清理释放，中间对象的dealloc方法将被执行。
 
-用KVO和NSNotification的方法来清理
+最终清理被遗漏的监听者,会用在KVO和NSNotification清理没用的监听者,不过这种方式有以下问题需要注意:
+* 清理的时候线程安全问题
+* 清理时机偏晚，是否适合你当前的情况
 
 
 ## Unrecognized Selector Sent to Instance
