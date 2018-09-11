@@ -10,4 +10,6 @@
 
 @interface NSMutableArray (MutableArrayHook)
 
++ (void)jj_swizzleNSMutableArray;
+
 @end

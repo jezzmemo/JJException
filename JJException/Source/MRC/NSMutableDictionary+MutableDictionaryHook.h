@@ -10,4 +10,6 @@
 
 @interface NSMutableDictionary (MutableDictionaryHook)
 
++ (void)jj_swizzleNSMutableDictionary;
+
 @end

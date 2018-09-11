@@ -23,18 +23,15 @@
 
 void unrecognizedSelector(UnrecognizedSelectorHandle* self, SEL _cmd){
     NSString* message = [NSString stringWithFormat:@"Unrecognized selector class:%@ and selector:%@",[self.fromObject class],NSStringFromSelector(_cmd)];
-    handleCrashException(message);
+    handleCrashException(JJExceptionGuardUnrecognizedSelector,message);
 }
 
 @end
 
 @implementation NSObject (UnrecognizedSelectorHook)
 
-+ (void)load{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        swizzleInstanceMethod([self class], @selector(forwardingTargetForSelector:), @selector(forwardingTargetForSelectorSwizzled:));
-    });
++ (void)jj_swizzleUnrecognizedSelector{
+    swizzleInstanceMethod([self class], @selector(forwardingTargetForSelector:), @selector(forwardingTargetForSelectorSwizzled:));
 }
 
 - (id)forwardingTargetForSelectorSwizzled:(SEL)selector{

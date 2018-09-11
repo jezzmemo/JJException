@@ -10,4 +10,6 @@
 
 @interface NSObject (UnrecognizedSelectorHook)
 
++ (void)jj_swizzleUnrecognizedSelector;
+
 @end

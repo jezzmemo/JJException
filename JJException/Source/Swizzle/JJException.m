@@ -11,6 +11,18 @@
 
 @implementation JJException
 
++ (void)startGuardException{
+    [JJExceptionProxy shareExceptionProxy].isProtectException = YES;
+}
+
++ (void)stopGuardException{
+    [JJExceptionProxy shareExceptionProxy].isProtectException = NO;
+}
+
++ (void)configExceptionCategory:(JJExceptionGuardCategory)exceptionGuardCategory{
+    [JJExceptionProxy shareExceptionProxy].exceptionGuardCategory = exceptionGuardCategory;
+}
+
 + (void)registerExceptionHandle:(id<JJExceptionHandle>)exceptionHandle{
     [JJExceptionProxy shareExceptionProxy].delegate = exceptionHandle;
 }

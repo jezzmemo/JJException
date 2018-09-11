@@ -9,6 +9,11 @@
 #import "JJExceptionProxy.h"
 #import <mach-o/dyld.h>
 #import <objc/runtime.h>
+#import "NSObject+UnrecognizedSelectorHook.h"
+#import "NSArray+ArrayHook.h"
+#import "NSMutableArray+MutableArrayHook.h"
+#import "NSDictionary+DictionaryHook.h"
+#import "NSMutableDictionary+MutableDictionaryHook.h"
 
 __attribute__((overloadable)) void handleCrashException(NSString* exceptionMessage){
     [[JJExceptionProxy shareExceptionProxy] handleCrashException:exceptionMessage extraInfo:@{}];
@@ -16,6 +21,14 @@ __attribute__((overloadable)) void handleCrashException(NSString* exceptionMessa
 
 __attribute__((overloadable)) void handleCrashException(NSString* exceptionMessage,NSDictionary* extraInfo){
     [[JJExceptionProxy shareExceptionProxy] handleCrashException:exceptionMessage extraInfo:extraInfo];
+}
+
+__attribute__((overloadable)) void handleCrashException(JJExceptionGuardCategory exceptionCategory, NSString* exceptionMessage,NSDictionary* extraInfo){
+    [[JJExceptionProxy shareExceptionProxy] handleCrashException:exceptionMessage exceptionCategory:exceptionCategory extraInfo:extraInfo];
+}
+
+__attribute__((overloadable)) void handleCrashException(JJExceptionGuardCategory exceptionCategory, NSString* exceptionMessage){
+    [[JJExceptionProxy shareExceptionProxy] handleCrashException:exceptionMessage exceptionCategory:exceptionCategory extraInfo:nil];
 }
 
 /**
@@ -36,7 +49,7 @@ uintptr_t get_load_address(void) {
 }
 
 /**
- Address Offset,arm64:0x0000000100000000 armv7:0x00004000
+ Address Offset
 
  @return slide address
  */
@@ -58,6 +71,7 @@ uintptr_t get_slide_address(void) {
     NSMutableSet* _blackClassesSet;
     NSInteger _currentClassSize;
     dispatch_semaphore_t _classArrayLock;
+    dispatch_semaphore_t _swizzleLock;//Protect swizzle atomic
 }
 
 @end
@@ -80,11 +94,12 @@ uintptr_t get_slide_address(void) {
         _currentClassesSet = [NSMutableSet new];
         _currentClassSize = 0;
         _classArrayLock = dispatch_semaphore_create(1);
+        _swizzleLock = dispatch_semaphore_create(1);
     }
     return self;
 }
 
-- (void)handleCrashException:(NSString *)exceptionMessage extraInfo:(nullable NSDictionary *)info{
+- (void)handleCrashException:(NSString *)exceptionMessage exceptionCategory:(JJExceptionGuardCategory)exceptionCategory extraInfo:(NSDictionary *)info{
     if (!exceptionMessage) {
         return;
     }
@@ -92,19 +107,59 @@ uintptr_t get_slide_address(void) {
     NSArray* callStack = [NSThread callStackSymbols];
     NSString* callStackString = [NSString stringWithFormat:@"%@",callStack];
     
-    NSString* exceptionResult = [NSString stringWithFormat:@"%@\n%@",exceptionMessage,callStackString];
+    uintptr_t loadAddress =  get_load_address();
+    uintptr_t slideAddress =  get_slide_address();
+    
+    NSString* exceptionResult = [NSString stringWithFormat:@"%ld\n%ld\n%@\n%@",loadAddress,slideAddress,exceptionMessage,callStackString];
     
     
     if ([self.delegate respondsToSelector:@selector(handleCrashException:extraInfo:)]){
         [self.delegate handleCrashException:exceptionResult extraInfo:info];
     }
     
+    if ([self.delegate respondsToSelector:@selector(handleCrashException:exceptionCategory:extraInfo:)]) {
+        [self.delegate handleCrashException:exceptionResult exceptionCategory:exceptionCategory extraInfo:info];
+    }
+    
 #ifdef DEBUG
     NSLog(@"================================JJException Start==================================");
-    NSAssert(NO, exceptionResult);
+    NSLog(@"JJException Type:%ld",(long)exceptionCategory);
+    NSLog(@"JJException Description:%@",exceptionMessage);
+    NSLog(@"JJException Extra info:%@",info);
+    NSLog(@"JJException callStack:%@",callStack);
     NSLog(@"================================JJException End====================================");
+    NSAssert(NO, @"");
 #endif
-    
+}
+
+- (void)handleCrashException:(NSString *)exceptionMessage extraInfo:(nullable NSDictionary *)info{
+    [self handleCrashException:exceptionMessage exceptionCategory:JJExceptionGuardNone extraInfo:info];
+}
+
+- (void)setIsProtectException:(BOOL)isProtectException{
+    dispatch_semaphore_wait(_swizzleLock, DISPATCH_TIME_FOREVER);
+    if (_isProtectException != isProtectException) {
+        _isProtectException = isProtectException;
+        
+        if(self.exceptionGuardCategory & JJExceptionGuardArrayContainer){
+            [NSArray jj_swizzleNSArray];
+            [NSMutableArray jj_swizzleNSMutableArray];
+        }
+        if(self.exceptionGuardCategory & JJExceptionGuardDictionaryContainer){
+            [NSDictionary jj_swizzleNSDictionary];
+            [NSMutableDictionary jj_swizzleNSMutableDictionary];
+        }
+        if(self.exceptionGuardCategory & JJExceptionGuardUnrecognizedSelector){
+            [NSObject jj_swizzleUnrecognizedSelector];
+        }
+    }
+    dispatch_semaphore_signal(_swizzleLock);
+}
+
+- (void)setExceptionGuardCategory:(JJExceptionGuardCategory)exceptionGuardCategory{
+    if (_exceptionGuardCategory != exceptionGuardCategory) {
+        _exceptionGuardCategory = exceptionGuardCategory;
+    }
 }
 
 

@@ -27,6 +27,23 @@ __attribute__((overloadable)) void handleCrashException(NSString* exceptionMessa
 __attribute__((overloadable)) void handleCrashException(NSString* exceptionMessage,NSDictionary* extraInfo);
 
 /**
+ C style invoke handle crash message,and extra crash info
+ 
+ @param exceptionCategory crash type
+ @param exceptionMessage crash message
+ @param extraInfo extra info
+ */
+__attribute__((overloadable)) void handleCrashException(JJExceptionGuardCategory exceptionCategory, NSString* exceptionMessage,NSDictionary* extraInfo);
+
+/**
+ C style invoke handle crash type,and exception message
+ 
+ @param exceptionCategory JJExceptionGuardCategory
+ @param exceptionMessage crash message
+ */
+__attribute__((overloadable)) void handleCrashException(JJExceptionGuardCategory exceptionCategory, NSString* exceptionMessage);
+
+/**
  Exception Proxy
  */
 @interface JJExceptionProxy : NSObject<JJExceptionHandle>
@@ -41,6 +58,17 @@ __attribute__((overloadable)) void handleCrashException(NSString* exceptionMessa
  Hold the JJExceptionHandle interface object
  */
 @property(nonatomic,readwrite,weak)id<JJExceptionHandle> delegate;
+
+/**
+ Setting hook excpetion status,default value is NO
+ */
+@property(nonatomic,readwrite,assign)BOOL isProtectException;
+
+/**
+ Setting exceptionGuardCategory
+ @see JJExceptionGuardCategory
+ */
+@property(nonatomic,readwrite,assign)JJExceptionGuardCategory exceptionGuardCategory;
 
 #pragma mark - Zombie collection
 

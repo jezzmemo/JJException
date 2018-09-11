@@ -12,12 +12,9 @@
 
 @implementation NSDictionary (DictionaryHook)
 
-+ (void)load{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        [NSDictionary jj_swizzleClassMethod:@selector(dictionaryWithObject:forKey:) withSwizzleMethod:@selector(hookDictionaryWithObject:forKey:)];
-        [NSDictionary jj_swizzleClassMethod:@selector(dictionaryWithObjects:forKeys:count:) withSwizzleMethod:@selector(hookDictionaryWithObjects:forKeys:count:)];
-    });
++ (void)jj_swizzleNSDictionary{
+    [NSDictionary jj_swizzleClassMethod:@selector(dictionaryWithObject:forKey:) withSwizzleMethod:@selector(hookDictionaryWithObject:forKey:)];
+    [NSDictionary jj_swizzleClassMethod:@selector(dictionaryWithObjects:forKeys:count:) withSwizzleMethod:@selector(hookDictionaryWithObjects:forKeys:count:)];
 }
 
 + (instancetype) hookDictionaryWithObject:(id)object forKey:(id)key
@@ -25,7 +22,7 @@
     if (object && key) {
         return [self hookDictionaryWithObject:object forKey:key];
     }
-    handleCrashException([NSString stringWithFormat:@"HookDictionaryWithObject invalid object:%@ and key:%@",object,key]);
+    handleCrashException(JJExceptionGuardDictionaryContainer,[NSString stringWithFormat:@"NSDictionary dictionaryWithObject invalid object:%@ and key:%@",object,key]);
     return nil;
 }
 + (instancetype) hookDictionaryWithObjects:(const id [])objects forKeys:(const id [])keys count:(NSUInteger)cnt
@@ -39,7 +36,7 @@
             objs[index] = objects[i];
             ++index;
         }else{
-            handleCrashException([NSString stringWithFormat:@"hookDictionaryWithObjects invalid keys:%@ and object:%@",keys[i],objects[i]]);
+            handleCrashException(JJExceptionGuardDictionaryContainer,[NSString stringWithFormat:@"NSDictionary dictionaryWithObjects invalid keys:%@ and object:%@",keys[i],objects[i]]);
         }
     }
     return [self hookDictionaryWithObjects:objs forKeys:ks count:index];
