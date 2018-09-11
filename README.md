@@ -55,8 +55,8 @@ pod 'JJException'
 [JJException技术原理](https://github.com/jezzmemo/JJException/blob/master/JJExceptionPrinciple.md)
 
 ## TODO(大家记得给我星哦)
-* 根据每种异常可自由配置
-* 必须手动开启和关闭
+* 每种异常可自由配置
+* 去除无侵入式的加载方式，必须手动开启和关闭
 * 报错信息更加详细
 
 ## License
