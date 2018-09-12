@@ -17,6 +17,10 @@ NS_ASSUME_NONNULL_BEGIN
  - JJExceptionGuardUnrecognizedSelector: Unrecognized Selector Exception
  - JJExceptionGuardDictionaryContainer: NSDictionary,NSMutableDictionary
  - JJExceptionGuardArrayContainer: NSArray,NSMutableArray
+ - JJExceptionGuardZombie: Zombie
+ - JJExceptionGuardKVOCrash: KVO exception
+ - JJExceptionGuardNSTimer: NSTimer
+ - JJExceptionGuardNSNotificationCenter: NSNotificationCenter
  - JJExceptionGuardAll: Above All
  */
 typedef NS_OPTIONS(NSInteger,JJExceptionGuardCategory){

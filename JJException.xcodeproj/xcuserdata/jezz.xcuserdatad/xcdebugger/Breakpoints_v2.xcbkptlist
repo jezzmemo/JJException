@@ -121,13 +121,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JJException/ViewController.m"
-            timestampString = "558458934.9643739"
+            filePath = "JJException/Source/Swizzle/JJExceptionProxy.m"
+            timestampString = "558459434.865995"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "26"
-            endingLineNumber = "26"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
+            landmarkName = "-setIsProtectException:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
