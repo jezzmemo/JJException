@@ -10,4 +10,6 @@
 
 @interface NSNotificationCenter (ClearNotification)
 
++ (void)jj_swizzleNSNotificationCenter;
+
 @end

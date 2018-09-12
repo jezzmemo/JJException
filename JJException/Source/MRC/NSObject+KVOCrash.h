@@ -10,4 +10,6 @@
 
 @interface NSObject (KVOCrash)
 
++ (void)jj_swizzleKVOCrash;
+
 @end

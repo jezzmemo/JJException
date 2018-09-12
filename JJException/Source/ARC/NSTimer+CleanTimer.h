@@ -10,4 +10,6 @@
 
 @interface NSTimer (CleanTimer)
 
++ (void)jj_swizzleNSTimer;
+
 @end

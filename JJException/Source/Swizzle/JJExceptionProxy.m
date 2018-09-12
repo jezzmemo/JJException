@@ -14,6 +14,10 @@
 #import "NSMutableArray+MutableArrayHook.h"
 #import "NSDictionary+DictionaryHook.h"
 #import "NSMutableDictionary+MutableDictionaryHook.h"
+#import "NSObject+ZombieHook.h"
+#import "NSObject+KVOCrash.h"
+#import "NSTimer+CleanTimer.h"
+#import "NSNotificationCenter+ClearNotification.h"
 
 __attribute__((overloadable)) void handleCrashException(NSString* exceptionMessage){
     [[JJExceptionProxy shareExceptionProxy] handleCrashException:exceptionMessage extraInfo:@{}];
@@ -151,6 +155,22 @@ uintptr_t get_slide_address(void) {
         }
         if(self.exceptionGuardCategory & JJExceptionGuardUnrecognizedSelector){
             [NSObject jj_swizzleUnrecognizedSelector];
+        }
+        
+        if (self.exceptionGuardCategory & JJExceptionGuardZombie) {
+            [NSObject jj_swizzleZombie];
+        }
+        
+        if (self.exceptionGuardCategory & JJExceptionGuardKVOCrash) {
+            [NSObject jj_swizzleKVOCrash];
+        }
+        
+        if (self.exceptionGuardCategory & JJExceptionGuardNSTimer) {
+            [NSTimer jj_swizzleNSTimer];
+        }
+        
+        if (self.exceptionGuardCategory & JJExceptionGuardNSNotificationCenter) {
+            [NSNotificationCenter jj_swizzleNSNotificationCenter];
         }
     }
     dispatch_semaphore_signal(_swizzleLock);

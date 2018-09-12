@@ -24,7 +24,11 @@ typedef NS_OPTIONS(NSInteger,JJExceptionGuardCategory){
     JJExceptionGuardUnrecognizedSelector = 1 << 1,
     JJExceptionGuardDictionaryContainer = 1 << 2,
     JJExceptionGuardArrayContainer = 1 << 3,
-    JJExceptionGuardAll = JJExceptionGuardUnrecognizedSelector | JJExceptionGuardDictionaryContainer | JJExceptionGuardArrayContainer,
+    JJExceptionGuardZombie = 1 << 4,
+    JJExceptionGuardKVOCrash = 1 << 5,
+    JJExceptionGuardNSTimer = 1 << 6,
+    JJExceptionGuardNSNotificationCenter = 1 << 7,
+    JJExceptionGuardAll = JJExceptionGuardUnrecognizedSelector | JJExceptionGuardDictionaryContainer | JJExceptionGuardArrayContainer | JJExceptionGuardZombie | JJExceptionGuardKVOCrash | JJExceptionGuardNSTimer | JJExceptionGuardNSNotificationCenter,
 };
 
 /**

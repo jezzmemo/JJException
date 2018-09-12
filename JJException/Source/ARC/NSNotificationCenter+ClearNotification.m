@@ -38,11 +38,8 @@ static const char DeallocNotificationCenterStubKey;
 
 @implementation NSNotificationCenter (ClearNotification)
 
-+ (void)load{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        swizzleInstanceMethod([NSNotificationCenter class], @selector(addObserver:selector:name:object:), @selector(hookAddObserver:selector:name:object:));
-    });
++ (void)jj_swizzleNSNotificationCenter{
+    swizzleInstanceMethod([NSNotificationCenter class], @selector(addObserver:selector:name:object:), @selector(hookAddObserver:selector:name:object:));
 }
 
 - (void)hookAddObserver:(id)observer selector:(SEL)aSelector name:(NSNotificationName)aName object:(id)anObject{

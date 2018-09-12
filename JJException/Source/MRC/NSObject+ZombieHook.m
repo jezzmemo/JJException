@@ -49,11 +49,8 @@ void unrecognizedSelectorZombie(ZombieSelectorHandle* self, SEL _cmd){
 
 @implementation NSObject (ZombieHook)
 
-+ (void)load{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        [self jj_swizzleInstanceMethod:@selector(dealloc) withSwizzleMethod:@selector(hookDealloc)];
-    });
++ (void)jj_swizzleZombie{
+    [self jj_swizzleInstanceMethod:@selector(dealloc) withSwizzleMethod:@selector(hookDealloc)];
 }
 
 - (void)hookDealloc{

@@ -10,4 +10,6 @@
 
 @interface NSObject (ZombieHook)
 
++ (void)jj_swizzleZombie;
+
 @end

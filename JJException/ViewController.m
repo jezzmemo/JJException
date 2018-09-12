@@ -21,6 +21,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [JJException configExceptionCategory:JJExceptionGuardAll];
+    [JJException startGuardException];
+    
     [JJException registerExceptionHandle:self];
     
     UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
