@@ -8,7 +8,7 @@
 
 #import "NSTimer+CleanTimer.h"
 #import "NSObject+SwizzleHook.h"
-
+#import "JJExceptionProxy.h"
 
 /**
  Copy the NSTimer Info
@@ -17,6 +17,9 @@
 
 @property(nonatomic,readwrite,assign)NSTimeInterval ti;
 
+/**
+ weak reference target
+ */
 @property(nonatomic,readwrite,weak)id target;
 
 @property(nonatomic,readwrite,assign)SEL selector;
@@ -28,6 +31,16 @@
  */
 @property(nonatomic,readwrite,weak)NSTimer* timer;
 
+/**
+ Record the target class name
+ */
+@property(nonatomic,readwrite,copy)NSString* targetClassName;
+
+/**
+ Record the target method name
+ */
+@property(nonatomic,readwrite,copy)NSString* targetMethodName;
+
 @end
 
 
@@ -37,6 +50,7 @@
     if (!self.target) {
         [self.timer invalidate];
         self.timer = nil;
+        handleCrashException(JJExceptionGuardNSTimer,[NSString stringWithFormat:@"Need invalidate timer from target:%@ method:%@",self.targetClassName,self.targetMethodName]);
         return;
     }
     if ([self.target respondsToSelector:self.selector]) {
@@ -64,6 +78,11 @@
     timerObject.target = aTarget;
     timerObject.selector = aSelector;
     timerObject.userInfo = userInfo;
+    if (aTarget) {
+        timerObject.targetClassName = [NSString stringWithCString:object_getClassName(aTarget) encoding:NSASCIIStringEncoding];
+    }
+    timerObject.targetMethodName = NSStringFromSelector(aSelector);
+    
     NSTimer* timer = [NSTimer hookScheduledTimerWithTimeInterval:ti target:timerObject selector:@selector(fireTimer) userInfo:userInfo repeats:yesOrNo];
     timerObject.timer = timer;
     

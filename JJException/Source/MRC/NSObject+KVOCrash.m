@@ -9,6 +9,7 @@
 #import "NSObject+KVOCrash.h"
 #import "NSObject+SwizzleHook.h"
 #import <objc/runtime.h>
+#import "JJExceptionProxy.h"
 
 static const char DeallocKVOKey;
 
@@ -104,6 +105,7 @@ static const char DeallocKVOKey;
 - (void)clearKVOData{
     for (KVOObjectItem* item in self.kvoObjectSet) {
         //Invoke the origin removeObserver,do not check array
+        handleCrashException(JJExceptionGuardKVOCrash,[NSString stringWithFormat:@"KVO forget remove keyPath:%@ observer:%@",item.keyPath,item.observer]);
         #pragma clang diagnostic push
         #pragma clang diagnostic ignored "-Wundeclared-selector"
         [self.whichObject performSelector:@selector(hookRemoveObserver:forKeyPath:) withObject:item.observer withObject:item.keyPath];
@@ -155,6 +157,8 @@ static const char DeallocKVOKey;
             [object addKVOObjectItem:item];
             
             [self hookAddObserver:observer forKeyPath:keyPath options:options context:context];
+        }else{
+            handleCrashException(JJExceptionGuardKVOCrash,[NSString stringWithFormat:@"KVO duplicate key:%@ observer:%@",keyPath,observer]);
         }
     }
     [item release];
@@ -170,6 +174,8 @@ static const char DeallocKVOKey;
     if ([object.kvoObjectSet containsObject:item]) {
         [self hookRemoveObserver:observer forKeyPath:keyPath];
         [object removeKVOObjectItem:item];
+    }else{
+        handleCrashException(JJExceptionGuardKVOCrash,[NSString stringWithFormat:@"KVO removeObserver did not exist key:%@ observer:%@",keyPath,observer]);
     }
     
     [item release];

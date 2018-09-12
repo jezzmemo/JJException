@@ -74,7 +74,7 @@ uintptr_t get_slide_address(void) {
     NSMutableSet* _currentClassesSet;
     NSMutableSet* _blackClassesSet;
     NSInteger _currentClassSize;
-    dispatch_semaphore_t _classArrayLock;
+    dispatch_semaphore_t _classArrayLock;//Protect _blackClassesSet and _currentClassesSet atomic
     dispatch_semaphore_t _swizzleLock;//Protect swizzle atomic
 }
 
