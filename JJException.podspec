@@ -96,24 +96,32 @@ Pod::Spec.new do |s|
     spec.ios.dependency 'JJException/Swizzle'
     spec.ios.dependency 'JJException/ARC'
     spec.ios.dependency 'JJException/MRC'
+    spec.ios.dependency 'JJException/Main'
   end
 
   s.subspec 'ARC' do |spec|
     spec.requires_arc = true
     spec.source_files  = "JJException/Source/ARC/*.{h,m}"
     spec.dependency 'JJException/Swizzle'
+    spec.dependency 'JJException/Main'
   end
 
   s.subspec 'Swizzle' do |spec|
     spec.requires_arc = true
-    spec.public_header_files = "JJException/Source/Swizzle/JJException.h"
     spec.source_files  = "JJException/Source/Swizzle/*.{h,m}"
+  end
+
+  s.subspec 'Main' do |spec|
+    spec.requires_arc = true
+    spec.public_header_files = "JJException/Source/Main/JJException.h"
+    spec.source_files  = "JJException/Source/Main/*.{h,m}"
   end
 
   s.subspec 'MRC' do |spec|
     spec.requires_arc = false
     spec.source_files  = "JJException/Source/MRC/*.{h,m}"
     spec.dependency 'JJException/Swizzle'
+    spec.dependency 'JJException/Main'
   end
 
   #s.source_files  = "JJException/Source/*.{h,m}"

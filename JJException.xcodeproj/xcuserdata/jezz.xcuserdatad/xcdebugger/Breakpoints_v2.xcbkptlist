@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JJException/Source/Swizzle/JJExceptionProxy.m"
-            timestampString = "558459434.865995"
+            timestampString = "558461951.321661"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "148"
-            endingLineNumber = "148"
+            startingLineNumber = "151"
+            endingLineNumber = "151"
             landmarkName = "-setIsProtectException:"
             landmarkType = "7">
          </BreakpointContent>

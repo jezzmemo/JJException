@@ -9,15 +9,6 @@
 #import "JJExceptionProxy.h"
 #import <mach-o/dyld.h>
 #import <objc/runtime.h>
-#import "NSObject+UnrecognizedSelectorHook.h"
-#import "NSArray+ArrayHook.h"
-#import "NSMutableArray+MutableArrayHook.h"
-#import "NSDictionary+DictionaryHook.h"
-#import "NSMutableDictionary+MutableDictionaryHook.h"
-#import "NSObject+ZombieHook.h"
-#import "NSObject+KVOCrash.h"
-#import "NSTimer+CleanTimer.h"
-#import "NSNotificationCenter+ClearNotification.h"
 
 __attribute__((overloadable)) void handleCrashException(NSString* exceptionMessage){
     [[JJExceptionProxy shareExceptionProxy] handleCrashException:exceptionMessage extraInfo:@{}];
@@ -145,33 +136,37 @@ uintptr_t get_slide_address(void) {
     if (_isProtectException != isProtectException) {
         _isProtectException = isProtectException;
         
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Wundeclared-selector"
+        
         if(self.exceptionGuardCategory & JJExceptionGuardArrayContainer){
-            [NSArray jj_swizzleNSArray];
-            [NSMutableArray jj_swizzleNSMutableArray];
+            [NSArray performSelector:@selector(jj_swizzleNSArray)];
+            [NSMutableArray performSelector:@selector(jj_swizzleNSMutableArray)];
         }
         if(self.exceptionGuardCategory & JJExceptionGuardDictionaryContainer){
-            [NSDictionary jj_swizzleNSDictionary];
-            [NSMutableDictionary jj_swizzleNSMutableDictionary];
+            [NSDictionary performSelector:@selector(jj_swizzleNSDictionary)];
+            [NSMutableDictionary performSelector:@selector(jj_swizzleNSMutableDictionary)];
         }
         if(self.exceptionGuardCategory & JJExceptionGuardUnrecognizedSelector){
-            [NSObject jj_swizzleUnrecognizedSelector];
+            [NSObject performSelector:@selector(jj_swizzleUnrecognizedSelector)];
         }
         
         if (self.exceptionGuardCategory & JJExceptionGuardZombie) {
-            [NSObject jj_swizzleZombie];
+            [NSObject performSelector:@selector(jj_swizzleZombie)];
         }
         
         if (self.exceptionGuardCategory & JJExceptionGuardKVOCrash) {
-            [NSObject jj_swizzleKVOCrash];
+            [NSObject performSelector:@selector(jj_swizzleKVOCrash)];
         }
         
         if (self.exceptionGuardCategory & JJExceptionGuardNSTimer) {
-            [NSTimer jj_swizzleNSTimer];
+            [NSTimer performSelector:@selector(jj_swizzleNSTimer)];
         }
         
         if (self.exceptionGuardCategory & JJExceptionGuardNSNotificationCenter) {
-            [NSNotificationCenter jj_swizzleNSNotificationCenter];
+            [NSNotificationCenter performSelector:@selector(jj_swizzleNSNotificationCenter)];
         }
+        #pragma clang diagnostic pop
     }
     dispatch_semaphore_signal(_swizzleLock);
 }
