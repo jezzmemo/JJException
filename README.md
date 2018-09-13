@@ -54,7 +54,7 @@ typedef NS_OPTIONS(NSInteger,JJExceptionGuardCategory){
 
 * Zombie使用黑名单机制，只有加入这个名单的才有作用,示例如下:
 ```objc
-[JJException addZombieObjectArray:@[TestZombie.class]];
+    [JJException addZombieObjectArray:@[TestZombie.class]];
 ```
 
 * 如果需要记录日志，只需要实现`JJExceptionHandle`协议，并注册:
