@@ -49,7 +49,7 @@ typedef NS_OPTIONS(NSInteger,JJExceptionGuardCategory){
 
 * 实时关闭保护
 ```objc
-	[JJException stopGuardException];
+    [JJException stopGuardException];
 ```
 
 * Zombie使用黑名单机制，只有加入这个名单的才有作用,示例如下:
