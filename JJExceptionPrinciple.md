@@ -191,7 +191,7 @@ Hook以下方法:
 
 不过最后说一点，就是dealloc确实需要注意，因为这里存在集合的操作，所以要注意时间复杂度，dealloc执行的很频繁的，而且主线程和子线程都会涉及到，尤其是主线程一定注意，否则会影响到UI的体验。
 
-## callStackSymbols偏移问题
+## CallStackSymbols偏移问题
 
 在记录出错信息上，调用栈信息会辅助帮我们快速定位问题，但是`[NSThread callStackSymbols]`的地址都是偏移过的，app在每次启动的时候都会ASLR（Address space layout randomization）,获取这个偏移代码如下:
 ```
