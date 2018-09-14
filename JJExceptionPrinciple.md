@@ -217,7 +217,7 @@ uintptr_t get_slide_address(void) {
 4 xxxxx 0x000000010089b958 xxxxx + 8960344
 ```
 
-真正的查询地址是__真正地址 =  0x00000001007d20a4 - get_slide_address__
+真正的查询地址:__真正地址 =  0x00000001007d20a4 - get_slide_address__
 
 接下来使用ATOS来查询Symbol:
 ```
