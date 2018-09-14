@@ -81,6 +81,7 @@ typedef NS_OPTIONS(NSInteger,JJExceptionGuardCategory){
 
 ## TODO(大家记得给我星哦)
 * 增加object dealloc的block支持，内部使用，外部也可以单独引用
+* 支持NSAttributedString和NSString crash
 
 ## License
 JJException is released under the MIT license. See LICENSE for details.
