@@ -191,6 +191,59 @@ Hook以下方法:
 
 不过最后说一点，就是dealloc确实需要注意，因为这里存在集合的操作，所以要注意时间复杂度，dealloc执行的很频繁的，而且主线程和子线程都会涉及到，尤其是主线程一定注意，否则会影响到UI的体验。
 
+## callStackSymbols偏移问题
+
+在记录出错信息上，调用栈信息会辅助帮我们快速定位问题，但是`[NSThread callStackSymbols]`的地址都是偏移过的，app在每次启动的时候都会ASLR（Address space layout randomization）,获取这个偏移代码如下:
+```
+uintptr_t get_slide_address(void) {
+    uintptr_t vmaddr_slide = 0;
+    for (uint32_t i = 0; i < _dyld_image_count(); i++) {
+        const struct mach_header *header = _dyld_get_image_header(i);
+        if (header->filetype == MH_EXECUTE) {
+            vmaddr_slide = _dyld_get_image_vmaddr_slide(i);
+            break;
+        }
+    }
+    
+    return (uintptr_t)vmaddr_slide;
+}
+```
+
+给一段出错调用栈示例,xxxxx代表应用名称:
+```
+1 xxxxx 0x00000001007d20a4 xxxxx + 8134820
+2 xxxxx 0x00000001007d190c xxxxx + 8132876
+3 xxxxx 0x0000000100857e80 xxxxx + 8683136
+4 xxxxx 0x000000010089b958 xxxxx + 8960344
+```
+
+真正的查询地址是__真正地址 =  0x00000001007d20a4 - get_slide_address__
+
+接下来使用ATOS来查询Symbol:
+```
+atos -arch arm64 -o xxxxx.dSYM/Contents/Resources/DWARF/xxxxx 真正地址
+```
+
+还有一种方法是获取Base address:
+```
+uintptr_t get_load_address(void) {
+    const struct mach_header *exe_header = NULL;
+    for (uint32_t i = 0; i < _dyld_image_count(); i++) {
+        const struct mach_header *header = _dyld_get_image_header(i);
+        if (header->filetype == MH_EXECUTE) {
+            exe_header = header;
+            break;
+        }
+    }
+    return (uintptr_t)exe_header;
+}
+```
+
+```
+atos -arch arm64 -o xxxxx.dSYM/Contents/Resources/DWARF/xxxxx -l get_load_address 0x00000001007d20a4
+```
+
+
 ## 参考资料
 
 [https://github.com/opensource-apple/objc4/blob/master/runtime/objc-runtime-new.mm](https://github.com/opensource-apple/objc4/blob/master/runtime/objc-runtime-new.mm)
