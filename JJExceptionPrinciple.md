@@ -239,6 +239,8 @@ uintptr_t get_load_address(void) {
 }
 ```
 
+__注意是有-l参数的__
+
 ```
 atos -arch arm64 -o xxxxx.dSYM/Contents/Resources/DWARF/xxxxx -l get_load_address 0x00000001007d20a4
 ```
