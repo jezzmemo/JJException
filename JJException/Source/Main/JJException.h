@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
  - JJExceptionGuardKVOCrash: KVO exception
  - JJExceptionGuardNSTimer: NSTimer
  - JJExceptionGuardNSNotificationCenter: NSNotificationCenter
+ - JJExceptionGuardAllExceptZombie:Above All except Zombie
  - JJExceptionGuardAll: Above All
  */
 typedef NS_OPTIONS(NSInteger,JJExceptionGuardCategory){
@@ -32,6 +33,7 @@ typedef NS_OPTIONS(NSInteger,JJExceptionGuardCategory){
     JJExceptionGuardKVOCrash = 1 << 5,
     JJExceptionGuardNSTimer = 1 << 6,
     JJExceptionGuardNSNotificationCenter = 1 << 7,
+    JJExceptionGuardAllExceptZombie = JJExceptionGuardUnrecognizedSelector | JJExceptionGuardDictionaryContainer | JJExceptionGuardArrayContainer | JJExceptionGuardKVOCrash | JJExceptionGuardNSTimer | JJExceptionGuardNSNotificationCenter,
     JJExceptionGuardAll = JJExceptionGuardUnrecognizedSelector | JJExceptionGuardDictionaryContainer | JJExceptionGuardArrayContainer | JJExceptionGuardZombie | JJExceptionGuardKVOCrash | JJExceptionGuardNSTimer | JJExceptionGuardNSNotificationCenter,
 };
 
