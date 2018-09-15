@@ -13,7 +13,7 @@ static const char DeallocNSObjectKey;
 
 @interface DeallocStub : NSObject
 
-@property (nonatomic, copy) void(^deallocBlock)(void);
+@property (nonatomic,readwrite,copy) void(^deallocBlock)(void);
 
 @end
 
