@@ -30,16 +30,18 @@ static const char DeallocNSObjectKey;
 @implementation NSObject (DeallocBlock)
 
 - (void)jj_deallocBlock:(void(^)(void))block{
-    NSMutableArray* blockArray = objc_getAssociatedObject(self, &DeallocNSObjectKey);
-    if (!blockArray) {
-        blockArray = [NSMutableArray array];
-        objc_setAssociatedObject(self, &DeallocNSObjectKey, blockArray, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    @synchronized(self){
+        NSMutableArray* blockArray = objc_getAssociatedObject(self, &DeallocNSObjectKey);
+        if (!blockArray) {
+            blockArray = [NSMutableArray array];
+            objc_setAssociatedObject(self, &DeallocNSObjectKey, blockArray, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        }
+        
+        DeallocStub *stub = [DeallocStub new];
+        stub.deallocBlock = block;
+        
+        [blockArray addObject:stub];
     }
-    
-    DeallocStub *stub = [DeallocStub new];
-    stub.deallocBlock = block;
-    
-    [blockArray addObject:stub];
 }
 
 @end
