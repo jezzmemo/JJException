@@ -75,9 +75,16 @@ typedef NS_OPTIONS(NSInteger,JJExceptionGuardCategory){
 }
 ```
 
-## 工作原理
+## 问题答疑
+
+> 保护App的实现技术原理是什么?
 
 [JJException技术原理](https://github.com/jezzmemo/JJException/blob/master/JJExceptionPrinciple.md)
+
+> JJException是否和Bugly和友盟等第三方库是否有冲突
+
+这些第三方的库主要是记录Bug的，不是hook，所以不会和JJException冲突
+
 
 ## TODO(大家记得给我星哦)
 * 增加object dealloc的block支持，内部使用，外部也可以单独引用
