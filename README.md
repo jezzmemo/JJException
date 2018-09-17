@@ -83,7 +83,7 @@ typedef NS_OPTIONS(NSInteger,JJExceptionGuardCategory){
 
 * JJException是否和Bugly和友盟等第三方库是否有冲突
 
-> 这些第三方的库主要是记录Crash Bug的，JJException主要是通过Hook技术来实现，所以不会和JJException冲突
+> Bugly和友盟是记录Crash Bug的log还有一些统计功能，JJException主要是通过Hook技术来实现，所以不会和JJException冲突，__只有一种情况会有冲突，第三方库和JJException，Hook同样的方法，可能导致JJException不起作用__
 
 
 ## TODO(大家记得给我星哦)
