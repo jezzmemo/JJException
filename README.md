@@ -85,6 +85,11 @@ typedef NS_OPTIONS(NSInteger,JJExceptionGuardCategory){
 
 > Bugly和友盟是记录Crash Bug的log还有一些统计功能，JJException主要是通过Hook技术来实现，所以不会和JJException冲突，__只有一种情况会有冲突，第三方库和JJException，Hook同样的方法，可能导致JJException不起作用__
 
+* 如何上传异常信息到Bugly
+
+> Bugly可以帮我们解决重复信息和CallStack信息，以及解决的状态维护
+> [Bugly reportError:error],error由自己构造，上传后显示在`错误分析`菜单里
+
 
 ## TODO(大家记得给我星哦)
 * 增加object dealloc的block支持，内部使用，外部也可以单独引用
