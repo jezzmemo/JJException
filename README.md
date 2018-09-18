@@ -77,17 +77,17 @@ typedef NS_OPTIONS(NSInteger,JJExceptionGuardCategory){
 
 ## 问题答疑
 
-* 保护App的实现技术原理是什么?
+> 保护App的实现技术原理是什么?
 
-> [JJException技术原理](https://github.com/jezzmemo/JJException/blob/master/JJExceptionPrinciple.md)
+[JJException技术原理](https://github.com/jezzmemo/JJException/blob/master/JJExceptionPrinciple.md)
 
-* JJException是否和Bugly和友盟等第三方库是否有冲突？
+> JJException是否和Bugly和友盟等第三方库是否有冲突？
 
-> Bugly和友盟是记录Crash Bug的log还有一些统计功能，JJException主要是通过Hook技术来实现，所以不会和JJException冲突，__只有一种情况会有冲突，第三方库和JJException，Hook同样的方法，可能导致JJException不起作用__
+Bugly和友盟是记录Crash Bug的log还有一些统计功能，JJException主要是通过Hook技术来实现，所以不会和JJException冲突，__只有一种情况会有冲突，第三方库和JJException，Hook同样的方法，可能导致JJException不起作用__
 
-* 如何上传异常信息到Bugly？
+> 如何上传异常信息到Bugly？
 
-> Bugly可以帮我们解决重复信息和CallStack信息，以及解决的状态维护。  
+Bugly可以帮我们解决重复信息和CallStack信息，以及解决的状态维护。  
 实现JJExceptionHandle协议后，将异常信息组织成Error，然后用[Bugly reportError:error]上传异常信息，上传后异常信息Bugly的后台`错误分析`菜单里
 
 
