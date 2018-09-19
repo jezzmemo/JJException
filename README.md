@@ -77,6 +77,10 @@ typedef NS_OPTIONS(NSInteger,JJExceptionGuardCategory){
 
 ## 问题答疑
 
+> 是否影响上线App Store
+
+不会的，JJException的功能都是使用的官方API,没有任何私有API
+
 > 保护App的实现技术原理是什么?
 
 [JJException技术原理](https://github.com/jezzmemo/JJException/blob/master/JJExceptionPrinciple.md)
