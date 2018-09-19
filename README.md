@@ -18,6 +18,8 @@
 
 - [x] NSNotification
 
+- [ ] NSString,NSMutableString,NSAttributedString,NSMutableAttributedString
+
 ## 如何安装
 
 ```
