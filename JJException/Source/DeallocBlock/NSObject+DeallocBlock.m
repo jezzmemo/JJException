@@ -23,6 +23,7 @@ static const char DeallocNSObjectKey;
     if (self.deallocBlock) {
         self.deallocBlock();
     }
+    self.deallocBlock = nil;
 }
 
 @end

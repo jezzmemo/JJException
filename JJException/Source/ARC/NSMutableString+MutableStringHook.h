@@ -10,4 +10,6 @@
 
 @interface NSMutableString (MutableStringHook)
 
++ (void)jj_swizzleNSMutableString;
+
 @end
