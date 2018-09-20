@@ -93,7 +93,7 @@ Bugly和友盟是记录Crash Bug的log还有一些统计功能，JJException主�
 
 > 如何上传异常信息到Bugly？
 
-Bugly可以帮我们解决重复信息和CallStack信息，以及解决的状态维护。  
+Bugly可以帮我们解决重复信息和CallStack信息，以及状态维护。  
 实现JJExceptionHandle协议后，将异常信息组织成Error，然后用[Bugly reportError:error]上传异常信息，上传后异常信息Bugly的后台`错误分析`菜单里
 
 
