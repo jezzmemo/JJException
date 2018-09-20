@@ -13,8 +13,10 @@
 
 + (void)jj_swizzleNSMutableString{
     
+    //NSPlaceholderMutableString
     swizzleInstanceMethod(NSClassFromString(@"NSPlaceholderMutableString"), @selector(initWithCString:encoding:), @selector(hookInitWithCString:encoding:));
     
+    //__NSCFString
     swizzleInstanceMethod(NSClassFromString(@"__NSCFString"), @selector(appendString:), @selector(hookAppendString:));
     swizzleInstanceMethod(NSClassFromString(@"__NSCFString"), @selector(insertString:atIndex:), @selector(hookInsertString:atIndex:));
     swizzleInstanceMethod(NSClassFromString(@"__NSCFString"), @selector(deleteCharactersInRange:), @selector(hookDeleteCharactersInRange:));

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		61025B4D2153E36100191522 /* NSAttributedString+AttributedStringHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61025B4C2153E36100191522 /* NSAttributedString+AttributedStringHook.m */; };
+		61025B502153E58F00191522 /* NSMutableAttributedString+MutableAttributedStringHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61025B4F2153E58F00191522 /* NSMutableAttributedString+MutableAttributedStringHook.m */; };
 		61196D4720F261C800022DDC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 61196D4620F261C800022DDC /* AppDelegate.m */; };
 		61196D4A20F261C800022DDC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61196D4920F261C800022DDC /* ViewController.m */; };
 		61196D4D20F261C800022DDC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61196D4B20F261C800022DDC /* Main.storyboard */; };
@@ -44,6 +46,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		61025B4B2153E36100191522 /* NSAttributedString+AttributedStringHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+AttributedStringHook.h"; sourceTree = "<group>"; };
+		61025B4C2153E36100191522 /* NSAttributedString+AttributedStringHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+AttributedStringHook.m"; sourceTree = "<group>"; };
+		61025B4E2153E58F00191522 /* NSMutableAttributedString+MutableAttributedStringHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+MutableAttributedStringHook.h"; sourceTree = "<group>"; };
+		61025B4F2153E58F00191522 /* NSMutableAttributedString+MutableAttributedStringHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableAttributedString+MutableAttributedStringHook.m"; sourceTree = "<group>"; };
 		61196D4220F261C800022DDC /* JJException.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JJException.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61196D4520F261C800022DDC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		61196D4620F261C800022DDC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -223,6 +229,10 @@
 				613E0AB221510A8B00B8D0DF /* NSString+StringHook.m */,
 				613E0AB821514E2E00B8D0DF /* NSMutableString+MutableStringHook.h */,
 				613E0AB921514E2E00B8D0DF /* NSMutableString+MutableStringHook.m */,
+				61025B4B2153E36100191522 /* NSAttributedString+AttributedStringHook.h */,
+				61025B4C2153E36100191522 /* NSAttributedString+AttributedStringHook.m */,
+				61025B4E2153E58F00191522 /* NSMutableAttributedString+MutableAttributedStringHook.h */,
+				61025B4F2153E58F00191522 /* NSMutableAttributedString+MutableAttributedStringHook.m */,
 			);
 			path = ARC;
 			sourceTree = "<group>";
@@ -338,6 +348,7 @@
 			files = (
 				61A7F54021427E4100C87FA1 /* NSObject+UnrecognizedSelectorHook.m in Sources */,
 				61A7F5632145071800C87FA1 /* KVOObjectDemo.m in Sources */,
+				61025B4D2153E36100191522 /* NSAttributedString+AttributedStringHook.m in Sources */,
 				61A7F54321427E7F00C87FA1 /* NSObject+KVOCrash.m in Sources */,
 				61A7F54F21427EB700C87FA1 /* NSMutableDictionary+MutableDictionaryHook.m in Sources */,
 				61196D4A20F261C800022DDC /* ViewController.m in Sources */,
@@ -350,6 +361,7 @@
 				61A7F55221427F5200C87FA1 /* NSObject+ZombieHook.m in Sources */,
 				61A7F51C213B859300C87FA1 /* PushViewController.m in Sources */,
 				613E0AAD214FF41B00B8D0DF /* NSObject+DeallocBlock.m in Sources */,
+				61025B502153E58F00191522 /* NSMutableAttributedString+MutableAttributedStringHook.m in Sources */,
 				613E0A8E21496ED100B8D0DF /* JJException.m in Sources */,
 				61196D4720F261C800022DDC /* AppDelegate.m in Sources */,
 				61A7F5562144D0FA00C87FA1 /* NSObject+SwizzleHook.m in Sources */,
