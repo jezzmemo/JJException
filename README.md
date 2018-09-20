@@ -101,6 +101,7 @@ Bugly可以帮我们解决重复信息和CallStack信息，以及状态维护。
 * 增加object dealloc的block支持，内部使用，外部也可以单独引用
 * 支持NSAttributedString和NSString crash
 * 由于Zombie的特殊性，JJExceptionGuardCategory新增一种除了Zombie的所有分类
+* 支持Carthage
 
 ## License
 JJException is released under the MIT license. See LICENSE for details.
