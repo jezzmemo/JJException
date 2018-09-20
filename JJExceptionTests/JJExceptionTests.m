@@ -91,6 +91,21 @@
     
 }
 
+- (void)testImmutableString{
+    NSAssert([NSString stringWithUTF8String:NULL] == nil,@"Check parameter nil");
+    NSAssert([NSString stringWithCString:NULL encoding:NSUTF8StringEncoding] == nil,@"Check parameter nil");
+    
+    NSString* empty = @"";
+    [empty substringFromIndex:10];
+    [empty substringToIndex:10];
+    [empty substringWithRange:NSMakeRange(100, 1000)];
+    [empty rangeOfString:@"11" options:NSCaseInsensitiveSearch range:NSMakeRange(10, 100) locale:[NSLocale new]];
+}
+
+- (void)testMutableString{
+    
+}
+
 - (void)testJJExceptionPerformance{
     [self measureBlock:^{
         NSArray* array = @[@"112",@"12",@"12",@"12",@"12",@"12",@"12",@"12",@"12",@"12"];
