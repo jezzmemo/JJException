@@ -81,13 +81,13 @@
 }
 
 - (void)testZombieException{
-    [JJException addZombieObjectArray:@[TestZombie.class]];
-    
-    TestZombie* test = [TestZombie new];
-    [test release];
-    [test test];
-    
-    free(test);
+//    [JJException addZombieObjectArray:@[TestZombie.class]];
+//    
+//    TestZombie* test = [TestZombie new];
+//    [test release];
+//    [test test];
+//    
+//    free(test);
     
 }
 
@@ -95,15 +95,64 @@
     NSAssert([NSString stringWithUTF8String:NULL] == nil,@"Check parameter nil");
     NSAssert([NSString stringWithCString:NULL encoding:NSUTF8StringEncoding] == nil,@"Check parameter nil");
     
-    NSString* empty = @"";
+    NSString* empty = @"";//__NSCFConstantString
     [empty substringFromIndex:10];
     [empty substringToIndex:10];
     [empty substringWithRange:NSMakeRange(100, 1000)];
     [empty rangeOfString:@"11" options:NSCaseInsensitiveSearch range:NSMakeRange(10, 100) locale:[NSLocale new]];
+    
+    NSString* taggedPointerString = @"a";
+    NSString* taggedPointerStringB = [[taggedPointerString mutableCopy] copy];//NSTaggedPointerString
+    
+    [taggedPointerStringB substringFromIndex:10];
+    [taggedPointerStringB substringToIndex:10];
+    [taggedPointerStringB substringWithRange:NSMakeRange(100, 1000)];
+    [taggedPointerStringB rangeOfString:@"11" options:NSCaseInsensitiveSearch range:NSMakeRange(10, 100) locale:[NSLocale new]];
+    
+    NSString* test = nil;
+    [NSString stringWithString:test];//NSPlaceholderString
 }
 
 - (void)testMutableString{
     
+    NSMutableString* normalMutableString = [NSMutableString new];
+    NSString* nilString = nil;
+    
+    [normalMutableString appendString:nilString];
+    [normalMutableString insertString:@"test" atIndex:1000];
+    [normalMutableString deleteCharactersInRange:NSMakeRange(100, 1000)];
+    [normalMutableString substringFromIndex:100];
+    [normalMutableString substringToIndex:1000];
+    [normalMutableString substringWithRange:NSMakeRange(100, 1000)];
+}
+
+
+- (void)testAttributeString{
+    NSString* nilString = nil;
+    
+    NSAttributedString* attribute = [[NSAttributedString alloc] initWithString:nilString];
+    [attribute attributedSubstringFromRange:NSMakeRange(100, 1000)];
+    NSRange point = NSMakeRange(100, 1000);
+    [attribute attribute:@"test" atIndex:100 effectiveRange:&point];
+    
+    [attribute enumerateAttribute:@"test" inRange:NSMakeRange(100, 1001) options:NSAttributedStringEnumerationReverse usingBlock:nil];
+    [attribute enumerateAttributesInRange:NSMakeRange(0, 1000) options:NSAttributedStringEnumerationReverse usingBlock:nil];
+}
+
+- (void)testNSMutableAttributedString{
+    NSString* nilString = nil;
+    NSDictionary* nilDic = nil;
+    NSMutableAttributedString* attribute = [[NSMutableAttributedString alloc] initWithString:nilString];
+    NSMutableAttributedString* attribute1 = [[NSMutableAttributedString alloc] initWithString:nilString attributes:nilDic];
+    
+    NSMutableAttributedString* attribute2 = [[NSMutableAttributedString alloc] initWithString:@""];
+    [attribute2 addAttribute:NSFontAttributeName value:nilString range:NSMakeRange(0, 1000)];
+    [attribute2 addAttributes:nilDic range:NSMakeRange(1000, 100000)];
+    [attribute2 addAttributes:nilDic range:NSMakeRange(1000, 0)];
+    
+    [attribute2 setAttributes:nilDic range:NSMakeRange(100, 100)];
+    [attribute2 setAttributes:nilDic range:NSMakeRange(100, 0)];
+    [attribute2 setAttributes:@{} range:NSMakeRange(100, 100)];
 }
 
 - (void)testJJExceptionPerformance{

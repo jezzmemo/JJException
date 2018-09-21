@@ -12,10 +12,6 @@
 @implementation NSMutableString (MutableStringHook)
 
 + (void)jj_swizzleNSMutableString{
-    
-    //NSPlaceholderMutableString
-    swizzleInstanceMethod(NSClassFromString(@"NSPlaceholderMutableString"), @selector(initWithCString:encoding:), @selector(hookInitWithCString:encoding:));
-    
     //__NSCFString
     swizzleInstanceMethod(NSClassFromString(@"__NSCFString"), @selector(appendString:), @selector(hookAppendString:));
     swizzleInstanceMethod(NSClassFromString(@"__NSCFString"), @selector(insertString:atIndex:), @selector(hookInsertString:atIndex:));
@@ -23,14 +19,6 @@
     swizzleInstanceMethod(NSClassFromString(@"__NSCFString"), @selector(substringFromIndex:), @selector(hookSubstringFromIndex:));
     swizzleInstanceMethod(NSClassFromString(@"__NSCFString"), @selector(substringToIndex:), @selector(hookSubstringToIndex:));
     swizzleInstanceMethod(NSClassFromString(@"__NSCFString"), @selector(substringWithRange:), @selector(hookSubstringWithRange:));
-    
-}
-
-- (nullable instancetype) hookInitWithCString:(const char *)nullTerminatedCString encoding:(NSStringEncoding)encoding{
-    if (NULL != nullTerminatedCString){
-        return [self hookInitWithCString:nullTerminatedCString encoding:encoding];
-    }
-    return nil;
 }
 
 - (void) hookAppendString:(NSString *)aString{
@@ -53,13 +41,6 @@
     }else{
         
     }
-}
-
-- (NSString *)hookStringByAppendingString:(NSString *)aString{
-    if (aString){
-        return [self hookStringByAppendingString:aString];
-    }
-    return self;
 }
 
 - (NSString *)hookSubstringFromIndex:(NSUInteger)from{

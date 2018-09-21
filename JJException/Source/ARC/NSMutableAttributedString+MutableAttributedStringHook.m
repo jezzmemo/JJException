@@ -8,19 +8,22 @@
 
 #import "NSMutableAttributedString+MutableAttributedStringHook.h"
 #import "NSObject+SwizzleHook.h"
+#import <objc/runtime.h>
 
 @implementation NSMutableAttributedString (MutableAttributedStringHook)
 
 + (void)jj_swizzleNSMutableAttributedString{
-    swizzleInstanceMethod(NSClassFromString(@"NSMutableAttributedString"), @selector(initWithString:), @selector(hookInitWithString:));
-    swizzleInstanceMethod(NSClassFromString(@"NSMutableAttributedString"), @selector(initWithString:attributes:), @selector(hookInitWithString:attributes:));
+    NSMutableAttributedString* instanceObject = [NSMutableAttributedString new];
+    Class cls =  object_getClass(instanceObject);
     
-    swizzleInstanceMethod(NSClassFromString(@"NSMutableAttributedString"),@selector(addAttribute:value:range:), @selector(hookAddAttribute:value:range:));
-    swizzleInstanceMethod(NSClassFromString(@"NSMutableAttributedString"),@selector(addAttributes:range:), @selector(hookAddAttributes:range:));
-    swizzleInstanceMethod(NSClassFromString(@"NSMutableAttributedString"),@selector(setAttributes:range:), @selector(hookSetAttributes:range:));
+    swizzleInstanceMethod(cls,@selector(initWithString:), @selector(hookInitWithString:));
+    swizzleInstanceMethod(cls,@selector(initWithString:attributes:), @selector(hookInitWithString:attributes:));
+    swizzleInstanceMethod(cls,@selector(addAttribute:value:range:), @selector(hookAddAttribute:value:range:));
+    swizzleInstanceMethod(cls,@selector(addAttributes:range:), @selector(hookAddAttributes:range:));
+    swizzleInstanceMethod(cls,@selector(setAttributes:range:), @selector(hookSetAttributes:range:));
 }
 
-- (id)hookInitWithString:(NSString*)str {
+- (id)hookInitWithString:(NSString*)str{
     if (str){
         return [self hookInitWithString:str];
     }
@@ -34,7 +37,7 @@
     return nil;
 }
 
-- (void)hookAddAttribute:(id)name value:(id)value range:(NSRange)range {
+- (void)hookAddAttribute:(id)name value:(id)value range:(NSRange)range{
     if (!range.length) {
         [self hookAddAttribute:name value:value range:range];
     }else if (value){
@@ -47,7 +50,7 @@
         
     }
 }
-- (void)hookAddAttributes:(NSDictionary<NSString *,id> *)attrs range:(NSRange)range {
+- (void)hookAddAttributes:(NSDictionary<NSString *,id> *)attrs range:(NSRange)range{
     if (!range.length) {
         [self hookAddAttributes:attrs range:range];
     }else if (attrs){
@@ -61,7 +64,7 @@
     }
 }
 
-- (void)hookSetAttributes:(NSDictionary<NSString *,id> *)attrs range:(NSRange)range {
+- (void)hookSetAttributes:(NSDictionary<NSString *,id> *)attrs range:(NSRange)range{
     if (!range.length) {
         [self hookSetAttributes:attrs range:range];
     }else if (attrs){

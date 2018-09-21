@@ -16,7 +16,8 @@
     [NSString jj_swizzleClassMethod:@selector(stringWithCString:encoding:) withSwizzleMethod:@selector(hookStringWithCString:encoding:)];
     
     //NSPlaceholderString
-    swizzleInstanceMethod(NSClassFromString(@"NSPlaceholderString"), @selector(initWithCString:encoding:), @selector(hookStringWithCString:encoding:));
+    swizzleInstanceMethod(NSClassFromString(@"NSPlaceholderString"), @selector(initWithCString:encoding:), @selector(hookInitWithCString:encoding:));
+    swizzleInstanceMethod(NSClassFromString(@"NSPlaceholderString"), @selector(initWithString:), @selector(hookInitWithString:));
     
     //_NSCFConstantString
     swizzleInstanceMethod(NSClassFromString(@"__NSCFConstantString"), @selector(substringFromIndex:), @selector(hookSubstringFromIndex:));
@@ -38,10 +39,18 @@
     }
     return nil;
 }
+
 + (nullable instancetype) hookStringWithCString:(const char *)cString encoding:(NSStringEncoding)enc
 {
     if (NULL != cString){
         return [self hookStringWithCString:cString encoding:enc];
+    }
+    return nil;
+}
+
+- (nullable instancetype) hookInitWithString:(id)cString{
+    if (nil != cString){
+        return [self hookInitWithString:cString];
     }
     return nil;
 }
