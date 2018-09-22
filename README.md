@@ -1,4 +1,5 @@
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/JJException.svg)](https://img.shields.io/cocoapods/v/JJException.svg)
+[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Platform](https://img.shields.io/cocoapods/p/JJException.svg?style=flat)](http://cocoadocs.org/docsets/JJException)
 ![License MIT](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)
 
@@ -18,12 +19,18 @@
 
 - [x] NSNotification
 
-- [ ] NSString,NSMutableString,NSAttributedString,NSMutableAttributedString
+- [x] NSString,NSMutableString,NSAttributedString,NSMutableAttributedString
 
 ## 如何安装
 
 ```
 pod 'JJException'
+```
+
+更新`Cartfile`:
+
+```
+github "jezzmemo/JJException"
 ```
 
 ## 如何使用
@@ -39,7 +46,9 @@ typedef NS_OPTIONS(NSInteger,JJExceptionGuardCategory){
     JJExceptionGuardKVOCrash = 1 << 5,
     JJExceptionGuardNSTimer = 1 << 6,
     JJExceptionGuardNSNotificationCenter = 1 << 7,
-    JJExceptionGuardAll = JJExceptionGuardUnrecognizedSelector | JJExceptionGuardDictionaryContainer | JJExceptionGuardArrayContainer | JJExceptionGuardZombie | JJExceptionGuardKVOCrash | JJExceptionGuardNSTimer | JJExceptionGuardNSNotificationCenter,
+    JJExceptionGuardNSStringContainer = 1 << 8,
+    JJExceptionGuardAllExceptZombie = JJExceptionGuardUnrecognizedSelector | JJExceptionGuardDictionaryContainer | JJExceptionGuardArrayContainer | JJExceptionGuardKVOCrash | JJExceptionGuardNSTimer | JJExceptionGuardNSNotificationCenter | JJExceptionGuardNSStringContainer,
+    JJExceptionGuardAll = JJExceptionGuardUnrecognizedSelector | JJExceptionGuardDictionaryContainer | JJExceptionGuardArrayContainer | JJExceptionGuardZombie | JJExceptionGuardKVOCrash | JJExceptionGuardNSTimer | JJExceptionGuardNSNotificationCenter | JJExceptionGuardNSStringContainer,
 };
 ```
 
@@ -52,6 +61,12 @@ typedef NS_OPTIONS(NSInteger,JJExceptionGuardCategory){
 * 实时关闭保护
 ```objc
     [JJException stopGuardException];
+```
+
+* 当异常时，默认程序不会中断，如果需要遇到异常时退出，需要如下设置:
+```objc
+	//Default value:NO
+    JJException.exceptionWhenTerminate = YES;
 ```
 
 * Zombie使用黑名单机制，只有加入这个名单的才有作用,示例如下:
@@ -98,10 +113,7 @@ Bugly可以帮我们解决重复信息和CallStack信息，以及状态维护。
 
 
 ## TODO(大家记得给我星哦)
-* 增加object dealloc的block支持，内部使用，外部也可以单独引用
-* 支持NSAttributedString和NSString crash
-* 由于Zombie的特殊性，JJExceptionGuardCategory新增一种除了Zombie的所有分类
-* 支持Carthage
+* 增强Hook的健壮性
 
 ## License
 JJException is released under the MIT license. See LICENSE for details.
