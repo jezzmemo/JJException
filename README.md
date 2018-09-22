@@ -23,11 +23,13 @@
 
 ## 如何安装
 
+__Podfile__
+
 ```
 pod 'JJException'
 ```
 
-更新`Cartfile`:
+__Cartfile__
 
 ```
 github "jezzmemo/JJException"
