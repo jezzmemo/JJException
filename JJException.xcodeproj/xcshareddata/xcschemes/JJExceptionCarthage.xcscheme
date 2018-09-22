@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "61025B5B215639B700191522"
-               BuildableName = "JJExceptionCarthage.framework"
+               BuildableName = "JJException.framework"
                BlueprintName = "JJExceptionCarthage"
                ReferencedContainer = "container:JJException.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "61025B5B215639B700191522"
-            BuildableName = "JJExceptionCarthage.framework"
+            BuildableName = "JJException.framework"
             BlueprintName = "JJExceptionCarthage"
             ReferencedContainer = "container:JJException.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "61025B5B215639B700191522"
-            BuildableName = "JJExceptionCarthage.framework"
+            BuildableName = "JJException.framework"
             BlueprintName = "JJExceptionCarthage"
             ReferencedContainer = "container:JJException.xcodeproj">
          </BuildableReference>
