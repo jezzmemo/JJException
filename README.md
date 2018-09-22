@@ -67,7 +67,7 @@ typedef NS_OPTIONS(NSInteger,JJExceptionGuardCategory){
 
 * 当异常时，默认程序不会中断，如果需要遇到异常时退出，需要如下设置:
 ```objc
-	//Default value:NO
+    //Default value:NO
     JJException.exceptionWhenTerminate = YES;
 ```
 
