@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "JJException"
-  s.version      = "0.0.6"
+  s.version      = "0.0.7"
   s.summary      = "Handle the objective-c crash exception."
 
   # This description is used to generate tags and improve search results.
@@ -97,6 +97,7 @@ Pod::Spec.new do |s|
     spec.ios.dependency 'JJException/ARC'
     spec.ios.dependency 'JJException/MRC'
     spec.ios.dependency 'JJException/Main'
+    spec.ios.dependency 'JJException/DeallocBlock'
   end
 
   s.subspec 'ARC' do |spec|
@@ -104,6 +105,7 @@ Pod::Spec.new do |s|
     spec.source_files  = "JJException/Source/ARC/*.{h,m}"
     spec.dependency 'JJException/Swizzle'
     spec.dependency 'JJException/Main'
+    spec.dependency 'JJException/DeallocBlock'
   end
 
   s.subspec 'Swizzle' do |spec|
@@ -122,6 +124,11 @@ Pod::Spec.new do |s|
     spec.source_files  = "JJException/Source/MRC/*.{h,m}"
     spec.dependency 'JJException/Swizzle'
     spec.dependency 'JJException/Main'
+  end
+
+  s.subspec 'DeallocBlock' do |spec|
+    spec.requires_arc = true
+    spec.source_files  = "JJException/Source/DeallocBlock/*.{h,m}"
   end
 
   #s.source_files  = "JJException/Source/*.{h,m}"

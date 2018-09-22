@@ -131,18 +131,21 @@
     NSString* nilString = nil;
     
     NSAttributedString* attribute = [[NSAttributedString alloc] initWithString:nilString];
-    [attribute attributedSubstringFromRange:NSMakeRange(100, 1000)];
-    NSRange point = NSMakeRange(100, 1000);
-    [attribute attribute:@"test" atIndex:100 effectiveRange:&point];
     
-    [attribute enumerateAttribute:@"test" inRange:NSMakeRange(100, 1001) options:NSAttributedStringEnumerationReverse usingBlock:nil];
-    [attribute enumerateAttributesInRange:NSMakeRange(0, 1000) options:NSAttributedStringEnumerationReverse usingBlock:nil];
+    NSAttributedString* noramlAttribute = [[NSAttributedString alloc] initWithString:@"1"];
+    [noramlAttribute attributedSubstringFromRange:NSMakeRange(100, 1000)];
+    NSRange point = NSMakeRange(100, 1000);
+    [noramlAttribute attribute:@"test" atIndex:100 effectiveRange:&point];
+    
+    [noramlAttribute enumerateAttribute:@"test" inRange:NSMakeRange(100, 1001) options:NSAttributedStringEnumerationReverse usingBlock:nil];
+    [noramlAttribute enumerateAttributesInRange:NSMakeRange(0, 1000) options:NSAttributedStringEnumerationReverse usingBlock:nil];
 }
 
 - (void)testNSMutableAttributedString{
     NSString* nilString = nil;
     NSDictionary* nilDic = nil;
     NSMutableAttributedString* attribute = [[NSMutableAttributedString alloc] initWithString:nilString];
+    
     NSMutableAttributedString* attribute1 = [[NSMutableAttributedString alloc] initWithString:nilString attributes:nilDic];
     
     NSMutableAttributedString* attribute2 = [[NSMutableAttributedString alloc] initWithString:@""];

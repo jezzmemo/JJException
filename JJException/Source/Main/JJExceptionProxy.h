@@ -65,6 +65,13 @@ __attribute__((overloadable)) void handleCrashException(JJExceptionGuardCategory
 @property(nonatomic,readwrite,assign)BOOL isProtectException;
 
 /**
+ If exceptionWhenTerminate YES,the exception will stop application
+ If exceptionWhenTerminate NO,the exception only show log on the console, will not stop the application
+ Default value:NO
+ */
+@property(nonatomic,readwrite,assign)BOOL exceptionWhenTerminate;
+
+/**
  Setting exceptionGuardCategory
  @see JJExceptionGuardCategory
  */

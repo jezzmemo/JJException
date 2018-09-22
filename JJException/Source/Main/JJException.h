@@ -70,6 +70,14 @@ typedef NS_OPTIONS(NSInteger,JJExceptionGuardCategory){
  */
 @interface JJException : NSObject
 
+
+/**
+ If exceptionWhenTerminate YES,the exception will stop application
+ If exceptionWhenTerminate NO,the exception only show log on the console, will not stop the application
+ Default value:NO
+ */
+@property(class,nonatomic,readwrite,assign)BOOL exceptionWhenTerminate;
+
 /**
  Config the guard exception category,default:JJExceptionGuardNone
  

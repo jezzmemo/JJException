@@ -11,6 +11,9 @@
 
 static const char DeallocNSObjectKey;
 
+/**
+ Observer the target middle object
+ */
 @interface DeallocStub : NSObject
 
 @property (nonatomic,readwrite,copy) void(^deallocBlock)(void);

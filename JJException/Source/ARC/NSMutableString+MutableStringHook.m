@@ -8,6 +8,7 @@
 
 #import "NSMutableString+MutableStringHook.h"
 #import "NSObject+SwizzleHook.h"
+#import "JJExceptionProxy.h"
 
 @implementation NSMutableString (MutableStringHook)
 
@@ -25,6 +26,7 @@
     if (aString){
         [self hookAppendString:aString];
     }else{
+        handleCrashException(JJExceptionGuardNSStringContainer,[NSString stringWithFormat:@"NSMutableString appendString value:%@ parameter nil",self]);
     }
 }
 
@@ -32,6 +34,7 @@
     if (aString && loc <= self.length) {
         [self hookInsertString:aString atIndex:loc];
     }else{
+        handleCrashException(JJExceptionGuardNSStringContainer,[NSString stringWithFormat:@"NSMutableString insertString:atIndex: value:%@ paremeter string:%@ atIndex:%tu",self,aString,loc]);
     }
 }
 
@@ -39,7 +42,7 @@
     if (range.location + range.length <= self.length){
         [self hookDeleteCharactersInRange:range];
     }else{
-        
+        handleCrashException(JJExceptionGuardNSStringContainer,[NSString stringWithFormat:@"NSMutableString deleteCharactersInRange value:%@ range:%@",self,NSStringFromRange(range)]);
     }
 }
 
@@ -47,6 +50,7 @@
     if (from <= self.length) {
         return [self hookSubstringFromIndex:from];
     }
+    handleCrashException(JJExceptionGuardNSStringContainer,[NSString stringWithFormat:@"NSMutableString substringFromIndex value:%@ from:%tu",self,from]);
     return nil;
 }
 
@@ -54,15 +58,15 @@
     if (to <= self.length) {
         return [self hookSubstringToIndex:to];
     }
+    handleCrashException(JJExceptionGuardNSStringContainer,[NSString stringWithFormat:@"NSMutableString substringToIndex value:%@ to:%tu",self,to]);
     return self;
 }
 
 - (NSString *)hookSubstringWithRange:(NSRange)range{
     if (range.location + range.length <= self.length) {
         return [self hookSubstringWithRange:range];
-    }else if (range.location < self.length){
-        return [self hookSubstringWithRange:NSMakeRange(range.location, self.length-range.location)];
     }
+    handleCrashException(JJExceptionGuardNSStringContainer,[NSString stringWithFormat:@"NSMutableString substringWithRange value:%@ range:%@",self,NSStringFromRange(range)]);
     return nil;
 }
 

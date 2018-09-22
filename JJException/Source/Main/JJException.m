@@ -11,6 +11,14 @@
 
 @implementation JJException
 
++ (BOOL)exceptionWhenTerminate{
+    return [JJExceptionProxy shareExceptionProxy].exceptionWhenTerminate;
+}
+
++ (void)setExceptionWhenTerminate:(BOOL)exceptionWhenTerminate{
+    [JJExceptionProxy shareExceptionProxy].exceptionWhenTerminate = exceptionWhenTerminate;
+}
+
 + (void)startGuardException{
     [JJExceptionProxy shareExceptionProxy].isProtectException = YES;
 }

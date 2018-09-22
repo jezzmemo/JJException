@@ -9,6 +9,43 @@
 /* Begin PBXBuildFile section */
 		61025B4D2153E36100191522 /* NSAttributedString+AttributedStringHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61025B4C2153E36100191522 /* NSAttributedString+AttributedStringHook.m */; };
 		61025B502153E58F00191522 /* NSMutableAttributedString+MutableAttributedStringHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61025B4F2153E58F00191522 /* NSMutableAttributedString+MutableAttributedStringHook.m */; };
+		61025B63215639B700191522 /* JJException.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61025B5C215639B700191522 /* JJException.framework */; };
+		61025B64215639B700191522 /* JJException.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 61025B5C215639B700191522 /* JJException.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		61025B6921563A6400191522 /* NSObject+DeallocBlock.h in Sources */ = {isa = PBXBuildFile; fileRef = 613E0AAB214FF41B00B8D0DF /* NSObject+DeallocBlock.h */; };
+		61025B6A21563A6400191522 /* NSObject+DeallocBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 613E0AAC214FF41B00B8D0DF /* NSObject+DeallocBlock.m */; };
+		61025B6B21563A6400191522 /* JJExceptionProxy.h in Sources */ = {isa = PBXBuildFile; fileRef = 613E0A93214974B700B8D0DF /* JJExceptionProxy.h */; };
+		61025B6C21563A6400191522 /* JJExceptionProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 613E0A94214974B800B8D0DF /* JJExceptionProxy.m */; };
+		61025B6D21563A6400191522 /* JJException.h in Sources */ = {isa = PBXBuildFile; fileRef = 613E0A8C21496ED100B8D0DF /* JJException.h */; };
+		61025B6E21563A6400191522 /* JJException.m in Sources */ = {isa = PBXBuildFile; fileRef = 613E0A8B21496ED100B8D0DF /* JJException.m */; };
+		61025B6F21563A6400191522 /* NSTimer+CleanTimer.h in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F55B2144ED9C00C87FA1 /* NSTimer+CleanTimer.h */; };
+		61025B7021563A6400191522 /* NSTimer+CleanTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F5582144ED9C00C87FA1 /* NSTimer+CleanTimer.m */; };
+		61025B7121563A6400191522 /* NSNotificationCenter+ClearNotification.h in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F5592144ED9C00C87FA1 /* NSNotificationCenter+ClearNotification.h */; };
+		61025B7221563A6400191522 /* NSNotificationCenter+ClearNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F55D2144ED9C00C87FA1 /* NSNotificationCenter+ClearNotification.m */; };
+		61025B7321563A6400191522 /* NSString+StringHook.h in Sources */ = {isa = PBXBuildFile; fileRef = 613E0AB121510A8B00B8D0DF /* NSString+StringHook.h */; };
+		61025B7421563A6400191522 /* NSString+StringHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 613E0AB221510A8B00B8D0DF /* NSString+StringHook.m */; };
+		61025B7521563A6400191522 /* NSMutableString+MutableStringHook.h in Sources */ = {isa = PBXBuildFile; fileRef = 613E0AB821514E2E00B8D0DF /* NSMutableString+MutableStringHook.h */; };
+		61025B7621563A6400191522 /* NSMutableString+MutableStringHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 613E0AB921514E2E00B8D0DF /* NSMutableString+MutableStringHook.m */; };
+		61025B7721563A6400191522 /* NSAttributedString+AttributedStringHook.h in Sources */ = {isa = PBXBuildFile; fileRef = 61025B4B2153E36100191522 /* NSAttributedString+AttributedStringHook.h */; };
+		61025B7821563A6400191522 /* NSAttributedString+AttributedStringHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61025B4C2153E36100191522 /* NSAttributedString+AttributedStringHook.m */; };
+		61025B7921563A6400191522 /* NSMutableAttributedString+MutableAttributedStringHook.h in Sources */ = {isa = PBXBuildFile; fileRef = 61025B4E2153E58F00191522 /* NSMutableAttributedString+MutableAttributedStringHook.h */; };
+		61025B7A21563A6400191522 /* NSMutableAttributedString+MutableAttributedStringHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61025B4F2153E58F00191522 /* NSMutableAttributedString+MutableAttributedStringHook.m */; };
+		61025B7B21563A6400191522 /* NSObject+SwizzleHook.h in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F5542144D0FA00C87FA1 /* NSObject+SwizzleHook.h */; };
+		61025B7C21563A6400191522 /* NSObject+SwizzleHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F5552144D0FA00C87FA1 /* NSObject+SwizzleHook.m */; };
+		61025B7D21563A6400191522 /* NSObject+ZombieHook.h in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F55121427F5200C87FA1 /* NSObject+ZombieHook.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		61025B7E21563A6400191522 /* NSObject+ZombieHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F55021427F5100C87FA1 /* NSObject+ZombieHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		61025B7F21563A6400191522 /* NSArray+ArrayHook.h in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F54721427EB600C87FA1 /* NSArray+ArrayHook.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		61025B8021563A6400191522 /* NSArray+ArrayHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F54421427EB600C87FA1 /* NSArray+ArrayHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		61025B8121563A6400191522 /* NSDictionary+DictionaryHook.h in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F54821427EB600C87FA1 /* NSDictionary+DictionaryHook.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		61025B8221563A6400191522 /* NSDictionary+DictionaryHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F54621427EB600C87FA1 /* NSDictionary+DictionaryHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		61025B8321563A6400191522 /* NSMutableArray+MutableArrayHook.h in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F54A21427EB600C87FA1 /* NSMutableArray+MutableArrayHook.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		61025B8421563A6400191522 /* NSMutableArray+MutableArrayHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F54921427EB600C87FA1 /* NSMutableArray+MutableArrayHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		61025B8521563A6400191522 /* NSMutableDictionary+MutableDictionaryHook.h in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F54521427EB600C87FA1 /* NSMutableDictionary+MutableDictionaryHook.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		61025B8621563A6400191522 /* NSMutableDictionary+MutableDictionaryHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F54B21427EB700C87FA1 /* NSMutableDictionary+MutableDictionaryHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		61025B8721563A6400191522 /* NSObject+KVOCrash.h in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F54121427E7E00C87FA1 /* NSObject+KVOCrash.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		61025B8821563A6400191522 /* NSObject+KVOCrash.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F54221427E7F00C87FA1 /* NSObject+KVOCrash.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		61025B8921563A6400191522 /* NSObject+UnrecognizedSelectorHook.h in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F53E21427E4100C87FA1 /* NSObject+UnrecognizedSelectorHook.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		61025B8A21563A6400191522 /* NSObject+UnrecognizedSelectorHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F53F21427E4100C87FA1 /* NSObject+UnrecognizedSelectorHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		61025B8B21563ABB00191522 /* JJException.h in Headers */ = {isa = PBXBuildFile; fileRef = 613E0A8C21496ED100B8D0DF /* JJException.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		61196D4720F261C800022DDC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 61196D4620F261C800022DDC /* AppDelegate.m */; };
 		61196D4A20F261C800022DDC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61196D4920F261C800022DDC /* ViewController.m */; };
 		61196D4D20F261C800022DDC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61196D4B20F261C800022DDC /* Main.storyboard */; };
@@ -36,6 +73,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		61025B61215639B700191522 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 61196D3A20F261C800022DDC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 61025B5B215639B700191522;
+			remoteInfo = JJExceptionCarthage;
+		};
 		61BC3FC920F7ACE500D8C791 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 61196D3A20F261C800022DDC /* Project object */;
@@ -45,11 +89,27 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		61025B68215639B700191522 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				61025B64215639B700191522 /* JJException.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		61025B4B2153E36100191522 /* NSAttributedString+AttributedStringHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+AttributedStringHook.h"; sourceTree = "<group>"; };
 		61025B4C2153E36100191522 /* NSAttributedString+AttributedStringHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+AttributedStringHook.m"; sourceTree = "<group>"; };
 		61025B4E2153E58F00191522 /* NSMutableAttributedString+MutableAttributedStringHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+MutableAttributedStringHook.h"; sourceTree = "<group>"; };
 		61025B4F2153E58F00191522 /* NSMutableAttributedString+MutableAttributedStringHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableAttributedString+MutableAttributedStringHook.m"; sourceTree = "<group>"; };
+		61025B5C215639B700191522 /* JJException.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JJException.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		61025B5F215639B700191522 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		61196D4220F261C800022DDC /* JJException.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JJException.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61196D4520F261C800022DDC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		61196D4620F261C800022DDC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -100,10 +160,18 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		61025B58215639B700191522 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		61196D3F20F261C800022DDC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61025B63215639B700191522 /* JJException.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,11 +185,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		61025B5D215639B700191522 /* JJExceptionCarthage */ = {
+			isa = PBXGroup;
+			children = (
+				61025B5F215639B700191522 /* Info.plist */,
+			);
+			path = JJExceptionCarthage;
+			sourceTree = "<group>";
+		};
 		61196D3920F261C800022DDC = {
 			isa = PBXGroup;
 			children = (
 				61196D4420F261C800022DDC /* JJException */,
 				61BC3FC520F7ACE500D8C791 /* JJExceptionTests */,
+				61025B5D215639B700191522 /* JJExceptionCarthage */,
 				61196D4320F261C800022DDC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -131,6 +208,7 @@
 			children = (
 				61196D4220F261C800022DDC /* JJException.app */,
 				61BC3FC420F7ACE500D8C791 /* JJExceptionTests.xctest */,
+				61025B5C215639B700191522 /* JJException.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -173,8 +251,8 @@
 			children = (
 				613E0A93214974B700B8D0DF /* JJExceptionProxy.h */,
 				613E0A94214974B800B8D0DF /* JJExceptionProxy.m */,
-				613E0A8B21496ED100B8D0DF /* JJException.m */,
 				613E0A8C21496ED100B8D0DF /* JJException.h */,
+				613E0A8B21496ED100B8D0DF /* JJException.m */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -248,7 +326,36 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXHeadersBuildPhase section */
+		61025B59215639B700191522 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61025B8B21563ABB00191522 /* JJException.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
 /* Begin PBXNativeTarget section */
+		61025B5B215639B700191522 /* JJExceptionCarthage */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 61025B65215639B700191522 /* Build configuration list for PBXNativeTarget "JJExceptionCarthage" */;
+			buildPhases = (
+				61025B57215639B700191522 /* Sources */,
+				61025B58215639B700191522 /* Frameworks */,
+				61025B59215639B700191522 /* Headers */,
+				61025B5A215639B700191522 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JJExceptionCarthage;
+			productName = JJExceptionCarthage;
+			productReference = 61025B5C215639B700191522 /* JJException.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		61196D4120F261C800022DDC /* JJException */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 61196D5820F261CC00022DDC /* Build configuration list for PBXNativeTarget "JJException" */;
@@ -256,10 +363,12 @@
 				61196D3E20F261C800022DDC /* Sources */,
 				61196D3F20F261C800022DDC /* Frameworks */,
 				61196D4020F261C800022DDC /* Resources */,
+				61025B68215639B700191522 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				61025B62215639B700191522 /* PBXTargetDependency */,
 			);
 			name = JJException;
 			productName = JJException;
@@ -293,6 +402,9 @@
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = Jezz;
 				TargetAttributes = {
+					61025B5B215639B700191522 = {
+						CreatedOnToolsVersion = 9.4.1;
+					};
 					61196D4120F261C800022DDC = {
 						CreatedOnToolsVersion = 9.4.1;
 					};
@@ -317,11 +429,19 @@
 			targets = (
 				61196D4120F261C800022DDC /* JJException */,
 				61BC3FC320F7ACE500D8C791 /* JJExceptionTests */,
+				61025B5B215639B700191522 /* JJExceptionCarthage */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		61025B5A215639B700191522 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		61196D4020F261C800022DDC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -342,6 +462,47 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		61025B57215639B700191522 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61025B6921563A6400191522 /* NSObject+DeallocBlock.h in Sources */,
+				61025B6A21563A6400191522 /* NSObject+DeallocBlock.m in Sources */,
+				61025B6B21563A6400191522 /* JJExceptionProxy.h in Sources */,
+				61025B6C21563A6400191522 /* JJExceptionProxy.m in Sources */,
+				61025B6D21563A6400191522 /* JJException.h in Sources */,
+				61025B6E21563A6400191522 /* JJException.m in Sources */,
+				61025B6F21563A6400191522 /* NSTimer+CleanTimer.h in Sources */,
+				61025B7021563A6400191522 /* NSTimer+CleanTimer.m in Sources */,
+				61025B7121563A6400191522 /* NSNotificationCenter+ClearNotification.h in Sources */,
+				61025B7221563A6400191522 /* NSNotificationCenter+ClearNotification.m in Sources */,
+				61025B7321563A6400191522 /* NSString+StringHook.h in Sources */,
+				61025B7421563A6400191522 /* NSString+StringHook.m in Sources */,
+				61025B7521563A6400191522 /* NSMutableString+MutableStringHook.h in Sources */,
+				61025B7621563A6400191522 /* NSMutableString+MutableStringHook.m in Sources */,
+				61025B7721563A6400191522 /* NSAttributedString+AttributedStringHook.h in Sources */,
+				61025B7821563A6400191522 /* NSAttributedString+AttributedStringHook.m in Sources */,
+				61025B7921563A6400191522 /* NSMutableAttributedString+MutableAttributedStringHook.h in Sources */,
+				61025B7A21563A6400191522 /* NSMutableAttributedString+MutableAttributedStringHook.m in Sources */,
+				61025B7B21563A6400191522 /* NSObject+SwizzleHook.h in Sources */,
+				61025B7C21563A6400191522 /* NSObject+SwizzleHook.m in Sources */,
+				61025B7D21563A6400191522 /* NSObject+ZombieHook.h in Sources */,
+				61025B7E21563A6400191522 /* NSObject+ZombieHook.m in Sources */,
+				61025B7F21563A6400191522 /* NSArray+ArrayHook.h in Sources */,
+				61025B8021563A6400191522 /* NSArray+ArrayHook.m in Sources */,
+				61025B8121563A6400191522 /* NSDictionary+DictionaryHook.h in Sources */,
+				61025B8221563A6400191522 /* NSDictionary+DictionaryHook.m in Sources */,
+				61025B8321563A6400191522 /* NSMutableArray+MutableArrayHook.h in Sources */,
+				61025B8421563A6400191522 /* NSMutableArray+MutableArrayHook.m in Sources */,
+				61025B8521563A6400191522 /* NSMutableDictionary+MutableDictionaryHook.h in Sources */,
+				61025B8621563A6400191522 /* NSMutableDictionary+MutableDictionaryHook.m in Sources */,
+				61025B8721563A6400191522 /* NSObject+KVOCrash.h in Sources */,
+				61025B8821563A6400191522 /* NSObject+KVOCrash.m in Sources */,
+				61025B8921563A6400191522 /* NSObject+UnrecognizedSelectorHook.h in Sources */,
+				61025B8A21563A6400191522 /* NSObject+UnrecognizedSelectorHook.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		61196D3E20F261C800022DDC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -382,6 +543,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		61025B62215639B700191522 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 61025B5B215639B700191522 /* JJExceptionCarthage */;
+			targetProxy = 61025B61215639B700191522 /* PBXContainerItemProxy */;
+		};
 		61BC3FCA20F7ACE500D8C791 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 61196D4120F261C800022DDC /* JJException */;
@@ -409,6 +575,62 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		61025B66215639B700191522 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = CS3P4Q373F;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = JJExceptionCarthage/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = JJException.JJExceptionCarthage;
+				PRODUCT_MODULE_NAME = JJException;
+				PRODUCT_NAME = JJException;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		61025B67215639B700191522 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = CS3P4Q373F;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = JJExceptionCarthage/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = JJException.JJExceptionCarthage;
+				PRODUCT_MODULE_NAME = JJException;
+				PRODUCT_NAME = JJException;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		61196D5620F261CC00022DDC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -596,6 +818,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		61025B65215639B700191522 /* Build configuration list for PBXNativeTarget "JJExceptionCarthage" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				61025B66215639B700191522 /* Debug */,
+				61025B67215639B700191522 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		61196D3D20F261C800022DDC /* Build configuration list for PBXProject "JJException" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

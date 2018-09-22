@@ -8,6 +8,7 @@
 
 #import "NSString+StringHook.h"
 #import "NSObject+SwizzleHook.h"
+#import "JJExceptionProxy.h"
 
 @implementation NSString (StringHook)
 
@@ -32,11 +33,11 @@
     swizzleInstanceMethod(NSClassFromString(@"NSTaggedPointerString"), @selector(rangeOfString:options:range:locale:), @selector(hookRangeOfString:options:range:locale:));
 }
 
-+ (NSString*) hookStringWithUTF8String:(const char *)nullTerminatedCString
-{
++ (NSString*) hookStringWithUTF8String:(const char *)nullTerminatedCString{
     if (NULL != nullTerminatedCString) {
         return [self hookStringWithUTF8String:nullTerminatedCString];
     }
+    handleCrashException(JJExceptionGuardNSStringContainer,@"NSString stringWithUTF8String NULL char pointer");
     return nil;
 }
 
@@ -45,6 +46,7 @@
     if (NULL != cString){
         return [self hookStringWithCString:cString encoding:enc];
     }
+    handleCrashException(JJExceptionGuardNSStringContainer,@"NSString stringWithCString:encoding: NULL char pointer");
     return nil;
 }
 
@@ -52,56 +54,50 @@
     if (nil != cString){
         return [self hookInitWithString:cString];
     }
+    handleCrashException(JJExceptionGuardNSStringContainer,@"NSString initWithString nil parameter");
     return nil;
 }
 
-- (nullable instancetype) hookInitWithCString:(const char *)nullTerminatedCString encoding:(NSStringEncoding)encoding
-{
+- (nullable instancetype) hookInitWithCString:(const char *)nullTerminatedCString encoding:(NSStringEncoding)encoding{
     if (NULL != nullTerminatedCString){
         return [self hookInitWithCString:nullTerminatedCString encoding:encoding];
     }
+    handleCrashException(JJExceptionGuardNSStringContainer,@"NSString initWithCString:encoding NULL char pointer");
     return nil;
 }
-- (NSString *)hookStringByAppendingString:(NSString *)aString
-{
-    if (aString){
-        return [self hookStringByAppendingString:aString];
-    }
-    return self;
-}
-- (NSString *)hookSubstringFromIndex:(NSUInteger)from
-{
+
+- (NSString *)hookSubstringFromIndex:(NSUInteger)from{
     if (from <= self.length) {
         return [self hookSubstringFromIndex:from];
     }
+    handleCrashException(JJExceptionGuardNSStringContainer,[NSString stringWithFormat:@"NSString substringFromIndex value:%@ from:%tu",self,from]);
     return nil;
 }
-- (NSString *)hookSubstringToIndex:(NSUInteger)to
-{
+
+- (NSString *)hookSubstringToIndex:(NSUInteger)to{
     if (to <= self.length) {
         return [self hookSubstringToIndex:to];
     }
+    handleCrashException(JJExceptionGuardNSStringContainer,[NSString stringWithFormat:@"NSString substringToIndex value:%@ from:%tu",self,to]);
     return self;
 }
-- (NSString *)hookSubstringWithRange:(NSRange)range
-{
+
+- (NSString *)hookSubstringWithRange:(NSRange)range{
     if (range.location + range.length <= self.length) {
         return [self hookSubstringWithRange:range];
-    }else if (range.location < self.length){
-        return [self hookSubstringWithRange:NSMakeRange(range.location, self.length-range.location)];
     }
+    handleCrashException(JJExceptionGuardNSStringContainer,[NSString stringWithFormat:@"NSString substringWithRange value:%@ range:%@",self,NSStringFromRange(range)]);
     return nil;
 }
-- (NSRange)hookRangeOfString:(NSString *)searchString options:(NSStringCompareOptions)mask range:(NSRange)range locale:(nullable NSLocale *)locale
-{
+- (NSRange)hookRangeOfString:(NSString *)searchString options:(NSStringCompareOptions)mask range:(NSRange)range locale:(nullable NSLocale *)locale{
     if (searchString){
         if (range.location + range.length <= self.length) {
             return [self hookRangeOfString:searchString options:mask range:range locale:locale];
-        }else if (range.location < self.length){
-            return [self hookRangeOfString:searchString options:mask range:NSMakeRange(range.location, self.length-range.location) locale:locale];
         }
+        handleCrashException(JJExceptionGuardNSStringContainer,[NSString stringWithFormat:@"NSString rangeOfString:options:range:locale: value:%@ range:%@",self,NSStringFromRange(range)]);
         return NSMakeRange(NSNotFound, 0);
     }else{
+        handleCrashException(JJExceptionGuardNSStringContainer,[NSString stringWithFormat:@"NSString rangeOfString:options:range:locale: searchString nil value:%@ range:%@",self,NSStringFromRange(range)]);
         return NSMakeRange(NSNotFound, 0);
     }
 }

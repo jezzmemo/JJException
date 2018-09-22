@@ -22,6 +22,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    JJException.exceptionWhenTerminate = NO;
+    
     [JJException configExceptionCategory:JJExceptionGuardAll];
     [JJException startGuardException];
     
