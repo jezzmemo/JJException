@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		61025B4D2153E36100191522 /* NSAttributedString+AttributedStringHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61025B4C2153E36100191522 /* NSAttributedString+AttributedStringHook.m */; };
 		61025B502153E58F00191522 /* NSMutableAttributedString+MutableAttributedStringHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61025B4F2153E58F00191522 /* NSMutableAttributedString+MutableAttributedStringHook.m */; };
-		61025B63215639B700191522 /* JJException.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61025B5C215639B700191522 /* JJException.framework */; };
-		61025B64215639B700191522 /* JJException.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 61025B5C215639B700191522 /* JJException.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		61025B6921563A6400191522 /* NSObject+DeallocBlock.h in Sources */ = {isa = PBXBuildFile; fileRef = 613E0AAB214FF41B00B8D0DF /* NSObject+DeallocBlock.h */; };
 		61025B6A21563A6400191522 /* NSObject+DeallocBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 613E0AAC214FF41B00B8D0DF /* NSObject+DeallocBlock.m */; };
 		61025B6B21563A6400191522 /* JJExceptionProxy.h in Sources */ = {isa = PBXBuildFile; fileRef = 613E0A93214974B700B8D0DF /* JJExceptionProxy.h */; };
@@ -73,13 +71,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		61025B61215639B700191522 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 61196D3A20F261C800022DDC /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 61025B5B215639B700191522;
-			remoteInfo = JJExceptionCarthage;
-		};
 		61BC3FC920F7ACE500D8C791 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 61196D3A20F261C800022DDC /* Project object */;
@@ -88,20 +79,6 @@
 			remoteInfo = JJException;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		61025B68215639B700191522 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				61025B64215639B700191522 /* JJException.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		61025B4B2153E36100191522 /* NSAttributedString+AttributedStringHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+AttributedStringHook.h"; sourceTree = "<group>"; };
@@ -171,7 +148,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				61025B63215639B700191522 /* JJException.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,12 +339,10 @@
 				61196D3E20F261C800022DDC /* Sources */,
 				61196D3F20F261C800022DDC /* Frameworks */,
 				61196D4020F261C800022DDC /* Resources */,
-				61025B68215639B700191522 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				61025B62215639B700191522 /* PBXTargetDependency */,
 			);
 			name = JJException;
 			productName = JJException;
@@ -543,11 +517,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		61025B62215639B700191522 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 61025B5B215639B700191522 /* JJExceptionCarthage */;
-			targetProxy = 61025B61215639B700191522 /* PBXContainerItemProxy */;
-		};
 		61BC3FCA20F7ACE500D8C791 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 61196D4120F261C800022DDC /* JJException */;
@@ -588,6 +557,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = JJExceptionCarthage/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -616,6 +586,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = JJExceptionCarthage/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
