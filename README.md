@@ -35,6 +35,10 @@ __Cartfile__
 github "jezzmemo/JJException"
 ```
 
+__手动导入代码__
+
+导入`Source`文件夹里所有文件，需要将MRC目录下所有.m文件，编译选项更改成-fno-objc-arc
+
 ## 如何使用
 
 * 所有异常的分类,根据自身需要，自由组合
