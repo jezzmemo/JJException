@@ -23,7 +23,7 @@ before_install:
 script:
   - set -o pipefail
   - xcodebuild -project JJException.xcodeproj -scheme JJException -sdk iphonesimulator PLATFORM_NAME=iphonesimulator -configuration DEBUG
-  - xctool -project JJException.xcodeproj -scheme JJException build test -sdk iphonesimulator GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES
+  - xctool -project JJException.xcodeproj -scheme JJException test -sdk iphonesimulator GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES
 after_success:
 
   - bash <(curl -s https://codecov.io/bash)
