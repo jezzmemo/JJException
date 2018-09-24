@@ -22,7 +22,7 @@ before_install:
   - gem install xcpretty -N
 script:
   - set -o pipefail
-  - xcodebuild -project JJException.xcodeproj -scheme JJException -configuration DEBUG
+  - xcodebuild -project JJException.xcodeproj -scheme JJException -sdk iphonesimulator PLATFORM_NAME=iphonesimulator -configuration DEBUG
 after_success:
 
 after_failure:
