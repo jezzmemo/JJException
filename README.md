@@ -1,4 +1,5 @@
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/JJException.svg)](https://img.shields.io/cocoapods/v/JJException.svg)
+[![Build Status](https://travis-ci.org/jezzmemo/JJException.svg?branch=master)](https://travis-ci.org/jezzmemo/JJException.svg?branch=master)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Platform](https://img.shields.io/cocoapods/p/JJException.svg?style=flat)](http://cocoadocs.org/docsets/JJException)
 ![License MIT](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)
