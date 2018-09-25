@@ -22,7 +22,8 @@ before_install:
   - gem install xcpretty -N
 script:
   - set -o pipefail
-  - xcodebuild -project JJException.xcodeproj -scheme JJException -sdk iphonesimulator PLATFORM_NAME=iphonesimulator -configuration DEBUG
+  - xcodebuild clean build -project JJException.xcodeproj -scheme JJException -sdk iphonesimulator PLATFORM_NAME=iphonesimulator -configuration DEBUG
+  - xcodebuild clean build test -project JJException.xcodeproj -scheme JJException -sdk iphonesimulator PLATFORM_NAME=iphonesimulator -destination "platform=iOS Simulator,name=iPad Air 2,OS=11.4" -configuration Debug GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES
 after_success:
-
+  - bash <(curl -s https://codecov.io/bash)
 after_failure:

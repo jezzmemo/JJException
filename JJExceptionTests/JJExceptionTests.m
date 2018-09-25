@@ -31,6 +31,10 @@
 
 - (void)setUp {
     [super setUp];
+    JJException.exceptionWhenTerminate = NO;
+    
+    [JJException configExceptionCategory:JJExceptionGuardAll];
+    [JJException startGuardException];
 }
 
 - (void)tearDown {
