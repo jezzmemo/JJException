@@ -14,7 +14,7 @@
 
 @interface UnrecognizedSelectorHandle : NSObject
 
-@property(nonatomic,readwrite,weak)id fromObject;
+@property(nonatomic,readwrite,assign)id fromObject;
 
 @end
 
@@ -24,6 +24,11 @@
 void unrecognizedSelector(UnrecognizedSelectorHandle* self, SEL _cmd){
     NSString* message = [NSString stringWithFormat:@"Unrecognized selector class:%@ and selector:%@",[self.fromObject class],NSStringFromSelector(_cmd)];
     handleCrashException(JJExceptionGuardUnrecognizedSelector,message);
+}
+
+- (void)dealloc{
+    self.fromObject = nil;
+    [super dealloc];
 }
 
 @end

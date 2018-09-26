@@ -15,7 +15,7 @@ const NSInteger MAX_ARRAY_SIZE = 1024 * 1024 * 5;// MAX Memeory Size 5M
 
 @interface ZombieSelectorHandle : NSObject
 
-@property(nonatomic,readwrite,weak)id fromObject;
+@property(nonatomic,readwrite,assign)id fromObject;
 
 @end
 
