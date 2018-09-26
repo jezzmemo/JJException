@@ -19,7 +19,7 @@ static const char DeallocKVOKey;
  */
 @interface KVOObjectItem : NSObject
 
-@property(nonatomic,readwrite,unsafe_unretained)NSObject* observer;
+@property(nonatomic,readwrite,assign)NSObject* observer;
 @property(nonatomic,readwrite,copy)NSString* keyPath;
 @property(nonatomic,readwrite,assign)NSKeyValueObservingOptions options;
 @property(nonatomic,readwrite,assign)void* context;
@@ -39,6 +39,12 @@ static const char DeallocKVOKey;
     return [self.observer hash] ^ [self.keyPath hash];
 }
 
+- (void)dealloc{
+    self.observer = nil;
+    self.context = nil;
+    [super dealloc];
+}
+
 @end
 
 @interface KVOObjectContainer : NSObject
@@ -51,7 +57,7 @@ static const char DeallocKVOKey;
 /**
  Associated owner object
  */
-@property(nonatomic,readwrite,unsafe_unretained)NSObject* whichObject;
+@property(nonatomic,readwrite,assign)NSObject* whichObject;
 
 /**
  NSMutableSet safe-thread
