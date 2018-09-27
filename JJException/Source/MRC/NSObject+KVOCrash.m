@@ -68,6 +68,8 @@ static const char DeallocKVOKey;
 
 - (void)removeKVOObjectItem:(KVOObjectItem*)item;
 
+- (BOOL)checkItemExist:(KVOObjectItem*)item;
+
 @end
 
 @implementation KVOObjectContainer
@@ -86,6 +88,18 @@ static const char DeallocKVOKey;
         [self.kvoObjectSet removeObject:item];
         dispatch_semaphore_signal(self.kvoLock);
     }
+}
+
+- (BOOL)checkItemExist:(KVOObjectItem*)item{
+    dispatch_semaphore_wait(self.kvoLock, DISPATCH_TIME_FOREVER);
+    BOOL exist = NO;
+    if (!item) {
+        dispatch_semaphore_signal(self.kvoLock);
+        return exist;
+    }
+    exist = [self.kvoObjectSet containsObject:item];
+    dispatch_semaphore_signal(self.kvoLock);
+    return exist;
 }
 
 - (dispatch_semaphore_t)kvoLock{
@@ -111,7 +125,7 @@ static const char DeallocKVOKey;
 - (void)clearKVOData{
     for (KVOObjectItem* item in self.kvoObjectSet) {
         //Invoke the origin removeObserver,do not check array
-        handleCrashException(JJExceptionGuardKVOCrash,[NSString stringWithFormat:@"KVO forget remove keyPath:%@ observer:%@",item.keyPath,item.observer]);
+        handleCrashException(JJExceptionGuardKVOCrash,[NSString stringWithFormat:@"KVO forgot remove keyPath:%@",item.keyPath]);
         #pragma clang diagnostic push
         #pragma clang diagnostic ignored "-Wundeclared-selector"
         [self.whichObject performSelector:@selector(hookRemoveObserver:forKeyPath:) withObject:item.observer withObject:item.keyPath];
@@ -142,46 +156,48 @@ static const char DeallocKVOKey;
         return;
     }
     
-    KVOObjectContainer* object = objc_getAssociatedObject(self,&DeallocKVOKey);
-
+    KVOObjectContainer* objectContainer = objc_getAssociatedObject(self,&DeallocKVOKey);
+    
     KVOObjectItem* item = [[KVOObjectItem alloc] init];
     item.observer = observer;
     item.keyPath = keyPath;
     item.options = options;
     item.context = context;
-
-    if (!object) {
-        KVOObjectContainer* objectContainer = [KVOObjectContainer new];
+    
+    if (!objectContainer) {
+        objectContainer = [KVOObjectContainer new];
         [objectContainer setWhichObject:self];
-        [objectContainer addKVOObjectItem:item];
-        objc_setAssociatedObject(self, &DeallocKVOKey, objectContainer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        objc_setAssociatedObject(self, &DeallocKVOKey, objectContainer, OBJC_ASSOCIATION_RETAIN);
         [objectContainer release];
-        
-        [self hookAddObserver:observer forKeyPath:keyPath options:options context:context];
-    }else{
-        if (![object.kvoObjectSet containsObject:item]) {
-            [object addKVOObjectItem:item];
-            
-            [self hookAddObserver:observer forKeyPath:keyPath options:options context:context];
-        }else{
-            handleCrashException(JJExceptionGuardKVOCrash,[NSString stringWithFormat:@"KVO duplicate key:%@ observer:%@",keyPath,observer]);
-        }
     }
+    
+    if (![objectContainer checkItemExist:item]) {
+        [objectContainer addKVOObjectItem:item];
+        [self hookAddObserver:observer forKeyPath:keyPath options:options context:context];
+    }
+    
     [item release];
 }
 
 - (void)hookRemoveObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath{
-    KVOObjectContainer* object = objc_getAssociatedObject(self, &DeallocKVOKey);
+    
+    KVOObjectContainer* objectContainer = objc_getAssociatedObject(self, &DeallocKVOKey);
+    
+    if (!observer) {
+        return;
+    }
+    
+    if (!objectContainer) {
+        return;
+    }
     
     KVOObjectItem* item = [[KVOObjectItem alloc] init];
     item.observer = observer;
     item.keyPath = keyPath;
     
-    if ([object.kvoObjectSet containsObject:item]) {
+    if ([objectContainer checkItemExist:item]) {
         [self hookRemoveObserver:observer forKeyPath:keyPath];
-        [object removeKVOObjectItem:item];
-    }else{
-        handleCrashException(JJExceptionGuardKVOCrash,[NSString stringWithFormat:@"KVO removeObserver did not exist key:%@ observer:%@",keyPath,observer]);
+        [objectContainer removeKVOObjectItem:item];
     }
     
     [item release];

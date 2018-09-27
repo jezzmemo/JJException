@@ -9,9 +9,23 @@
 #import "PushViewController.h"
 #import "KVOObjectDemo.h"
 
+
+@interface KVOObserver :NSObject
+
+@end
+
+@implementation KVOObserver
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
+    
+}
+
+@end
+
 @interface PushViewController (){
     NSTimer* _t;
     KVOObjectDemo* _kvoDemo;
+    KVOObserver* _kvoObserver;
 }
 
 @property(nonatomic,readwrite,copy)NSString* test;
@@ -26,6 +40,7 @@
     [super viewDidLoad];
     
     _kvoDemo = [KVOObjectDemo new];
+    _kvoObserver = [KVOObserver new];
     
     [self testTimer];
     
@@ -72,6 +87,8 @@
     [self addObserver:self forKeyPath:@"test2" options:NSKeyValueObservingOptionNew context:nil];
     
     [_kvoDemo addObserver:self forKeyPath:@"demoString" options:NSKeyValueObservingOptionNew context:nil];
+    
+    [self addObserver:_kvoObserver forKeyPath:@"demoString1" options:NSKeyValueObservingOptionNew context:nil];
 }
 
 
