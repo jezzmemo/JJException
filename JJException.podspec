@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "JJException"
-  s.version      = "0.0.7"
+  s.version      = "0.0.8"
   s.summary      = "Handle the objective-c crash exception."
 
   # This description is used to generate tags and improve search results.
@@ -65,13 +65,13 @@ Pod::Spec.new do |s|
 
   # s.platform     = :ios
   # s.platform     = :ios, "5.0"
-  s.platform     = :ios, "8.0"
+  #s.platform     = :ios, "8.0"
 
   #  When using multiple platforms
-  # s.ios.deployment_target = "5.0"
-  # s.osx.deployment_target = "10.7"
-  # s.watchos.deployment_target = "2.0"
-  # s.tvos.deployment_target = "9.0"
+  s.ios.deployment_target = "8.0"
+  s.osx.deployment_target = "10.7"
+  s.watchos.deployment_target = "2.0"
+  s.tvos.deployment_target = "9.0"
 
 
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -93,11 +93,11 @@ Pod::Spec.new do |s|
 
   s.default_subspec = 'All'
   s.subspec 'All' do |spec|
-    spec.ios.dependency 'JJException/Swizzle'
-    spec.ios.dependency 'JJException/ARC'
-    spec.ios.dependency 'JJException/MRC'
-    spec.ios.dependency 'JJException/Main'
-    spec.ios.dependency 'JJException/DeallocBlock'
+    spec.dependency 'JJException/Swizzle'
+    spec.dependency 'JJException/ARC'
+    spec.dependency 'JJException/MRC'
+    spec.dependency 'JJException/Main'
+    spec.dependency 'JJException/DeallocBlock'
   end
 
   s.subspec 'ARC' do |spec|

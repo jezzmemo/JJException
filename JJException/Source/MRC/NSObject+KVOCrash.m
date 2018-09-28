@@ -62,7 +62,12 @@ static const char DeallocKVOKey;
 /**
  NSMutableSet safe-thread
  */
+
+#if OS_OBJECT_HAVE_OBJC_SUPPORT
 @property(nonatomic,readwrite,retain)dispatch_semaphore_t kvoLock;
+#else
+@property(nonatomic,readwrite,assign)dispatch_semaphore_t kvoLock;
+#endif
 
 - (void)addKVOObjectItem:(KVOObjectItem*)item;
 
