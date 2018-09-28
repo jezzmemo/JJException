@@ -122,7 +122,6 @@ Bugly可以帮我们解决重复信息和CallStack信息，以及状态维护。
 
 ## TODO(大家记得给我星哦)
 * 增强Hook的健壮性
-* 支持多平台（Mac OS X,TVOS,WatchOS）
 
 ## License
 JJException is released under the MIT license. See LICENSE for details.
