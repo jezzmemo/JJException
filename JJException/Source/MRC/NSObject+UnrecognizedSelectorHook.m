@@ -40,9 +40,8 @@ void unrecognizedSelector(UnrecognizedSelectorHandle* self, SEL _cmd){
 }
 
 - (id)forwardingTargetForSelectorSwizzled:(SEL)selector{
-    BOOL existSelector = [self respondsToSelector:selector];
     NSMethodSignature* methodSignature = [self methodSignatureForSelector:selector];
-    if (!methodSignature || !existSelector) {
+    if (!methodSignature) {
         id stub = [[UnrecognizedSelectorHandle new] autorelease];
         [stub setFromObject:self];
         class_addMethod([stub class], selector, (IMP)unrecognizedSelector, "v@:");
