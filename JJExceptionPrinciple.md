@@ -105,6 +105,7 @@ static void xxxInstanceName(id self, SEL cmd, id value) {
 2. forwardInvocation在三步中式最后一步，会导致流转的周期变长，而且会产生NSInvocation,性能不是最好的选择
 
 __2018-10-7__
+
 根据热心的网友提供的[Bug](https://github.com/jezzmemo/JJException/issues/9),在使用协议时，但是并没有具体实现，导致没有找到方法闪退。
 
 原因就是`[self methodSignatureForSelector:selector]`返回了方法签名，不是nil,导致了最终没有找到方法，最终找到原因是如下：
@@ -115,15 +116,15 @@ __2018-10-7__
 下面来看看为什么会这样，`methodSignatureForSelector`最终执行的方法是`CoreFoundation __methodDescriptionForSelector:`,大概的流程是这样的：
 
 ```
-    0x10fa4f77e <+62>:  callq  0x10fb7428a               ; symbol stub for: class_copyProtocolList
-    0x10fa4f7ab <+107>: callq  0x10fb742b4               ; symbol stub for: class_isMetaClass
-    0x10fa4f7c0 <+128>: callq  0x10fb74788               ; symbol stub for: protocol_getMethodDescription
-    0x10fa4f7d7 <+151>: callq  0x10fb742b4               ; symbol stub for: class_isMetaClass
-    0x10fa4f7e9 <+169>: callq  0x10fb74788               ; symbol stub for: protocol_getMethodDescription
-    0x10fa4f837 <+247>: callq  0x10fb7444c               ; symbol stub for: free
-    0x10fa4f845 <+261>: callq  0x10fb742ae               ; symbol stub for: class_getSuperclass
-    0x10fa4f85e <+286>: callq  0x10fb74296               ; symbol stub for: class_getInstanceMethod
-    0x10fa4f86b <+299>: callq  0x10fb745d8               ; symbol stub for: method_getDescription
+    0x10fa4f77e <+62>:  callq  0x10fb7428a   ; symbol stub for: class_copyProtocolList
+    0x10fa4f7ab <+107>: callq  0x10fb742b4   ; symbol stub for: class_isMetaClass
+    0x10fa4f7c0 <+128>: callq  0x10fb74788   ; symbol stub for: protocol_getMethodDescription
+    0x10fa4f7d7 <+151>: callq  0x10fb742b4   ; symbol stub for: class_isMetaClass
+    0x10fa4f7e9 <+169>: callq  0x10fb74788   ; symbol stub for: protocol_getMethodDescription
+    0x10fa4f837 <+247>: callq  0x10fb7444c   ; symbol stub for: free
+    0x10fa4f845 <+261>: callq  0x10fb742ae   ; symbol stub for: class_getSuperclass
+    0x10fa4f85e <+286>: callq  0x10fb74296   ; symbol stub for: class_getInstanceMethod
+    0x10fa4f86b <+299>: callq  0x10fb745d8   ; symbol stub for: method_getDescription
 ```
 
 这里面我去掉了逻辑跳转，留下了关键的一些symbol，可以看出里面的一些关键动作，用图表示更直观:
