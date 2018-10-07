@@ -45,6 +45,12 @@
     [self performSelectorOnMainThread:@selector(tearDown1) withObject:nil waitUntilDone:NO];
 }
 
+- (void)testNull{
+    NSNull* null = [NSNull null];
+    NSString* str = (NSString*)null;
+    NSAssert([str uppercaseString] == nil, @"NSNull is nil");
+}
+
 - (void)testArrayException{
     NSArray* testArray = @[@"1"];
     

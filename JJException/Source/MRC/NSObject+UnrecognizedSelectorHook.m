@@ -11,43 +11,36 @@
 #import <objc/runtime.h>
 #import "JJExceptionProxy.h"
 
-
-@interface UnrecognizedSelectorHandle : NSObject
-
-@property(nonatomic,readwrite,assign)id fromObject;
-
-@end
-
-
-@implementation UnrecognizedSelectorHandle
-
-void unrecognizedSelector(UnrecognizedSelectorHandle* self, SEL _cmd){
-    NSString* message = [NSString stringWithFormat:@"Unrecognized selector class:%@ and selector:%@",[self.fromObject class],NSStringFromSelector(_cmd)];
-    handleCrashException(JJExceptionGuardUnrecognizedSelector,message);
-}
-
-- (void)dealloc{
-    self.fromObject = nil;
-    [super dealloc];
-}
-
-@end
-
 @implementation NSObject (UnrecognizedSelectorHook)
 
 + (void)jj_swizzleUnrecognizedSelector{
-    swizzleInstanceMethod([self class], @selector(forwardingTargetForSelector:), @selector(forwardingTargetForSelectorSwizzled:));
+    swizzleInstanceMethod([self class], @selector(methodSignatureForSelector:), @selector(methodSignatureForSelectorSwizzled:));
+    swizzleInstanceMethod([self class], @selector(forwardInvocation:), @selector(forwardInvocationSwizzled:));
 }
 
-- (id)forwardingTargetForSelectorSwizzled:(SEL)selector{
-    NSMethodSignature* methodSignature = [self methodSignatureForSelector:selector];
-    if (!methodSignature) {
-        id stub = [[UnrecognizedSelectorHandle new] autorelease];
-        [stub setFromObject:self];
-        class_addMethod([stub class], selector, (IMP)unrecognizedSelector, "v@:");
-        return stub;
+- (NSMethodSignature*)methodSignatureForSelectorSwizzled:(SEL)aSelector {
+    NSMethodSignature* methodSignature = [self methodSignatureForSelectorSwizzled:aSelector];
+    if (methodSignature) {
+        return methodSignature;
     }
-    return [self forwardingTargetForSelectorSwizzled:selector];
+    
+    IMP originIMP = class_getMethodImplementation([NSObject class], @selector(methodSignatureForSelector:));
+    IMP currentClassIMP = class_getMethodImplementation(self.class, @selector(methodSignatureForSelector:));
+    
+    // If current class override methodSignatureForSelector return nil
+    if (originIMP != currentClassIMP){
+        return nil;
+    }
+    
+    // Customer method signature
+    // void xxx(id,sel,id)
+    return [NSMethodSignature signatureWithObjCTypes:"v@:@"];
 }
+
+- (void)forwardInvocationSwizzled:(NSInvocation*)invocation{
+    NSString* message = [NSString stringWithFormat:@"Unrecognized selector class:%@ and selector:%@",NSStringFromClass(self.class),NSStringFromSelector(invocation.selector)];
+    handleCrashException(JJExceptionGuardUnrecognizedSelector,message);
+}
+
 
 @end

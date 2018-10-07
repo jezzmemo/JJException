@@ -43,7 +43,7 @@
     [self.view addSubview:button];
     
     UIButton* otherButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [otherButton setTitle:@"Test NSArray|NSDictionary|UnrecognizedSelector" forState:UIControlStateNormal];
+    [otherButton setTitle:@"Test NSArray|NSDictionary|UnrecognizedSelector|NSNull" forState:UIControlStateNormal];
     [otherButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
     otherButton.frame = CGRectMake(0, 350, self.view.frame.size.width, 50);
     [otherButton addTarget:self action:@selector(testArrayDictionaryUnrecognizedSelector) forControlEvents:UIControlEventTouchUpInside];
@@ -52,7 +52,7 @@
 #pragma mark - Exception Delegate
 
 - (void)handleCrashException:(NSString*)exceptionMessage extraInfo:(NSDictionary*)info{
-    
+
 }
 
 #pragma mark - Action
@@ -81,6 +81,7 @@
     [self testSampleArray];
     [self testSimpleDictionary];
     [self testUnrecognizedSelector];
+    [self testNull];
 }
 
 - (void)testSampleArray{
@@ -96,7 +97,13 @@
 
 - (void)testUnrecognizedSelector{
     [self performSelector:@selector(testUndefineSelector)];
+    [self performSelector:@selector(handleCrashException:exceptionCategory:extraInfo:)];
 }
 
+- (void)testNull{
+    NSNull* null = [NSNull null];
+    NSString* str = (NSString*)null;
+    NSLog(@"Str length:%ld",str.length);
+}
 
 @end

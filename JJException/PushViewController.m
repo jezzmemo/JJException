@@ -30,7 +30,7 @@
 
 @property(nonatomic,readwrite,copy)NSString* test;
 
-//@property(nonatomic,readwrite,copy)NSObject* test1;
+@property(nonatomic,readwrite,copy)NSString* test1;
 
 @end
 
@@ -79,7 +79,7 @@
 #pragma mark - Test KVO
 
 - (void)testKVO{
-    [self addObserver:self forKeyPath:@"test1" options:NSKeyValueObservingOptionNew context:nil];
+    [self addObserver:self forKeyPath:@"test1" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew context:nil];
     [self addObserver:self forKeyPath:@"test1" options:NSKeyValueObservingOptionNew context:nil];
     
     [self removeObserver:self forKeyPath:@"test0" context:nil];
