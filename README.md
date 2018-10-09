@@ -9,19 +9,21 @@
 
 保护App,一般常见的问题不会导致闪退，增强App的健壮性，同时会将错误抛出来，根据每个App自身的日志渠道记录，下次迭代或者热修复以下问题.
 
-- [x] Unrecognized Selector Sent to Instance
+- [x] Unrecognized Selector Sent to Instance(方法不存在异常)
 
-- [x] NSArray,NSMutableArray,NSDictonary,NSMutableDictionary
+- [x] NSNull(方法不存在异常)
 
-- [x] KVO
+- [x] NSArray,NSMutableArray,NSDictonary,NSMutableDictionary(数组越界,key-value参数异常)
 
-- [x] Zombie Pointer
+- [x] KVO(忘记移除keypath导致闪退)
 
-- [x] NSTimer
+- [x] Zombie Pointer(野指针)
 
-- [x] NSNotification
+- [x] NSTimer(忘记移除导致内存泄漏)
 
-- [x] NSString,NSMutableString,NSAttributedString,NSMutableAttributedString
+- [x] NSNotification(忘记移除导致异常)
+
+- [x] NSString,NSMutableString,NSAttributedString,NSMutableAttributedString(下标越界以及参数nil异常)
 
 ## 如何安装
 
