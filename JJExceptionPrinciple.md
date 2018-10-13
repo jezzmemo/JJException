@@ -284,14 +284,6 @@ __注意是有-l参数的__
 atos -arch arm64 -o xxxxx.dSYM/Contents/Resources/DWARF/xxxxx -l get_load_address 0x00000001007d20a4
 ```
 
-## Method Swizzling
-
-* Method swizzling不是原子操作
-* Swizzle冲突问题
-* 方法参数问题
-* Swizzle执行顺序
-
-
 ## 参考资料
 
 [https://github.com/opensource-apple/objc4/blob/master/runtime/objc-runtime-new.mm](https://github.com/opensource-apple/objc4/blob/master/runtime/objc-runtime-new.mm)
