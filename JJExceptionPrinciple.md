@@ -188,6 +188,7 @@ KVO在以下情况会导致闪退:
 需要Hook以下方法:
 * addObserver:forKeyPath:options:context:
 * removeObserver:forKeyPath:
+* removeObserver:forKeyPath:context:
 
 主要解决以下问题:
 * 在注册监听后,中间对象需要维护注册的数据集合，当宿主释放时，清除还在集合中的监听者
@@ -283,9 +284,17 @@ __注意是有-l参数的__
 atos -arch arm64 -o xxxxx.dSYM/Contents/Resources/DWARF/xxxxx -l get_load_address 0x00000001007d20a4
 ```
 
+## Method Swizzling
+
+* Method swizzling不是原子操作
+* Swizzle冲突问题
+* 方法参数问题
+* Swizzle执行顺序
+
 
 ## 参考资料
 
 [https://github.com/opensource-apple/objc4/blob/master/runtime/objc-runtime-new.mm](https://github.com/opensource-apple/objc4/blob/master/runtime/objc-runtime-new.mm)
 [大白健康系统](https://neyoufan.github.io/2017/01/13/ios/BayMax_HTSafetyGuard/)
 [反编译分析并模拟实现methodSignatureForSelector方法](http://tutuge.me/2017/04/08/diy-methodSignatureForSelector/)
+[https://stackoverflow.com/questions/5339276/what-are-the-dangers-of-method-swizzling-in-objective-c](https://stackoverflow.com/questions/5339276/what-are-the-dangers-of-method-swizzling-in-objective-c)

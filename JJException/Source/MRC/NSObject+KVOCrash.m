@@ -9,6 +9,7 @@
 #import "NSObject+KVOCrash.h"
 #import "NSObject+SwizzleHook.h"
 #import <objc/runtime.h>
+#import <objc/message.h>
 #import "JJExceptionProxy.h"
 
 static const char DeallocKVOKey;
@@ -73,7 +74,7 @@ static const char DeallocKVOKey;
 
 - (void)removeKVOObjectItem:(KVOObjectItem*)item;
 
-- (BOOL)checkItemExist:(KVOObjectItem*)item;
+- (BOOL)checkKVOItemExist:(KVOObjectItem*)item;
 
 @end
 
@@ -95,7 +96,7 @@ static const char DeallocKVOKey;
     }
 }
 
-- (BOOL)checkItemExist:(KVOObjectItem*)item{
+- (BOOL)checkKVOItemExist:(KVOObjectItem*)item{
     dispatch_semaphore_wait(self.kvoLock, DISPATCH_TIME_FOREVER);
     BOOL exist = NO;
     if (!item) {
@@ -133,7 +134,11 @@ static const char DeallocKVOKey;
         handleCrashException(JJExceptionGuardKVOCrash,[NSString stringWithFormat:@"KVO forgot remove keyPath:%@",item.keyPath]);
         #pragma clang diagnostic push
         #pragma clang diagnostic ignored "-Wundeclared-selector"
-        [self.whichObject performSelector:@selector(hookRemoveObserver:forKeyPath:) withObject:item.observer withObject:item.keyPath];
+        @try {
+            ((void(*)(id,SEL,id,NSString*))objc_msgSend)(self.whichObject,@selector(hookRemoveObserver:forKeyPath:),item.observer,item.keyPath);
+        }@catch (NSException *exception) {
+            handleCrashException(JJExceptionGuardKVOCrash,[exception reason]);
+        }
         #pragma clang diagnostic pop
     }
 }
@@ -177,7 +182,7 @@ static const char DeallocKVOKey;
         [objectContainer release];
     }
     
-    if (![objectContainer checkItemExist:item]) {
+    if (![objectContainer checkKVOItemExist:item]) {
         [objectContainer addKVOObjectItem:item];
         [self hookAddObserver:observer forKeyPath:keyPath options:options context:context];
     }
@@ -205,8 +210,12 @@ static const char DeallocKVOKey;
     item.observer = observer;
     item.keyPath = keyPath;
     
-    if ([objectContainer checkItemExist:item]) {
-        [self hookRemoveObserver:observer forKeyPath:keyPath];
+    if ([objectContainer checkKVOItemExist:item]) {
+        @try {
+            [self hookRemoveObserver:observer forKeyPath:keyPath];
+        }@catch (NSException *exception) {
+            handleCrashException(JJExceptionGuardKVOCrash,[exception reason]);
+        }
         [objectContainer removeKVOObjectItem:item];
     }
     
