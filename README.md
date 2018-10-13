@@ -7,7 +7,7 @@
 
 # JJException
 
-Common problems will not crash by the JJException,Hook the Unrecognized Selector,Out of bound,Paramter is nil,etc.Throw the exception to the interface,and then save the exception record to the log,upgrad the app or hot fix to resolve the exception.
+Common problems will not crash by the JJException,Hook the Unrecognized Selector,Out of bound,Paramter is nil,etc.Throw the exception to the interface,And then save the exception record to the log,Upgrad the app or Hot-Fix to resolve the exception.
 
 
 保护App,一般常见的问题不会导致闪退，增强App的健壮性，同时会将错误抛出来，根据每个App自身的日志渠道记录，下次迭代或者热修复以下问题.
