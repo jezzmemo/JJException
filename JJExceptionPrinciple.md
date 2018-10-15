@@ -289,8 +289,9 @@ atos -arch arm64 -o xxxxx.dSYM/Contents/Resources/DWARF/xxxxx -l get_load_addres
 * Method swizzling不是原子操作
 
 Method swizzling整个过程需要线程安全，如果你只是在`+(void)load`执行，并且是`dispatch_once`里执行的，这样一般是没问题的，这里两个细节就是:
-    - load保证了执行时间在main方法之前
-    - dispatch_once是保证线程安全的，还有只执行一次
+
+    1. load保证了执行时间在main方法之前
+    2. dispatch_once是保证线程安全的，还有只执行一次
 
 假如你是在App运行期间Method Swizzling，就一定要注意要保证线程是安全的,至于如何保证线程安全，google一大把，这里就不赘述了.
 
@@ -298,8 +299,8 @@ Method swizzling整个过程需要线程安全，如果你只是在`+(void)load`
 
 冲突的问题体现在，同一个方法，被多次Swizzling，每次对应的Method不一样，按照正常的需求，每个被Swizzling Method都要被执行，不想看到的是只会执行最后一次的Method swizzling，之前的原始方法不会执行，在这个地方做的比较完善的有两个库:
 
-  - [RSSwizzle](https://github.com/rabovik/RSSwizzle/)
-  - [Aspects](https://github.com/steipete/Aspects)
+    1. [RSSwizzle](https://github.com/rabovik/RSSwizzle/)
+    2. [Aspects](https://github.com/steipete/Aspects)
 
 `RSSwizzle`的原理是记住OriginIMP,当执行Origin Method，如果IMP存在直接返回IMP，如果IMP = NULL，证明这个方法可能在父类，直接去父类找并返回父类IMP
 
@@ -318,9 +319,9 @@ A类有一个方法a1,Swizzled的方法是a2,在执行原始方法时，取_cmd�
 * Swizzle执行顺序
 
 这个问题体现在有父类和继承关系上，分为以下几种情况:
-1. 父类有实现需要Swizzle的方法，子类没有，需要将Swizzled后的方法添加到当前类，并且执行原始方法时，指向父类
-2. 父类有实现需要Swizzle的方法，子类也有实现，这种直接替换成Swizzled的方法
-3. 执行的顺序是是你Swizzle添加的顺序，`RSSwizzle`类似链表的形式，`Aspects`是通过集合来维护的
+    1. 父类有实现需要Swizzle的方法，子类没有，需要将Swizzled后的方法添加到当前类，并且执行原始方法时，指向父类
+    2. 父类有实现需要Swizzle的方法，子类也有实现，这种直接替换成Swizzled的方法
+    3. 执行的顺序是是你Swizzle添加的顺序，`RSSwizzle`类似链表的形式，`Aspects`是通过集合来维护的
 
 
 ## 参考资料
