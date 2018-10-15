@@ -290,8 +290,8 @@ atos -arch arm64 -o xxxxx.dSYM/Contents/Resources/DWARF/xxxxx -l get_load_addres
 
 Method swizzling整个过程需要线程安全，如果你只是在`+(void)load`执行，并且是`dispatch_once`里执行的，这样一般是没问题的，这里两个细节就是:
 
-  - load保证了执行时间在main方法之前
-  - dispatch_once是保证线程安全的，还有只执行一次
+    - load保证了执行时间在main方法之前
+    - dispatch_once是保证线程安全的，还有只执行一次
 
 假如你是在App运行期间Method Swizzling，就一定要注意要保证线程是安全的,至于如何保证线程安全，google一大把，这里就不赘述了.
 
