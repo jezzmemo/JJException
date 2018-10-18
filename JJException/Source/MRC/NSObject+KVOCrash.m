@@ -43,6 +43,9 @@ static const char DeallocKVOKey;
 - (void)dealloc{
     self.observer = nil;
     self.context = nil;
+    if (self.keyPath) {
+        [self.keyPath release];
+    }
     [super dealloc];
 }
 
