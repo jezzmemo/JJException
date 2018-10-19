@@ -65,7 +65,7 @@ typedef NS_OPTIONS(NSInteger,JJExceptionGuardCategory){
 };
 ```
 
-* 设置异常类型并开启
+* 设置异常类型并开启，__建议放在`didFinishLaunchingWithOptions`第一行，以免在多线程出现异常的情况__
 ```objc
     [JJException configExceptionCategory:JJExceptionGuardAll];
     [JJException startGuardException];

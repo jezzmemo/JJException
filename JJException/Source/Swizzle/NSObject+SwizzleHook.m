@@ -8,9 +8,25 @@
 
 #import "NSObject+SwizzleHook.h"
 #import <objc/runtime.h>
+#import <libkern/OSAtomic.h>
 
-void swizzleClassMethod(Class cls, SEL originSelector, SEL swizzleSelector)
-{
+typedef IMP (^JJSWizzleImpProvider)(void);
+
+@interface JJSwizzleObject()
+@property (nonatomic,readwrite,copy) JJSWizzleImpProvider impProviderBlock;
+@property (nonatomic,readwrite,assign) SEL selector;
+@end
+
+@implementation JJSwizzleObject
+
+- (JJSwizzleOriginalIMP)getOriginalImplementation{
+    NSAssert(_impProviderBlock,nil);
+    return (JJSwizzleOriginalIMP)_impProviderBlock();
+}
+
+@end
+
+void swizzleClassMethod(Class cls, SEL originSelector, SEL swizzleSelector){
     if (!cls) {
         return;
     }
@@ -40,8 +56,7 @@ void swizzleClassMethod(Class cls, SEL originSelector, SEL swizzleSelector)
     }
 }
 
-void swizzleInstanceMethod(Class cls, SEL originSelector, SEL swizzleSelector)
-{
+void swizzleInstanceMethod(Class cls, SEL originSelector, SEL swizzleSelector){
     if (!cls) {
         return;
     }
@@ -75,12 +90,45 @@ void swizzleInstanceMethod(Class cls, SEL originSelector, SEL swizzleSelector)
 
 @implementation NSObject (SwizzleHook)
 
+void __JJ_SWIZZLE_BLOCK(Class classToSwizzle,SEL selector,JJSwizzledIMPBlock impBlock){
+    Method method = class_getInstanceMethod(classToSwizzle, selector);
+    
+    __block IMP originalIMP = NULL;
+    
+    JJSWizzleImpProvider originalImpProvider = ^IMP{
+        
+        IMP imp = originalIMP;
+        
+        if (NULL == imp){
+            Class superclass = class_getSuperclass(classToSwizzle);
+            imp = method_getImplementation(class_getInstanceMethod(superclass,selector));
+        }
+        return imp;
+    };
+    
+    JJSwizzleObject* swizzleInfo = [JJSwizzleObject new];
+    swizzleInfo.selector = selector;
+    swizzleInfo.impProviderBlock = originalImpProvider;
+    
+    id newIMPBlock = impBlock(swizzleInfo);
+    
+    const char* methodType = method_getTypeEncoding(method);
+    
+    IMP newIMP = imp_implementationWithBlock(newIMPBlock);
+    
+    originalIMP = class_replaceMethod(classToSwizzle, selector, newIMP, methodType);
+}
+
 + (void)jj_swizzleClassMethod:(SEL)originSelector withSwizzleMethod:(SEL)swizzleSelector{
     swizzleClassMethod(self.class, originSelector, swizzleSelector);
 }
 
 - (void)jj_swizzleInstanceMethod:(SEL)originSelector withSwizzleMethod:(SEL)swizzleSelector{
     swizzleInstanceMethod(self.class, originSelector, swizzleSelector);
+}
+
+- (void)jj_swizzleInstanceMethod:(SEL)originSelector withSwizzledBlock:(JJSwizzledIMPBlock)swizzledBlock{
+    __JJ_SWIZZLE_BLOCK(self.class, originSelector, swizzledBlock);
 }
 
 @end

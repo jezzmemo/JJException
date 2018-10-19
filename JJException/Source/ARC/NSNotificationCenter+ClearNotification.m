@@ -14,17 +14,23 @@
 @implementation NSNotificationCenter (ClearNotification)
 
 + (void)jj_swizzleNSNotificationCenter{
-    swizzleInstanceMethod([NSNotificationCenter class], @selector(addObserver:selector:name:object:), @selector(hookAddObserver:selector:name:object:));
+    [self jj_swizzleInstanceMethod:@selector(addObserver:selector:name:object:) withSwizzledBlock:^id(JJSwizzleObject *swizzleInfo) {
+        return ^(__unsafe_unretained id self,id observer,SEL aSelector,NSString* aName,id anObject){
+            [self processAddObserver:observer selector:aSelector name:aName object:anObject swizzleInfo:swizzleInfo];
+        };
+    }];
 }
 
-- (void)hookAddObserver:(id)observer selector:(SEL)aSelector name:(NSNotificationName)aName object:(id)anObject{
+- (void)processAddObserver:(id)observer selector:(SEL)aSelector name:(NSNotificationName)aName object:(id)anObject swizzleInfo:(JJSwizzleObject*)swizzleInfo{
     
     if (observer) {
         __unsafe_unretained typeof(observer) unsafeObject = observer;
         [observer jj_deallocBlock:^{
             [[NSNotificationCenter defaultCenter] removeObserver:unsafeObject];
         }];
-        [self hookAddObserver:observer selector:aSelector name:aName object:anObject];
+        void(*originIMP)(__unsafe_unretained id,SEL,id,SEL,NSString*,id);
+        originIMP = (__typeof(originIMP))[swizzleInfo getOriginalImplementation];
+        originIMP(self,swizzleInfo.selector,observer,aSelector,aName,anObject);
     }
 }
 

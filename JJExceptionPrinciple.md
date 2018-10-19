@@ -314,7 +314,9 @@ Method swizzling整个过程需要线程安全，如果你只是在`+(void)load`
 
 A类有一个方法a1,Swizzled的方法是a2,在执行原始方法时，取_cmd参数时是`a2`，如果a1方法体里有依赖_cmd时，就会出现问题。
 
-所以`RSSwizzle`和`Aspects`都是用block来规避这个问题的,__所以在JJException的0.1.1版本中将用RSSwizzle的方式来实现Hook__
+`RSSwizzle`是用block和IMP来规避这个问题的,`RSSwizzle`是真正避开这个问题的，因为对外接口就是IMP,所以他用宏对外，使用的比较生涩.
+
+`Aspects`其实没有安全避开这个问题，不过它主要保证`forwardInvocation:`没有依赖_cmd，就没有这个问题.
 
 * Swizzle执行顺序
 
