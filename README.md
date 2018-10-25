@@ -30,6 +30,11 @@ Common problems will not crash by the JJException,Hook the Unrecognized Selector
 
 ## 如何安装
 
+__Requirements__
+
+* iOS 8.0+
+* Xcode 8.0+
+
 __Podfile__
 
 ```
