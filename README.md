@@ -125,6 +125,7 @@ Bugly可以帮我们解决重复信息和CallStack信息，以及状态维护。
 实现JJExceptionHandle协议后，将异常信息组织成Error，然后用[Bugly reportError:error]上传异常信息，上传后异常信息Bugly的后台`错误分析`菜单里
 
 > Swift是否有作用
+
 是有作用的，Swift有些API实现是独立实现的，比如String,Array,用结构体的方式，但是有些还是沿用了Objective-c，凡是沿用Objective-c的特性的，JJException还是生效的，下面我来列下还依然生效的功能点:
 
 * Unrecognized Selector Sent to Instance
@@ -137,20 +138,20 @@ Bugly可以帮我们解决重复信息和CallStack信息，以及状态维护。
 
 这里贴下Swift的初始化代码示例:
 ```swift
-  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        self.registerJJException()
-        return true
-    }
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    self.registerJJException()
+    return true
+}
     
-    func registerJJException(){
-        JJException.configExceptionCategory(.allExceptZombie)
-        JJException.startGuard()
-        JJException.register(self);
-    }
+func registerJJException(){
+    JJException.configExceptionCategory(.allExceptZombie)
+    JJException.startGuard()
+    JJException.register(self);
+}
     
-    func handleCrashException(_ exceptionMessage: String, extraInfo info: [AnyHashable : Any]?) {
+func handleCrashException(_ exceptionMessage: String, extraInfo info: [AnyHashable : Any]?) {
         
-    }
+}
 ```
 
 
