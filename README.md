@@ -33,6 +33,7 @@ Common problems will not crash by the JJException,Hook the Unrecognized Selector
 __Requirements__
 
 * iOS 8.0+
+* OSX 10.7+
 * Xcode 8.0+
 
 __Podfile__
