@@ -227,7 +227,7 @@ uintptr_t get_slide_address(void) {
     return _currentClassSize;
 }
 
-- (id)objectFromCurrentClassesSet{
+- (nullable id)objectFromCurrentClassesSet{
     NSEnumerator* objectEnum = [_currentClassesSet objectEnumerator];
     for (id object in objectEnum) {
         return object;

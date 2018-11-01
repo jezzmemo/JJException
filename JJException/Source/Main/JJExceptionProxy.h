@@ -120,7 +120,7 @@ __attribute__((overloadable)) void handleCrashException(JJExceptionGuardCategory
 
  @return NSObject
  */
-- (id)objectFromCurrentClassesSet;
+- (nullable id)objectFromCurrentClassesSet;
 
 @end
 

@@ -165,6 +165,10 @@ static const char DeallocKVOKey;
 }
 
 - (void)hookAddObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context{
+    if (object_getClass(observer) == objc_getClass("RACKVOProxy")) {
+        [self hookAddObserver:observer forKeyPath:keyPath options:options context:context];
+        return;
+    }
     
     if (!observer || keyPath.length == 0) {
         return;
@@ -194,10 +198,20 @@ static const char DeallocKVOKey;
 }
 
 - (void)hookRemoveObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath context:(void*)context{
+    if (object_getClass(observer) == objc_getClass("RACKVOProxy")) {
+        [self hookRemoveObserver:observer forKeyPath:keyPath context:context];
+        return;
+    }
+    
     [self removeObserver:observer forKeyPath:keyPath];
 }
 
 - (void)hookRemoveObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath{
+    
+    if (object_getClass(observer) == objc_getClass("RACKVOProxy")) {
+        [self hookRemoveObserver:observer forKeyPath:keyPath];
+        return;
+    }
     
     KVOObjectContainer* objectContainer = objc_getAssociatedObject(self, &DeallocKVOKey);
     
