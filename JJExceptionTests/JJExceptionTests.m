@@ -151,14 +151,14 @@
     [noramlAttribute enumerateAttributesInRange:NSMakeRange(0, 1000) options:NSAttributedStringEnumerationReverse usingBlock:nil];
 }
 
-- (void)testNSMutableAttributedString{
+- (void)testMutableAttributedString{
     NSString* nilString = nil;
     NSDictionary* nilDic = nil;
     NSMutableAttributedString* attribute = [[NSMutableAttributedString alloc] initWithString:nilString];
     
     NSMutableAttributedString* attribute1 = [[NSMutableAttributedString alloc] initWithString:nilString attributes:nilDic];
     
-    NSMutableAttributedString* attribute2 = [[NSMutableAttributedString alloc] initWithString:@""];
+    NSMutableAttributedString* attribute2 = [[NSMutableAttributedString alloc] initWithString:@"12"];
     [attribute2 addAttribute:NSFontAttributeName value:nilString range:NSMakeRange(0, 1000)];
     [attribute2 addAttributes:nilDic range:NSMakeRange(1000, 100000)];
     [attribute2 addAttributes:nilDic range:NSMakeRange(1000, 0)];
@@ -166,6 +166,20 @@
     [attribute2 setAttributes:nilDic range:NSMakeRange(100, 100)];
     [attribute2 setAttributes:nilDic range:NSMakeRange(100, 0)];
     [attribute2 setAttributes:@{} range:NSMakeRange(100, 100)];
+    
+    [attribute2 removeAttribute:NSFontAttributeName range:NSMakeRange(0, 100)];
+    [attribute2 removeAttribute:NSFontAttributeName range:NSMakeRange(-1, 0)];
+    [attribute2 removeAttribute:nilString range:NSMakeRange(0, 100)];
+    
+    [attribute2 deleteCharactersInRange:NSMakeRange(0, 1)];
+    NSAssert([attribute2.string isEqualToString:@"2"], @"DeleteCharactersInRange Failed");
+    [attribute2 deleteCharactersInRange:NSMakeRange(0, 10)];
+    
+    [attribute2 replaceCharactersInRange:NSMakeRange(0, 1) withString:@"3"];
+    NSAssert([attribute2.string isEqualToString:@"3"], @"ReplaceCharactersInRange Failed");
+    
+    [attribute2 replaceCharactersInRange:NSMakeRange(0, 1) withString:nilString];
+    [attribute2 replaceCharactersInRange:NSMakeRange(0, 100) withString:@"1"];
 }
 
 - (void)testJJExceptionPerformance{

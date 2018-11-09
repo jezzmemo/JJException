@@ -22,6 +22,10 @@
     swizzleInstanceMethod(cls,@selector(addAttribute:value:range:), @selector(hookAddAttribute:value:range:));
     swizzleInstanceMethod(cls,@selector(addAttributes:range:), @selector(hookAddAttributes:range:));
     swizzleInstanceMethod(cls,@selector(setAttributes:range:), @selector(hookSetAttributes:range:));
+    swizzleInstanceMethod(cls,@selector(removeAttribute:range:), @selector(hookRemoveAttribute:range:));
+    swizzleInstanceMethod(cls,@selector(deleteCharactersInRange:), @selector(hookDeleteCharactersInRange:));
+    swizzleInstanceMethod(cls,@selector(replaceCharactersInRange:withString:), @selector(hookReplaceCharactersInRange:withString:));
+    swizzleInstanceMethod(cls,@selector(replaceCharactersInRange:withAttributedString:), @selector(hookReplaceCharactersInRange:withAttributedString:));
 }
 
 - (id)hookInitWithString:(NSString*)str{
@@ -78,6 +82,50 @@
         }
     }else{
         handleCrashException(JJExceptionGuardNSStringContainer,@"NSMutableAttributedString setAttributes:range: attrs nil");
+    }
+}
+
+- (void)hookRemoveAttribute:(id)name range:(NSRange)range {
+    if (!range.length) {
+        [self hookRemoveAttribute:name range:range];
+    }else if (name){
+        if (range.location + range.length <= self.length) {
+            [self hookRemoveAttribute:name range:range];
+        }else {
+            handleCrashException(JJExceptionGuardNSStringContainer,[NSString stringWithFormat:@"NSMutableAttributedString removeAttribute:range: name:%@ range:%@",name,NSStringFromRange(range)]);
+        }
+    }else{
+        handleCrashException(JJExceptionGuardNSStringContainer,@"NSMutableAttributedString removeAttribute:range: attrs nil");
+    }
+}
+
+- (void)hookDeleteCharactersInRange:(NSRange)range {
+    if (range.location + range.length <= self.length) {
+        [self hookDeleteCharactersInRange:range];
+    }else {
+        handleCrashException(JJExceptionGuardNSStringContainer,[NSString stringWithFormat:@"NSMutableAttributedString deleteCharactersInRange: range:%@",NSStringFromRange(range)]);
+    }
+}
+- (void)hookReplaceCharactersInRange:(NSRange)range withString:(NSString *)str {
+    if (str){
+        if (range.location + range.length <= self.length) {
+            [self hookReplaceCharactersInRange:range withString:str];
+        }else{
+            handleCrashException(JJExceptionGuardNSStringContainer,[NSString stringWithFormat:@"NSMutableAttributedString replaceCharactersInRange:withString string:%@ range:%@",str,NSStringFromRange(range)]);
+        }
+    }else{
+        handleCrashException(JJExceptionGuardNSStringContainer,@"NSMutableAttributedString replaceCharactersInRange:withString: string nil");
+    }
+}
+- (void)hookReplaceCharactersInRange:(NSRange)range withAttributedString:(NSAttributedString *)str {
+    if (str){
+        if (range.location + range.length <= self.length) {
+            [self hookReplaceCharactersInRange:range withAttributedString:str];
+        }else{
+          handleCrashException(JJExceptionGuardNSStringContainer,[NSString stringWithFormat:@"NSMutableAttributedString replaceCharactersInRange:withString string:%@ range:%@",str,NSStringFromRange(range)]);
+        }
+    }else{
+        handleCrashException(JJExceptionGuardNSStringContainer,@"NSMutableAttributedString replaceCharactersInRange:withString: attributedString nil");
     }
 }
 
