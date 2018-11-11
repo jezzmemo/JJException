@@ -44,6 +44,8 @@
 		61025B8921563A6400191522 /* NSObject+UnrecognizedSelectorHook.h in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F53E21427E4100C87FA1 /* NSObject+UnrecognizedSelectorHook.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		61025B8A21563A6400191522 /* NSObject+UnrecognizedSelectorHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F53F21427E4100C87FA1 /* NSObject+UnrecognizedSelectorHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		61025B8B21563ABB00191522 /* JJException.h in Headers */ = {isa = PBXBuildFile; fileRef = 613E0A8C21496ED100B8D0DF /* JJException.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6109EE7A2198244A00CB15E6 /* NSSet+SetHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 6109EE792198244A00CB15E6 /* NSSet+SetHook.m */; };
+		6109EE7D2198264F00CB15E6 /* NSMutableSet+MutableSetHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 6109EE7C2198264F00CB15E6 /* NSMutableSet+MutableSetHook.m */; };
 		61196D4720F261C800022DDC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 61196D4620F261C800022DDC /* AppDelegate.m */; };
 		61196D4A20F261C800022DDC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61196D4920F261C800022DDC /* ViewController.m */; };
 		61196D4D20F261C800022DDC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61196D4B20F261C800022DDC /* Main.storyboard */; };
@@ -87,6 +89,10 @@
 		61025B4F2153E58F00191522 /* NSMutableAttributedString+MutableAttributedStringHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableAttributedString+MutableAttributedStringHook.m"; sourceTree = "<group>"; };
 		61025B5C215639B700191522 /* JJException.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JJException.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		61025B5F215639B700191522 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6109EE782198244A00CB15E6 /* NSSet+SetHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSSet+SetHook.h"; sourceTree = "<group>"; };
+		6109EE792198244A00CB15E6 /* NSSet+SetHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSSet+SetHook.m"; sourceTree = "<group>"; };
+		6109EE7B2198264F00CB15E6 /* NSMutableSet+MutableSetHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableSet+MutableSetHook.h"; sourceTree = "<group>"; };
+		6109EE7C2198264F00CB15E6 /* NSMutableSet+MutableSetHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSMutableSet+MutableSetHook.m"; sourceTree = "<group>"; };
 		61196D4220F261C800022DDC /* JJException.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JJException.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61196D4520F261C800022DDC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		61196D4620F261C800022DDC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -287,6 +293,10 @@
 				61025B4C2153E36100191522 /* NSAttributedString+AttributedStringHook.m */,
 				61025B4E2153E58F00191522 /* NSMutableAttributedString+MutableAttributedStringHook.h */,
 				61025B4F2153E58F00191522 /* NSMutableAttributedString+MutableAttributedStringHook.m */,
+				6109EE782198244A00CB15E6 /* NSSet+SetHook.h */,
+				6109EE792198244A00CB15E6 /* NSSet+SetHook.m */,
+				6109EE7B2198264F00CB15E6 /* NSMutableSet+MutableSetHook.h */,
+				6109EE7C2198264F00CB15E6 /* NSMutableSet+MutableSetHook.m */,
 			);
 			path = ARC;
 			sourceTree = "<group>";
@@ -498,7 +508,9 @@
 				613E0AAD214FF41B00B8D0DF /* NSObject+DeallocBlock.m in Sources */,
 				61025B502153E58F00191522 /* NSMutableAttributedString+MutableAttributedStringHook.m in Sources */,
 				613E0A8E21496ED100B8D0DF /* JJException.m in Sources */,
+				6109EE7D2198264F00CB15E6 /* NSMutableSet+MutableSetHook.m in Sources */,
 				61196D4720F261C800022DDC /* AppDelegate.m in Sources */,
+				6109EE7A2198244A00CB15E6 /* NSSet+SetHook.m in Sources */,
 				61A7F5562144D0FA00C87FA1 /* NSObject+SwizzleHook.m in Sources */,
 				61A7F54E21427EB700C87FA1 /* NSMutableArray+MutableArrayHook.m in Sources */,
 				61A7F54D21427EB700C87FA1 /* NSDictionary+DictionaryHook.m in Sources */,

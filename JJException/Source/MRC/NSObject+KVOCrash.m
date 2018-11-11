@@ -134,7 +134,7 @@ static const char DeallocKVOKey;
 - (void)clearKVOData{
     for (KVOObjectItem* item in self.kvoObjectSet) {
         //Invoke the origin removeObserver,do not check array
-        handleCrashException(JJExceptionGuardKVOCrash,[NSString stringWithFormat:@"KVO forgot remove keyPath:%@",item.keyPath]);
+        handleCrashException(JJExceptionGuardKVOCrash,[NSString stringWithFormat:@"KVO forgot remove keyPath:%@ from which object:%@",item.keyPath,NSStringFromClass(object_getClass(self.whichObject))]);
         #pragma clang diagnostic push
         #pragma clang diagnostic ignored "-Wundeclared-selector"
         @try {

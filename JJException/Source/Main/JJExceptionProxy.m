@@ -144,6 +144,8 @@ uintptr_t get_slide_address(void) {
         if(self.exceptionGuardCategory & JJExceptionGuardArrayContainer){
             [NSArray performSelector:@selector(jj_swizzleNSArray)];
             [NSMutableArray performSelector:@selector(jj_swizzleNSMutableArray)];
+            [NSSet performSelector:@selector(jj_swizzleNSSet)];
+            [NSMutableSet performSelector:@selector(jj_swizzleNSMutableSet)];
         }
         if(self.exceptionGuardCategory & JJExceptionGuardDictionaryContainer){
             [NSDictionary performSelector:@selector(jj_swizzleNSDictionary)];

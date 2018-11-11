@@ -182,11 +182,23 @@
     [attribute2 replaceCharactersInRange:NSMakeRange(0, 100) withString:@"1"];
 }
 
+- (void)testNSSet{
+    NSObject* nilObject = nil;
+    __unused NSSet* set = [NSSet setWithObject:nilObject];
+}
+
+- (void)testNSMutableSet{
+    NSObject* nilObject = nil;
+    NSMutableSet* m = [NSMutableSet set];
+    [m addObject:nilObject];
+    [m removeObject:nilObject];
+}
+
 - (void)testJJExceptionPerformance{
     [self measureBlock:^{
         NSArray* array = @[@"112",@"12",@"12",@"12",@"12",@"12",@"12",@"12",@"12",@"12"];
         for (int i = 0;i < 1000000;i++) {
-            id object = [array objectAtIndex:1];
+            __unused id object = [array objectAtIndex:1];
         }
     }];
 }
