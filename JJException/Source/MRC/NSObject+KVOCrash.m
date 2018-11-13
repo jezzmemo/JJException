@@ -24,6 +24,7 @@ static const char DeallocKVOKey;
 @property(nonatomic,readwrite,copy)NSString* keyPath;
 @property(nonatomic,readwrite,assign)NSKeyValueObservingOptions options;
 @property(nonatomic,readwrite,assign)void* context;
+@property(nonatomic,readwrite,copy)NSString* observerName;
 
 @end
 
@@ -45,6 +46,9 @@ static const char DeallocKVOKey;
     self.context = nil;
     if (self.keyPath) {
         [self.keyPath release];
+    }
+    if (self.observerName) {
+        [self.observerName release];
     }
     [super dealloc];
 }
@@ -134,7 +138,7 @@ static const char DeallocKVOKey;
 - (void)clearKVOData{
     for (KVOObjectItem* item in self.kvoObjectSet) {
         //Invoke the origin removeObserver,do not check array
-        handleCrashException(JJExceptionGuardKVOCrash,[NSString stringWithFormat:@"KVO forgot remove keyPath:%@ from which object:%@",item.keyPath,NSStringFromClass(object_getClass(self.whichObject))]);
+        handleCrashException(JJExceptionGuardKVOCrash,[NSString stringWithFormat:@"KVO forgot remove keyPath:%@ from which object:%@",item.keyPath,item.observerName]);
         #pragma clang diagnostic push
         #pragma clang diagnostic ignored "-Wundeclared-selector"
         @try {
@@ -181,6 +185,7 @@ static const char DeallocKVOKey;
     item.keyPath = keyPath;
     item.options = options;
     item.context = context;
+    item.observerName = NSStringFromClass(self.class);
     
     if (!objectContainer) {
         objectContainer = [KVOObjectContainer new];
