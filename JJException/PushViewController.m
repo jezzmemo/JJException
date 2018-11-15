@@ -99,6 +99,7 @@
 #pragma mark - Dealloc
 
 - (void)dealloc{
+    [self removeObserver:self forKeyPath:@"test2"];
     NSLog(@"PushViewController%s",__FILE__);
 }
 

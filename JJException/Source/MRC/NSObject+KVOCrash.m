@@ -24,7 +24,6 @@ static const char DeallocKVOKey;
 @property(nonatomic,readwrite,copy)NSString* keyPath;
 @property(nonatomic,readwrite,assign)NSKeyValueObservingOptions options;
 @property(nonatomic,readwrite,assign)void* context;
-@property(nonatomic,readwrite,copy)NSString* observerName;
 
 @end
 
@@ -47,9 +46,6 @@ static const char DeallocKVOKey;
     if (self.keyPath) {
         [self.keyPath release];
     }
-    if (self.observerName) {
-        [self.observerName release];
-    }
     [super dealloc];
 }
 
@@ -65,12 +61,11 @@ static const char DeallocKVOKey;
 /**
  Associated owner object
  */
-@property(nonatomic,readwrite,assign)NSObject* whichObject;
+@property(nonatomic,readwrite,unsafe_unretained)NSObject* whichObject;
 
 /**
  NSMutableSet safe-thread
  */
-
 #if OS_OBJECT_HAVE_OBJC_SUPPORT
 @property(nonatomic,readwrite,retain)dispatch_semaphore_t kvoLock;
 #else
@@ -128,7 +123,6 @@ static const char DeallocKVOKey;
  release the dispatch_semaphore
  */
 - (void)dealloc{
-    [self clearKVOData];
     [self.kvoObjectSet release];
     self.whichObject = nil;
     dispatch_release(self.kvoLock);
@@ -138,7 +132,8 @@ static const char DeallocKVOKey;
 - (void)clearKVOData{
     for (KVOObjectItem* item in self.kvoObjectSet) {
         //Invoke the origin removeObserver,do not check array
-        handleCrashException(JJExceptionGuardKVOCrash,[NSString stringWithFormat:@"KVO forgot remove keyPath:%@ from which object:%@",item.keyPath,item.observerName]);
+        NSString* observerName = NSStringFromClass(object_getClass(self.whichObject));
+        handleCrashException(JJExceptionGuardKVOCrash,[NSString stringWithFormat:@"KVO forgot remove keyPath:%@ from which object:%@",item.keyPath,observerName]);
         #pragma clang diagnostic push
         #pragma clang diagnostic ignored "-Wundeclared-selector"
         @try {
@@ -185,13 +180,15 @@ static const char DeallocKVOKey;
     item.keyPath = keyPath;
     item.options = options;
     item.context = context;
-    item.observerName = NSStringFromClass(self.class);
     
     if (!objectContainer) {
         objectContainer = [KVOObjectContainer new];
         [objectContainer setWhichObject:self];
         objc_setAssociatedObject(self, &DeallocKVOKey, objectContainer, OBJC_ASSOCIATION_RETAIN);
         [objectContainer release];
+        
+        //Swizzle kvo dealloc
+        [self jj_swizzleInstanceMethod:@selector(dealloc) withSwizzleMethod:@selector(kvo_hookDealloc)];
     }
     
     if (![objectContainer checkKVOItemExist:item]) {
@@ -212,7 +209,6 @@ static const char DeallocKVOKey;
 }
 
 - (void)hookRemoveObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath{
-    
     if (object_getClass(observer) == objc_getClass("RACKVOProxy")) {
         [self hookRemoveObserver:observer forKeyPath:keyPath];
         return;
@@ -242,6 +238,22 @@ static const char DeallocKVOKey;
     }
     
     [item release];
+}
+
+
+/**
+ * Hook the kvo object dealloc and to clean the kvo array,
+ * And show the more kvo object info to the user
+ */
+- (void)kvo_hookDealloc{
+    
+    KVOObjectContainer* objectContainer = objc_getAssociatedObject(self, &DeallocKVOKey);
+    
+    if (objectContainer) {
+        [objectContainer clearKVOData];
+    }
+    
+    [self kvo_hookDealloc];
 }
 
 @end
