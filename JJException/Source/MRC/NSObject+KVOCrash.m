@@ -139,7 +139,6 @@ static const char DeallocKVOKey;
         @try {
             ((void(*)(id,SEL,id,NSString*))objc_msgSend)(self.whichObject,@selector(hookRemoveObserver:forKeyPath:),item.observer,item.keyPath);
         }@catch (NSException *exception) {
-            handleCrashException(JJExceptionGuardKVOCrash,[exception reason]);
         }
         #pragma clang diagnostic pop
     }
@@ -232,7 +231,6 @@ static const char DeallocKVOKey;
         @try {
             [self hookRemoveObserver:observer forKeyPath:keyPath];
         }@catch (NSException *exception) {
-            handleCrashException(JJExceptionGuardKVOCrash,[exception reason]);
         }
         [objectContainer removeKVOObjectItem:item];
     }
@@ -253,6 +251,7 @@ static const char DeallocKVOKey;
         [objectContainer clearKVOData];
     }
     
+    //Invoke the origin dealloc
     [self kvo_hookDealloc];
 }
 
