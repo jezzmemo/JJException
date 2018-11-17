@@ -195,7 +195,7 @@ KVO在以下情况会导致闪退:
 * 保护key不存在的情况
 * 保护重复添加的情况
 
-在开始KVO是采用AssociatedObject释放原理来处理那些忘记keyPath,这里有个问题就是如果开发者重写dealloc，并清理自己的keyPath,会导致AssociatedObject释放时，assgin的类产生野指针，
+在开始KVO是采用AssociatedObject释放原理来处理那些忘记keyPath,这里有个问题就是如果开发者重写dealloc，并清理自己的keyPath,会导致AssociatedObject释放时，target产生野指针.
 
 所以在没找到更好的办法，只能Swizzle dealloc方法，先清理kvo数据，再执行origin dealloc，不过这样就有个细节做不到，无法提示那些keyPath忘记清理.
 
