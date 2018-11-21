@@ -157,6 +157,8 @@ static const char DeallocKVOKey;
     swizzleInstanceMethod([self class], @selector(addObserver:forKeyPath:options:context:), @selector(hookAddObserver:forKeyPath:options:context:));
     swizzleInstanceMethod([self class], @selector(removeObserver:forKeyPath:), @selector(hookRemoveObserver:forKeyPath:));
     swizzleInstanceMethod([self class], @selector(removeObserver:forKeyPath:context:), @selector(hookRemoveObserver:forKeyPath:context:));
+    //Swizzle kvo dealloc
+    swizzleInstanceMethod([self class], @selector(dealloc), @selector(kvo_hookDealloc));
 }
 
 - (void)hookAddObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context{
@@ -182,9 +184,6 @@ static const char DeallocKVOKey;
         [objectContainer setWhichObject:self];
         objc_setAssociatedObject(self, &DeallocKVOKey, objectContainer, OBJC_ASSOCIATION_RETAIN);
         [objectContainer release];
-        
-        //Swizzle kvo dealloc
-        [self jj_swizzleInstanceMethod:@selector(dealloc) withSwizzleMethod:@selector(kvo_hookDealloc)];
     }
     
     if (![objectContainer checkKVOItemExist:item]) {
