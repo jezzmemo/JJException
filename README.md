@@ -160,13 +160,13 @@ func handleCrashException(_ exceptionMessage: String, extraInfo info: [AnyHashab
 }
 ```
 
-> Hook的API列表
+> JJException Hook那些API?
 
 [HookAPI](https://github.com/jezzmemo/JJException/blob/master/JJExceptionHookAPI.md)
 
 
 ## TODO(大家记得给我星哦)
-* 收集更多常见异常
+* 重构kVO
 
 ## License
 JJException is released under the MIT license. See LICENSE for details.
