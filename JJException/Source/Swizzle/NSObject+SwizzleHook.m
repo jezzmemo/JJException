@@ -8,9 +8,12 @@
 
 #import "NSObject+SwizzleHook.h"
 #import <objc/runtime.h>
+#import <objc/message.h>
 #import <libkern/OSAtomic.h>
 
 typedef IMP (^JJSWizzleImpProvider)(void);
+
+static const char jjSwizzledDeallocKey;
 
 @interface JJSwizzleObject()
 @property (nonatomic,readwrite,copy) JJSWizzleImpProvider impProviderBlock;
@@ -87,6 +90,60 @@ void swizzleInstanceMethod(Class cls, SEL originSelector, SEL swizzleSelector){
                             method_getTypeEncoding(originalMethod));
     }
 }
+
+// a class doesn't need dealloc swizzled if it or a superclass has been swizzled already
+BOOL jj_requiresDeallocSwizzle(Class class)
+{
+    BOOL swizzled = NO;
+    
+    for ( Class currentClass = class; !swizzled && currentClass != nil; currentClass = class_getSuperclass(currentClass) ) {
+        swizzled = [objc_getAssociatedObject(currentClass, &jjSwizzledDeallocKey) boolValue];
+    }
+    
+    return !swizzled;
+}
+
+void jj_swizzleDeallocIfNeeded(Class class)
+{
+    static SEL deallocSEL = NULL;
+    static SEL cleanupSEL = NULL;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        deallocSEL = sel_getUid("dealloc");
+        cleanupSEL = sel_getUid("jj_cleanKVO");
+    });
+    
+    @synchronized (class) {
+        if ( !jj_requiresDeallocSwizzle(class) ) {
+            return;
+        }
+        
+        objc_setAssociatedObject(class, &jjSwizzledDeallocKey, @(YES), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    
+    Method dealloc = class_getInstanceMethod(class, deallocSEL);
+    
+    if ( dealloc == NULL ) {
+        Class superclass = class_getSuperclass(class);
+        
+        class_addMethod(class, deallocSEL, imp_implementationWithBlock(^(__unsafe_unretained id self) {
+            
+            ((void(*)(id, SEL))objc_msgSend)(self, cleanupSEL);
+            
+            struct objc_super superStruct = (struct objc_super){ self, superclass };
+            ((void (*)(struct objc_super*, SEL))objc_msgSendSuper)(&superStruct, deallocSEL);
+            
+        }), method_getTypeEncoding(dealloc));
+    }else{
+        __block IMP deallocIMP = method_setImplementation(dealloc, imp_implementationWithBlock(^(__unsafe_unretained id self) {
+            ((void(*)(id, SEL))objc_msgSend)(self, cleanupSEL);
+            
+            ((void(*)(id, SEL))deallocIMP)(self, deallocSEL);
+        }));
+    }
+}
+
 
 @implementation NSObject (SwizzleHook)
 

@@ -13,6 +13,7 @@
 #import "JJExceptionProxy.h"
 
 static const char DeallocKVOKey;
+static const char ObserverDeallocKVOKey;
 
 /**
  Record the kvo object
@@ -50,6 +51,7 @@ static const char DeallocKVOKey;
 }
 
 @end
+
 
 @interface KVOObjectContainer : NSObject
 
@@ -129,7 +131,7 @@ static const char DeallocKVOKey;
     [super dealloc];
 }
 
-- (void)clearKVOData{
+- (void)cleanKVOData{
     for (KVOObjectItem* item in self.kvoObjectSet) {
         #pragma clang diagnostic push
         #pragma clang diagnostic ignored "-Wundeclared-selector"
@@ -151,14 +153,66 @@ static const char DeallocKVOKey;
 
 @end
 
+@interface JJObserverContainer : NSObject
+
+@property (nonatomic,readwrite,strong) NSHashTable* observers;
+
+/**
+ Associated owner object
+ */
+@property(nonatomic,readwrite,unsafe_unretained)NSObject* whichObject;
+
+- (void)addObserver:(KVOObjectItem *)observer;
+
+- (void)removeObserver:(KVOObjectItem *)observer;
+
+@end
+
+@implementation JJObserverContainer
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.observers = [NSHashTable hashTableWithOptions:NSMapTableWeakMemory];
+    }
+    return self;
+}
+
+- (void)addObserver:(KVOObjectItem *)observer
+{
+    @synchronized (self) {
+        [self.observers addObject:observer];
+    }
+}
+
+- (void)removeObserver:(KVOObjectItem *)observer
+{
+    @synchronized (self) {
+        [self.observers removeObject:observer];
+    }
+}
+
+- (void)cleanObservers{
+    for (KVOObjectItem* item in self.observers) {
+        [self.whichObject removeObserver:item.observer forKeyPath:item.keyPath];
+    }
+}
+
+- (void)dealloc{
+    self.whichObject = nil;
+    [self.observers release];
+    [super dealloc];
+}
+
+@end
+
 @implementation NSObject (KVOCrash)
 
 + (void)jj_swizzleKVOCrash{
     swizzleInstanceMethod([self class], @selector(addObserver:forKeyPath:options:context:), @selector(hookAddObserver:forKeyPath:options:context:));
     swizzleInstanceMethod([self class], @selector(removeObserver:forKeyPath:), @selector(hookRemoveObserver:forKeyPath:));
     swizzleInstanceMethod([self class], @selector(removeObserver:forKeyPath:context:), @selector(hookRemoveObserver:forKeyPath:context:));
-    //Swizzle kvo dealloc
-    swizzleInstanceMethod([self class], @selector(dealloc), @selector(kvo_hookDealloc));
 }
 
 - (void)hookAddObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context{
@@ -191,7 +245,22 @@ static const char DeallocKVOKey;
         [self hookAddObserver:observer forKeyPath:keyPath options:options context:context];
     }
     
+    JJObserverContainer* observerContainer = objc_getAssociatedObject(observer,&ObserverDeallocKVOKey);
+    
+    if (!observerContainer) {
+        observerContainer = [JJObserverContainer new];
+        [observerContainer setWhichObject:self];
+        [observerContainer addObserver:item];
+        objc_setAssociatedObject(observer, &ObserverDeallocKVOKey, observerContainer, OBJC_ASSOCIATION_RETAIN);
+        [observerContainer release];
+    }else{
+        [observerContainer addObserver:item];
+    }
+    
     [item release];
+    
+    jj_swizzleDeallocIfNeeded(self.class);
+    jj_swizzleDeallocIfNeeded(observer.class);
 }
 
 - (void)hookRemoveObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath context:(void*)context{
@@ -236,19 +305,16 @@ static const char DeallocKVOKey;
 
 
 /**
- * Hook the kvo object dealloc and to clean the kvo array,
- * And show the more kvo object info to the user
+ * Hook the kvo object dealloc and to clean the kvo array
  */
-- (void)kvo_hookDealloc{
+- (void)jj_cleanKVO{
     
     KVOObjectContainer* objectContainer = objc_getAssociatedObject(self, &DeallocKVOKey);
+    [objectContainer cleanKVOData];
     
-    if (objectContainer) {
-        [objectContainer clearKVOData];
-    }
+    JJObserverContainer* observerContainer = objc_getAssociatedObject(self, &ObserverDeallocKVOKey);
+    [observerContainer cleanObservers];
     
-    //Invoke the origin dealloc
-    [self kvo_hookDealloc];
 }
 
 @end

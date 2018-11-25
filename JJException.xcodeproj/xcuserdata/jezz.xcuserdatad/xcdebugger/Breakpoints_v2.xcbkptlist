@@ -27,61 +27,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JJException/Source/MRC/NSObject+KVOCrash.m"
-            timestampString = "564488427.585709"
+            filePath = "JJException/Source/DeallocBlock/NSObject+DeallocBlock.m"
+            timestampString = "564822196.511668"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
-            landmarkName = "-clearKVOData"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[KVOObjectContainer clearKVOData]"
-                  moduleName = "JJException"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jezz/git_project/JJExceptionGithub/JJException/Source/MRC/NSObject+KVOCrash.m"
-                  timestampString = "564488398.348398"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "133"
-                  endingLineNumber = "133"
-                  offsetFromSymbolStart = "55">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[KVOObjectContainer clearKVOData]"
-                  moduleName = "JJException"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jezz/git_project/JJExceptionGithub/JJException/Source/MRC/NSObject+KVOCrash.m"
-                  timestampString = "564488398.350692"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "133"
-                  endingLineNumber = "133"
-                  offsetFromSymbolStart = "65">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JJException/Source/MRC/NSObject+KVOCrash.m"
-            timestampString = "564488427.587878"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "244"
-            endingLineNumber = "244"
-            landmarkName = "-kvo_hookDealloc"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
+            landmarkName = "-dealloc"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

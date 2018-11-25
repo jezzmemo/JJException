@@ -36,6 +36,29 @@
 - (NSString *)stringByAppendingString:(NSString *)aString;
 ```
 
+* NSAttributedString
+
+```
+- (instancetype)initWithString:(NSString *)str;
+- (NSAttributedString *)attributedSubstringFromRange:(NSRange)range;
+- (nullable id)attribute:(NSAttributedStringKey)attrName atIndex:(NSUInteger)location effectiveRange:(nullable NSRangePointer)range;
+- (void)enumerateAttribute:(NSAttributedStringKey)attrName inRange:(NSRange)enumerationRange options:(NSAttributedStringEnumerationOptions)opts usingBlock:(void (NS_NOESCAPE ^)(id _Nullable value, NSRange range, BOOL *stop))block;
+- (void)enumerateAttributesInRange:(NSRange)enumerationRange options:(NSAttributedStringEnumerationOptions)opts usingBlock:(void (NS_NOESCAPE ^)(NSDictionary<NSAttributedStringKey, id> *attrs, NSRange range, BOOL *stop))block;
+```
+
+* NSMutableAttributedString
+
+```
+- (instancetype)initWithString:(NSString *)str;
+- (instancetype)initWithString:(NSString *)str attributes:(nullable NSDictionary<NSAttributedStringKey, id> *)attrs;
+- (void)addAttribute:(NSAttributedStringKey)name value:(id)value range:(NSRange)range;
+- (void)addAttributes:(NSDictionary<NSAttributedStringKey, id> *)attrs range:(NSRange)range;
+- (void)removeAttribute:(NSAttributedStringKey)name range:(NSRange)range;
+- (void)replaceCharactersInRange:(NSRange)range withAttributedString:(NSAttributedString *)attrString;
+- (void)deleteCharactersInRange:(NSRange)range;
+- (void)setAttributedString:(NSAttributedString *)attrString;
+```
+
 * NSArray
 
 ```
@@ -81,4 +104,16 @@
 ```
 - (void) addObject:(id)object;
 - (void) removeObject:(id)object;
+```
+
+* NSTimer
+
+```
++ (NSTimer *)timerWithTimeInterval:(NSTimeInterval)ti target:(id)aTarget selector:(SEL)aSelector userInfo:(nullable id)userInfo repeats:(BOOL)yesOrNo;
+```
+
+* NSNotificationCenter
+
+```
+- (void)addObserver:(id)observer selector:(SEL)aSelector name:(nullable NSNotificationName)aName object:(nullable id)anObject;
 ```

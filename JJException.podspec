@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "JJException"
-  s.version      = "0.1.7"
+  s.version      = "0.1.8"
   s.summary      = "Handle the objective-c crash exception."
 
   # This description is used to generate tags and improve search results.
@@ -69,7 +69,7 @@ Pod::Spec.new do |s|
 
   #  When using multiple platforms
   s.ios.deployment_target = "8.0"
-  s.osx.deployment_target = "10.7"
+  s.osx.deployment_target = "10.8"
   s.watchos.deployment_target = "2.0"
   s.tvos.deployment_target = "9.0"
 

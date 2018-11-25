@@ -199,6 +199,10 @@ KVO在以下情况会导致闪退:
 
 所以在没找到更好的办法，只能Swizzle dealloc方法，先清理kvo数据，再执行origin dealloc，不过这样就有个细节做不到，无法提示那些keyPath忘记清理.
 
+__2018/11/25__
+Swizzle dealloc影响面相对偏广，后续找了一种只针对需要KVO需求类的Swizzle，当前类用AssociatedObject来记住状态，如果Swizzle过就直接返回，另外还加强KVO的健壮性，监听了observer状态，在宿主还没释放，observer先释放，需要要对observer对应的keyPath对应的清理.
+
+
 ## NSTimer
 
 NSTimer存在以下问题:
