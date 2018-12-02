@@ -196,6 +196,10 @@ static const char ObserverDeallocKVOKey;
 - (void)cleanObservers{
     for (KVOObjectItem* item in self.observers) {
         [self.whichObject removeObserver:item.observer forKeyPath:item.keyPath];
+        
+    }
+    @synchronized (self) {
+        [self.observers removeAllObjects];
     }
 }
 
