@@ -52,6 +52,10 @@
 		61196D4F20F261CC00022DDC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61196D4E20F261CC00022DDC /* Assets.xcassets */; };
 		61196D5220F261CC00022DDC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61196D5020F261CC00022DDC /* LaunchScreen.storyboard */; };
 		61196D5520F261CC00022DDC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 61196D5420F261CC00022DDC /* main.m */; };
+		6138FCB121B57B95001AFE8D /* NSSet+SetHook.h in Sources */ = {isa = PBXBuildFile; fileRef = 6109EE782198244A00CB15E6 /* NSSet+SetHook.h */; };
+		6138FCB221B57B95001AFE8D /* NSSet+SetHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 6109EE792198244A00CB15E6 /* NSSet+SetHook.m */; };
+		6138FCB321B57B95001AFE8D /* NSMutableSet+MutableSetHook.h in Sources */ = {isa = PBXBuildFile; fileRef = 6109EE7B2198264F00CB15E6 /* NSMutableSet+MutableSetHook.h */; };
+		6138FCB421B57B95001AFE8D /* NSMutableSet+MutableSetHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 6109EE7C2198264F00CB15E6 /* NSMutableSet+MutableSetHook.m */; };
 		613E0A8E21496ED100B8D0DF /* JJException.m in Sources */ = {isa = PBXBuildFile; fileRef = 613E0A8B21496ED100B8D0DF /* JJException.m */; };
 		613E0A95214974B800B8D0DF /* JJExceptionProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = 613E0A94214974B800B8D0DF /* JJExceptionProxy.m */; };
 		613E0AAD214FF41B00B8D0DF /* NSObject+DeallocBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 613E0AAC214FF41B00B8D0DF /* NSObject+DeallocBlock.m */; };
@@ -450,6 +454,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6138FCB121B57B95001AFE8D /* NSSet+SetHook.h in Sources */,
+				6138FCB221B57B95001AFE8D /* NSSet+SetHook.m in Sources */,
+				6138FCB321B57B95001AFE8D /* NSMutableSet+MutableSetHook.h in Sources */,
+				6138FCB421B57B95001AFE8D /* NSMutableSet+MutableSetHook.m in Sources */,
 				61025B6921563A6400191522 /* NSObject+DeallocBlock.h in Sources */,
 				61025B6A21563A6400191522 /* NSObject+DeallocBlock.m in Sources */,
 				61025B6B21563A6400191522 /* JJExceptionProxy.h in Sources */,
