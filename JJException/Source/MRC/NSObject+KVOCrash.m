@@ -155,12 +155,12 @@ static const char ObserverDeallocKVOKey;
 
 @interface JJObserverContainer : NSObject
 
-@property (nonatomic,readwrite,strong) NSHashTable* observers;
+@property (nonatomic,readwrite,retain) NSHashTable* observers;
 
 /**
  Associated owner object
  */
-@property(nonatomic,readwrite,unsafe_unretained)NSObject* whichObject;
+@property(nonatomic,readwrite,assign) NSObject* whichObject;
 
 - (void)addObserver:(KVOObjectItem *)observer;
 
@@ -314,11 +314,13 @@ static const char ObserverDeallocKVOKey;
 - (void)jj_cleanKVO{
     
     KVOObjectContainer* objectContainer = objc_getAssociatedObject(self, &DeallocKVOKey);
-    [objectContainer cleanKVOData];
-    
     JJObserverContainer* observerContainer = objc_getAssociatedObject(self, &ObserverDeallocKVOKey);
-    [observerContainer cleanObservers];
     
+    if (objectContainer) {
+        [objectContainer cleanKVOData];
+    }else if(observerContainer){
+        [observerContainer cleanObservers];
+    }
 }
 
 @end
