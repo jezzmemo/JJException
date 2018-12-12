@@ -220,7 +220,7 @@ static const char ObserverDeallocKVOKey;
 }
 
 - (void)hookAddObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context{
-    if (object_getClass(observer) == objc_getClass("RACKVOProxy")) {
+    if ([self ignoreKVOInstanceClass:observer]) {
         [self hookAddObserver:observer forKeyPath:keyPath options:options context:context];
         return;
     }
@@ -268,7 +268,7 @@ static const char ObserverDeallocKVOKey;
 }
 
 - (void)hookRemoveObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath context:(void*)context{
-    if (object_getClass(observer) == objc_getClass("RACKVOProxy")) {
+    if ([self ignoreKVOInstanceClass:observer]) {
         [self hookRemoveObserver:observer forKeyPath:keyPath context:context];
         return;
     }
@@ -277,7 +277,7 @@ static const char ObserverDeallocKVOKey;
 }
 
 - (void)hookRemoveObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath{
-    if (object_getClass(observer) == objc_getClass("RACKVOProxy")) {
+    if ([self ignoreKVOInstanceClass:observer]) {
         [self hookRemoveObserver:observer forKeyPath:keyPath];
         return;
     }
@@ -305,6 +305,32 @@ static const char ObserverDeallocKVOKey;
     }
     
     [item release];
+}
+
+/**
+ Ignore Special Library
+ 
+ @param object Instance Class
+ @return YES or NO
+ */
+- (BOOL)ignoreKVOInstanceClass:(id)object{
+    
+    if (!object) {
+        return NO;
+    }
+    
+    //Ignore ReactiveCocoa
+    if (object_getClass(object) == objc_getClass("RACKVOProxy")) {
+        return YES;
+    }
+    
+    //Ignore AMAP
+    NSString* className = NSStringFromClass(object_getClass(object));
+    if ([className hasPrefix:@"AMap"]) {
+        return YES;
+    }
+    
+    return NO;
 }
 
 
