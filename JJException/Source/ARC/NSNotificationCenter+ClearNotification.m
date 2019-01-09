@@ -23,13 +23,20 @@
 
 - (void)processAddObserver:(id)observer selector:(SEL)aSelector name:(NSNotificationName)aName object:(id)anObject swizzleInfo:(JJSwizzleObject*)swizzleInfo{
     
-    if (observer) {
+    if (!observer) {
+        return;
+    }
+    
+    if ([observer isKindOfClass:NSObject.class]) {
         __unsafe_unretained typeof(observer) unsafeObject = observer;
         [observer jj_deallocBlock:^{
             [[NSNotificationCenter defaultCenter] removeObserver:unsafeObject];
         }];
-        void(*originIMP)(__unsafe_unretained id,SEL,id,SEL,NSString*,id);
-        originIMP = (__typeof(originIMP))[swizzleInfo getOriginalImplementation];
+    }
+    
+    void(*originIMP)(__unsafe_unretained id,SEL,id,SEL,NSString*,id);
+    originIMP = (__typeof(originIMP))[swizzleInfo getOriginalImplementation];
+    if (originIMP != NULL) {
         originIMP(self,swizzleInfo.selector,observer,aSelector,aName,anObject);
     }
 }
