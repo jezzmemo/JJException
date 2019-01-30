@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "JJException.h"
 #import <objc/runtime.h>
+#import "JJPerson.h"
 #import "PushViewController.h"
 
 @interface ViewController ()<JJExceptionHandle>
@@ -48,6 +49,13 @@
     otherButton.frame = CGRectMake(0, 350, self.view.frame.size.width, 50);
     [otherButton addTarget:self action:@selector(testArrayDictionaryUnrecognizedSelector) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:otherButton];
+    
+    UIButton* kvcButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [kvcButton setTitle:@"Test KVC" forState:UIControlStateNormal];
+    [kvcButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    kvcButton.frame = CGRectMake(0, 450, self.view.frame.size.width, 50);
+    [kvcButton addTarget:self action:@selector(keyButtonClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:kvcButton];
 }
 #pragma mark - Exception Delegate
 
@@ -104,6 +112,14 @@
     NSNull* null = [NSNull null];
     NSString* str = (NSString*)null;
     NSLog(@"Str length:%ld",str.length);
+}
+
+- (void)keyButtonClick
+{
+    JJPerson *p = [JJPerson new];
+    [p setValue: @"123" forKeyPath: @"age"];
+    
+    NSLog(@"%@", [p valueForKey: @"age"]);
 }
 
 @end

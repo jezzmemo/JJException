@@ -74,6 +74,8 @@
 		61A7F5602144ED9D00C87FA1 /* NSNotificationCenter+ClearNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F55D2144ED9C00C87FA1 /* NSNotificationCenter+ClearNotification.m */; };
 		61A7F5632145071800C87FA1 /* KVOObjectDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F5622145071800C87FA1 /* KVOObjectDemo.m */; };
 		61BC3FC720F7ACE500D8C791 /* JJExceptionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BC3FC620F7ACE500D8C791 /* JJExceptionTests.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B6500EC022018563006CE751 /* NSObject+KVCCrash.m in Sources */ = {isa = PBXBuildFile; fileRef = B6500EBF22018563006CE751 /* NSObject+KVCCrash.m */; };
+		B6500EC3220186CF006CE751 /* JJPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = B6500EC2220186CF006CE751 /* JJPerson.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -144,6 +146,10 @@
 		61BC3FC420F7ACE500D8C791 /* JJExceptionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JJExceptionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		61BC3FC620F7ACE500D8C791 /* JJExceptionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JJExceptionTests.m; sourceTree = "<group>"; };
 		61BC3FC820F7ACE500D8C791 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B6500EBE22018563006CE751 /* NSObject+KVCCrash.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+KVCCrash.h"; sourceTree = "<group>"; };
+		B6500EBF22018563006CE751 /* NSObject+KVCCrash.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+KVCCrash.m"; sourceTree = "<group>"; };
+		B6500EC1220186CF006CE751 /* JJPerson.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JJPerson.h; sourceTree = "<group>"; };
+		B6500EC2220186CF006CE751 /* JJPerson.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JJPerson.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,6 +222,8 @@
 				61A7F51B213B859300C87FA1 /* PushViewController.m */,
 				61A7F5612145071800C87FA1 /* KVOObjectDemo.h */,
 				61A7F5622145071800C87FA1 /* KVOObjectDemo.m */,
+				B6500EC1220186CF006CE751 /* JJPerson.h */,
+				B6500EC2220186CF006CE751 /* JJPerson.m */,
 			);
 			path = JJException;
 			sourceTree = "<group>";
@@ -301,6 +309,8 @@
 				6109EE792198244A00CB15E6 /* NSSet+SetHook.m */,
 				6109EE7B2198264F00CB15E6 /* NSMutableSet+MutableSetHook.h */,
 				6109EE7C2198264F00CB15E6 /* NSMutableSet+MutableSetHook.m */,
+				B6500EBE22018563006CE751 /* NSObject+KVCCrash.h */,
+				B6500EBF22018563006CE751 /* NSObject+KVCCrash.m */,
 			);
 			path = ARC;
 			sourceTree = "<group>";
@@ -504,6 +514,8 @@
 				61025B4D2153E36100191522 /* NSAttributedString+AttributedStringHook.m in Sources */,
 				61A7F54321427E7F00C87FA1 /* NSObject+KVOCrash.m in Sources */,
 				61A7F54F21427EB700C87FA1 /* NSMutableDictionary+MutableDictionaryHook.m in Sources */,
+				B6500EC022018563006CE751 /* NSObject+KVCCrash.m in Sources */,
+				B6500EC3220186CF006CE751 /* JJPerson.m in Sources */,
 				61196D4A20F261C800022DDC /* ViewController.m in Sources */,
 				613E0ABA21514E2E00B8D0DF /* NSMutableString+MutableStringHook.m in Sources */,
 				613E0A95214974B800B8D0DF /* JJExceptionProxy.m in Sources */,

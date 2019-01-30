@@ -177,6 +177,11 @@ uintptr_t get_slide_address(void) {
             [NSAttributedString performSelector:@selector(jj_swizzleNSAttributedString)];
             [NSMutableAttributedString performSelector:@selector(jj_swizzleNSMutableAttributedString)];
         }
+        
+        if (self.exceptionGuardCategory & JJExceptionGuardKVCCrash)
+        {
+            [NSObject performSelector: @selector(jj_swizzleKVCCrash)];
+        }
         #pragma clang diagnostic pop
     }
     dispatch_semaphore_signal(_swizzleLock);
