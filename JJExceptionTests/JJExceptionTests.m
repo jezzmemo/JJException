@@ -102,8 +102,9 @@
 }
 
 - (void)testImmutableString{
-    NSAssert([NSString stringWithUTF8String:NULL] == nil,@"Check parameter nil");
-    NSAssert([NSString stringWithCString:NULL encoding:NSUTF8StringEncoding] == nil,@"Check parameter nil");
+    const char* nullObject = NULL;
+    NSAssert([NSString stringWithUTF8String:nullObject] == nil,@"Check parameter nil");
+    NSAssert([NSString stringWithCString:nullObject encoding:NSUTF8StringEncoding] == nil,@"Check parameter nil");
     
     NSString* empty = @"";//__NSCFConstantString
     [empty substringFromIndex:10];

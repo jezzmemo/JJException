@@ -52,6 +52,7 @@
 		61196D4F20F261CC00022DDC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 61196D4E20F261CC00022DDC /* Assets.xcassets */; };
 		61196D5220F261CC00022DDC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 61196D5020F261CC00022DDC /* LaunchScreen.storyboard */; };
 		61196D5520F261CC00022DDC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 61196D5420F261CC00022DDC /* main.m */; };
+		612EED3A21C154C6000E2820 /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 612EED3921C154C6000E2820 /* PlayerViewController.m */; };
 		6138FCB121B57B95001AFE8D /* NSSet+SetHook.h in Sources */ = {isa = PBXBuildFile; fileRef = 6109EE782198244A00CB15E6 /* NSSet+SetHook.h */; };
 		6138FCB221B57B95001AFE8D /* NSSet+SetHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 6109EE792198244A00CB15E6 /* NSSet+SetHook.m */; };
 		6138FCB321B57B95001AFE8D /* NSMutableSet+MutableSetHook.h in Sources */ = {isa = PBXBuildFile; fileRef = 6109EE7B2198264F00CB15E6 /* NSMutableSet+MutableSetHook.h */; };
@@ -107,6 +108,8 @@
 		61196D5120F261CC00022DDC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		61196D5320F261CC00022DDC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		61196D5420F261CC00022DDC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		612EED3821C154C6000E2820 /* PlayerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerViewController.h; sourceTree = "<group>"; };
+		612EED3921C154C6000E2820 /* PlayerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayerViewController.m; sourceTree = "<group>"; };
 		613E0A8B21496ED100B8D0DF /* JJException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JJException.m; sourceTree = "<group>"; };
 		613E0A8C21496ED100B8D0DF /* JJException.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJException.h; sourceTree = "<group>"; };
 		613E0A93214974B700B8D0DF /* JJExceptionProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JJExceptionProxy.h; sourceTree = "<group>"; };
@@ -216,6 +219,8 @@
 				61A7F51B213B859300C87FA1 /* PushViewController.m */,
 				61A7F5612145071800C87FA1 /* KVOObjectDemo.h */,
 				61A7F5622145071800C87FA1 /* KVOObjectDemo.m */,
+				612EED3821C154C6000E2820 /* PlayerViewController.h */,
+				612EED3921C154C6000E2820 /* PlayerViewController.m */,
 			);
 			path = JJException;
 			sourceTree = "<group>";
@@ -513,6 +518,7 @@
 				61196D5520F261CC00022DDC /* main.m in Sources */,
 				61A7F55221427F5200C87FA1 /* NSObject+ZombieHook.m in Sources */,
 				61A7F51C213B859300C87FA1 /* PushViewController.m in Sources */,
+				612EED3A21C154C6000E2820 /* PlayerViewController.m in Sources */,
 				613E0AAD214FF41B00B8D0DF /* NSObject+DeallocBlock.m in Sources */,
 				61025B502153E58F00191522 /* NSMutableAttributedString+MutableAttributedStringHook.m in Sources */,
 				613E0A8E21496ED100B8D0DF /* JJException.m in Sources */,
