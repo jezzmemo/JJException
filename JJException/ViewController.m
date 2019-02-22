@@ -24,16 +24,9 @@
     UIButton* startGuardButton = [UIButton buttonWithType:UIButtonTypeSystem];
     [startGuardButton setTitle:@"Start Guard" forState:UIControlStateNormal];
     [startGuardButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    startGuardButton.frame = CGRectMake((self.view.frame.size.width - 100)/2, 200, 100, 50);
+    startGuardButton.frame = CGRectMake((self.view.frame.size.width - 100)/2, 250, 100, 50);
     [startGuardButton addTarget:self action:@selector(startGuardAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:startGuardButton];
-    
-    UIButton* stopGuardButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [stopGuardButton setTitle:@"Stop Guard" forState:UIControlStateNormal];
-    [stopGuardButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    stopGuardButton.frame = CGRectMake((self.view.frame.size.width - 100)/2, 250, 100, 50);
-    [stopGuardButton addTarget:self action:@selector(stopGuardAction) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:stopGuardButton];
     
     UIButton* button = [UIButton buttonWithType:UIButtonTypeSystem];
     [button setTitle:@"Test KVO|NotificatinCenter|NSTimer" forState:UIControlStateNormal];
@@ -64,10 +57,6 @@
     [JJException startGuardException];
     
     [JJException registerExceptionHandle:self];
-}
-
-- (void)stopGuardAction{
-    [JJException stopGuardException];
 }
 
 #pragma mark - Test Action

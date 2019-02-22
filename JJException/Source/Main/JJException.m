@@ -11,6 +11,10 @@
 
 @implementation JJException
 
++ (BOOL)isGuardException {
+    return [JJExceptionProxy shareExceptionProxy].isProtectException;
+}
+
 + (BOOL)exceptionWhenTerminate{
     return [JJExceptionProxy shareExceptionProxy].exceptionWhenTerminate;
 }

@@ -121,7 +121,7 @@ uintptr_t get_slide_address(void) {
     NSLog(@"JJException Type:%ld",(long)exceptionCategory);
     NSLog(@"JJException Description:%@",exceptionMessage);
     NSLog(@"JJException Extra info:%@",info);
-    NSLog(@"JJException callStack:%@",callStack);
+    NSLog(@"JJException CallStack:%@",callStack);
     NSLog(@"================================JJException End====================================");
     if (self.exceptionWhenTerminate) {
         NSAssert(NO, @"");

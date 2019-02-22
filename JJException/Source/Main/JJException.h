@@ -79,6 +79,11 @@ typedef NS_OPTIONS(NSInteger,JJExceptionGuardCategory){
 @property(class,nonatomic,readwrite,assign)BOOL exceptionWhenTerminate;
 
 /**
+ JJException guard exception status,default is NO
+ */
+@property(class,nonatomic,readonly,assign)BOOL isGuardException;
+
+/**
  Config the guard exception category,default:JJExceptionGuardNone
  
  @param exceptionGuardCategory JJExceptionGuardCategory
@@ -92,8 +97,11 @@ typedef NS_OPTIONS(NSInteger,JJExceptionGuardCategory){
 
 /**
  Stop the exception protect
+ 
+ * Why deprecated this method:
+ * https://github.com/jezzmemo/JJException/issues/54
  */
-+ (void)stopGuardException;
++ (void)stopGuardException __attribute__((deprecated("Stop invoke this method,If invoke this,Maybe occur the infinite loop and then CRASH")));
 
 /**
  Register exception interface
