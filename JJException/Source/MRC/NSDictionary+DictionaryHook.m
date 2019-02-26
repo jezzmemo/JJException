@@ -9,6 +9,9 @@
 #import "NSDictionary+DictionaryHook.h"
 #import "NSObject+SwizzleHook.h"
 #import "JJExceptionProxy.h"
+#import "JJExceptionMacros.h"
+
+JJSYNTH_DUMMY_CLASS(NSDictionary_DictionaryHook)
 
 @implementation NSDictionary (DictionaryHook)
 

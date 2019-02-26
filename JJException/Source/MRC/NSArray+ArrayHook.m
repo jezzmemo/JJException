@@ -9,6 +9,9 @@
 #import "NSArray+ArrayHook.h"
 #import "NSObject+SwizzleHook.h"
 #import "JJExceptionProxy.h"
+#import "JJExceptionMacros.h"
+
+JJSYNTH_DUMMY_CLASS(NSArray_ArrayHook)
 
 @implementation NSArray (ArrayHook)
 

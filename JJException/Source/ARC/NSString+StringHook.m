@@ -9,6 +9,9 @@
 #import "NSString+StringHook.h"
 #import "NSObject+SwizzleHook.h"
 #import "JJExceptionProxy.h"
+#import "JJExceptionMacros.h"
+
+JJSYNTH_DUMMY_CLASS(NSString_StringHook)
 
 @implementation NSString (StringHook)
 

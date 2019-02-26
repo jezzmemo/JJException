@@ -9,6 +9,9 @@
 #import "NSMutableString+MutableStringHook.h"
 #import "NSObject+SwizzleHook.h"
 #import "JJExceptionProxy.h"
+#import "JJExceptionMacros.h"
+
+JJSYNTH_DUMMY_CLASS(NSMutableString_MutableStringHook)
 
 @implementation NSMutableString (MutableStringHook)
 

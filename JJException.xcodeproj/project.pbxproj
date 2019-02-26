@@ -75,6 +75,7 @@
 		61A7F5602144ED9D00C87FA1 /* NSNotificationCenter+ClearNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F55D2144ED9C00C87FA1 /* NSNotificationCenter+ClearNotification.m */; };
 		61A7F5632145071800C87FA1 /* KVOObjectDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F5622145071800C87FA1 /* KVOObjectDemo.m */; };
 		61BC3FC720F7ACE500D8C791 /* JJExceptionTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 61BC3FC620F7ACE500D8C791 /* JJExceptionTests.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		93DC6F6922254D7000BA3EFD /* JJExceptionMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 93DC6F6822254D7000BA3EFD /* JJExceptionMacros.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -147,6 +148,7 @@
 		61BC3FC420F7ACE500D8C791 /* JJExceptionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JJExceptionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		61BC3FC620F7ACE500D8C791 /* JJExceptionTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JJExceptionTests.m; sourceTree = "<group>"; };
 		61BC3FC820F7ACE500D8C791 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		93DC6F6822254D7000BA3EFD /* JJExceptionMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JJExceptionMacros.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -244,6 +246,7 @@
 				613E0A94214974B800B8D0DF /* JJExceptionProxy.m */,
 				613E0A8C21496ED100B8D0DF /* JJException.h */,
 				613E0A8B21496ED100B8D0DF /* JJException.m */,
+				93DC6F6822254D7000BA3EFD /* JJExceptionMacros.h */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -327,6 +330,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				61025B8B21563ABB00191522 /* JJException.h in Headers */,
+				93DC6F6922254D7000BA3EFD /* JJExceptionMacros.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
