@@ -10,6 +10,9 @@
 #import "NSObject+SwizzleHook.h"
 #import <objc/runtime.h>
 #import "JJExceptionProxy.h"
+#import "JJExceptionMacros.h"
+
+JJSYNTH_DUMMY_CLASS(NSObject_UnrecognizedSelectorHook)
 
 @implementation NSObject (UnrecognizedSelectorHook)
 

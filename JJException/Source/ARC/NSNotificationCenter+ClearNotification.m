@@ -9,7 +9,10 @@
 #import "NSNotificationCenter+ClearNotification.h"
 #import "NSObject+SwizzleHook.h"
 #import "NSObject+DeallocBlock.h"
+#import "JJExceptionMacros.h"
 #import <objc/runtime.h>
+
+JJSYNTH_DUMMY_CLASS(NSNotificationCenter_ClearNotification)
 
 @implementation NSNotificationCenter (ClearNotification)
 

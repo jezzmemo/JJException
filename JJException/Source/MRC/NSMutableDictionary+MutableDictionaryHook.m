@@ -9,6 +9,9 @@
 #import "NSMutableDictionary+MutableDictionaryHook.h"
 #import "NSObject+SwizzleHook.h"
 #import "JJExceptionProxy.h"
+#import "JJExceptionMacros.h"
+
+JJSYNTH_DUMMY_CLASS(NSMutableDictionary_MutableDictionaryHook)
 
 @implementation NSMutableDictionary (MutableDictionaryHook)
 

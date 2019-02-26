@@ -9,6 +9,9 @@
 #import "NSSet+SetHook.h"
 #import "NSObject+SwizzleHook.h"
 #import "JJExceptionProxy.h"
+#import "JJExceptionMacros.h"
+
+JJSYNTH_DUMMY_CLASS(NSSet_SetHook)
 
 @implementation NSSet (SetHook)
 
