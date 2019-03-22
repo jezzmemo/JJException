@@ -38,6 +38,8 @@
 
 @property(nonatomic,readwrite,copy)NSString* demoString1;
 
+@property(nonatomic,readwrite,copy)NSString* notificationTest;
+
 @end
 
 @implementation PushViewController
@@ -47,7 +49,8 @@
     
     _kvoDemo = [KVOObjectDemo new];
     _kvoObserver = [KVOObserver new];
-    
+    _notificationTest = @"notificationTest";
+
     [self testTimer];
     
     [self testKVO];
@@ -68,7 +71,7 @@
 #pragma mark - Test Notifiaction
 
 - (void)testNotification{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(testNotificationObserver) name:@"test" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(testNotificationObserver) name:@"test" object:self.notificationTest];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"test" object:nil];
 }
