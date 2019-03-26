@@ -13,47 +13,18 @@
 #import <objc/runtime.h>
 #import <pthread.h>
 
-/**
- Copy the NSNotification Info
- */
-@interface JJNotificationObject : NSObject
-
-@property (nonatomic,readwrite,copy) NSString* name;
-
-@property(nonatomic,readwrite,weak)id observer;
-
-@property(nonatomic,readwrite,assign)id object;
-
-@end
-
-
 @implementation JJNotificationObject
-
-- (NSString *)debugDescription{
-    return [NSString stringWithFormat:@"<%@: %p> name: %@ observer: %@ object: %@", NSStringFromClass([self class]), self, _name, _observer, _object];
-}
-
-- (NSString *)description{
-    return [self debugDescription];
-}
-
-@end
-
-
-JJSYNTH_DUMMY_CLASS(NSNotificationCenter_ClearNotification)
-
-@implementation NSNotificationCenter (ClearNotification)
 
 static pthread_mutex_t jj_notification_lock;
 static NSMutableDictionary *jj_observerInfo;
 
-NSString * jj_observerInfoKey(id observer){
++ (NSString *)jj_observerInfoKey:(id)observer{
     NSString *className = NSStringFromClass([observer class]);
     NSString *key = [NSString stringWithFormat:@"%@_%p", className, observer];
     return key;
 }
 
-void jj_setNotificationObserverInfo(id observer, NSNotificationName name, id anObject){
++ (void)jj_setNotificationObserverInfo:(id)observer name:(NSNotificationName)name object:(id)anObject{
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         pthread_mutex_init(&jj_notification_lock, NULL);
@@ -63,8 +34,8 @@ void jj_setNotificationObserverInfo(id observer, NSNotificationName name, id anO
     observerInfo.observer = observer;
     observerInfo.name = name;
     observerInfo.object = anObject;
-    NSString *key = jj_observerInfoKey(observer);
-    NSMutableArray *infos = jj_notificationObserverInfos(observer);
+    NSString *key = [self jj_observerInfoKey:observer];
+    NSMutableArray *infos = [self jj_notificationObserverInfos:observer];
     pthread_mutex_lock(&jj_notification_lock);
     if (!infos) {
         infos = [[NSMutableArray alloc] init];
@@ -74,27 +45,34 @@ void jj_setNotificationObserverInfo(id observer, NSNotificationName name, id anO
     pthread_mutex_unlock(&jj_notification_lock);
 }
 
-NSMutableArray <JJNotificationObject *>* jj_notificationObserverInfos(id observer){
++ (NSMutableArray <JJNotificationObject *>* )jj_notificationObserverInfos:(id)observer{
     if (!jj_observerInfo || (jj_observerInfo.count == 0)) {
         return nil;
     }
     NSMutableArray <JJNotificationObject *>*objcets = nil;
-    NSString *key = jj_observerInfoKey(observer);
+    NSString *key = [self jj_observerInfoKey:observer];
     pthread_mutex_lock(&jj_notification_lock);
     objcets = [jj_observerInfo objectForKey:key];
     pthread_mutex_unlock(&jj_notification_lock);
     return objcets;
 }
 
-void jj_removeNotificationObserverInfo(id observer){
++ (void)jj_removeNotificationObserverInfo:(id)observer{
     if (!jj_observerInfo || (jj_observerInfo.count == 0)) {
         return ;
     }
-    NSString *key = jj_observerInfoKey(observer);
+    NSString *key = [self jj_observerInfoKey:observer];
     pthread_mutex_lock(&jj_notification_lock);
     [jj_observerInfo removeObjectForKey:key];
     pthread_mutex_unlock(&jj_notification_lock);
 }
+
+@end
+
+
+JJSYNTH_DUMMY_CLASS(NSNotificationCenter_ClearNotification)
+
+@implementation NSNotificationCenter (ClearNotification)
 
 + (void)jj_swizzleNSNotificationCenter{
     [self jj_swizzleInstanceMethod:@selector(addObserver:selector:name:object:) withSwizzledBlock:^id(JJSwizzleObject *swizzleInfo) {
@@ -111,11 +89,11 @@ void jj_removeNotificationObserverInfo(id observer){
     }
 
     if ([observer isKindOfClass:NSObject.class]) {
-        jj_setNotificationObserverInfo(observer, aName, anObject);
+        [JJNotificationObject jj_setNotificationObserverInfo:observer name:aName object:anObject];
         __unsafe_unretained typeof(observer) unsafeObject = observer;
         [observer jj_deallocBlock:^{
-            NSMutableArray <JJNotificationObject *>*infos = jj_notificationObserverInfos(unsafeObject);
-            jj_removeNotificationObserverInfo(unsafeObject);
+            NSMutableArray <JJNotificationObject *>*infos = [JJNotificationObject jj_notificationObserverInfos:unsafeObject];
+            [JJNotificationObject jj_removeNotificationObserverInfo:unsafeObject];
             if ([infos isKindOfClass:[NSArray class]] && infos.count > 0) {
                 for (JJNotificationObject *jjObject in infos) {
                     /**

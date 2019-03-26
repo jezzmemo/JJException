@@ -8,6 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import "JJException.h"
+#import "NSNotificationCenter+ClearNotification.h"
 
 @interface TestZombie : NSObject
 
@@ -202,6 +203,45 @@
             __unused id object = [array objectAtIndex:1];
         }
     }];
+}
+
+- (void)testJJNotificationObserverInfoKey{
+    NSString *str = @"Hello";
+    NSString *key = [JJNotificationObject jj_observerInfoKey:str];
+    BOOL isEqualTo = [key isEqualToString:[NSString stringWithFormat:@"NSString_%p", str]];
+    NSAssert(isEqualTo, @"JJNotificationObject jj_observerInfoKey Failed");
+}
+
+- (void)testJJNotificationSetObserverInfo{
+    TestZombie *test = [[TestZombie alloc] init];
+    [JJNotificationObject jj_setNotificationObserverInfo:test name:UIApplicationDidEnterBackgroundNotification object:@"Test"];
+    NSArray *array = [JJNotificationObject jj_notificationObserverInfos:test];
+    NSAssert([array count] == 1, @"infos error");
+}
+
+- (void)testJJNotificationGetInfos{
+    TestZombie *test = [[TestZombie alloc] init];
+    NSArray *array = [JJNotificationObject jj_notificationObserverInfos:test];
+    NSAssert([array count] == 0, @"infos error");
+    NSString *object = @"Test";
+    [JJNotificationObject jj_setNotificationObserverInfo:test name:UIApplicationDidEnterBackgroundNotification object:object];
+    array = [JJNotificationObject jj_notificationObserverInfos:test];
+    NSAssert([array count] == 1, @"infos error");
+    JJNotificationObject *obj = [array firstObject];
+    NSAssert(obj.name == UIApplicationDidEnterBackgroundNotification, @"JJNotificationObject name error");
+    NSAssert(obj.object == object, @"JJNotificationObject object error");
+}
+
+- (void)testJJNotificationRemoveInfos{
+    TestZombie *test = [[TestZombie alloc] init];
+    //nil remove
+    [JJNotificationObject jj_removeNotificationObserverInfo:test];
+    [JJNotificationObject jj_setNotificationObserverInfo:test name:UIApplicationDidEnterBackgroundNotification object:@"Test"];
+    NSArray *array = [JJNotificationObject jj_notificationObserverInfos:test];
+    NSAssert([array count] == 1, @"infos error");
+    [JJNotificationObject jj_removeNotificationObserverInfo:test];
+    array = [JJNotificationObject jj_notificationObserverInfos:test];
+    NSAssert([array count] == 0, @"infos error");
 }
 
 @end
