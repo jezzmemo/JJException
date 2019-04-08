@@ -6,6 +6,11 @@
 - (void)forwardInvocation:(NSInvocation *)anInvocation;
 ```
 
+```
++ (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector;
++ (void)forwardInvocation:(NSInvocation *)anInvocation;
+```
+
 * NSObject(KVOCrash)
 
 ```
