@@ -27,13 +27,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JJException/Source/MRC/NSObject+ZombieHook.m"
-            timestampString = "572505624.197015"
+            filePath = "JJException/ViewController.m"
+            timestampString = "577100550.896796"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
-            landmarkName = "-hookDealloc"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "-testArrayDictionaryUnrecognizedSelector"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

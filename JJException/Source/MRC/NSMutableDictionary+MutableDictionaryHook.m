@@ -18,12 +18,13 @@ JJSYNTH_DUMMY_CLASS(NSMutableDictionary_MutableDictionaryHook)
 + (void)jj_swizzleNSMutableDictionary{
     swizzleInstanceMethod(NSClassFromString(@"__NSDictionaryM"), @selector(setObject:forKey:), @selector(hookSetObject:forKey:));
     swizzleInstanceMethod(NSClassFromString(@"__NSDictionaryM"), @selector(removeObjectForKey:), @selector(hookRemoveObjectForKey:));
+    swizzleInstanceMethod(NSClassFromString(@"__NSDictionaryM"), @selector(setObject:forKeyedSubscript:), @selector(hookSetObject:forKeyedSubscript:));
 }
 
 - (void) hookSetObject:(id)object forKey:(id)key {
     if (object && key) {
         [self hookSetObject:object forKey:key];
-    }else{
+    } else {
         handleCrashException(JJExceptionGuardDictionaryContainer,[NSString stringWithFormat:@"NSMutableDictionary setObject invalid object:%@ and key:%@",object,key],self);
     }
 }
@@ -31,8 +32,16 @@ JJSYNTH_DUMMY_CLASS(NSMutableDictionary_MutableDictionaryHook)
 - (void) hookRemoveObjectForKey:(id)key {
     if (key) {
         [self hookRemoveObjectForKey:key];
-    }else{
+    } else {
         handleCrashException(JJExceptionGuardDictionaryContainer,@"NSMutableDictionary removeObjectForKey nil key",self);
+    }
+}
+
+- (void)hookSetObject:(id)object forKeyedSubscript:(id<NSCopying>)key {
+    if (object && key ) {
+        [self hookSetObject:object forKeyedSubscript:key];
+    } else {
+        handleCrashException(JJExceptionGuardDictionaryContainer,[NSString stringWithFormat:@"NSMutableDictionary setObject object:%@ and forKeyedSubscript:%@",object,key],self);
     }
 }
 

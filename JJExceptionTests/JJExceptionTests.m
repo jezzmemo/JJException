@@ -68,6 +68,9 @@
     
     NSAssert([mutableArray objectAtIndex:2] == nil, @"Check invalid index crash");
     NSAssert(mutableArray[2] == nil, @"Check invalid index crash");
+    
+    NSMutableArray* atIndexedSubscriptArray = @[@"text"].mutableCopy;
+    atIndexedSubscriptArray[3] = @"iOS";
 }
 
 - (void)testDictionaryException{
@@ -88,6 +91,10 @@
     
     NSString* key = nil;
     [testDic removeObjectForKey:key];
+    
+    NSMutableDictionary *forKeyedSubscript = @{@"name" : @"text"}.mutableCopy;
+    NSString *subscript = nil;
+    forKeyedSubscript[subscript] = @(25);
 }
 
 - (void)testZombieException{

@@ -24,6 +24,7 @@ JJSYNTH_DUMMY_CLASS(NSMutableArray_MutableArrayHook)
     swizzleInstanceMethod(NSClassFromString(@"__NSArrayM"), @selector(insertObject:atIndex:), @selector(hookInsertObject:atIndex:));
     swizzleInstanceMethod(NSClassFromString(@"__NSArrayM"), @selector(removeObjectAtIndex:), @selector(hookRemoveObjectAtIndex:));
     swizzleInstanceMethod(NSClassFromString(@"__NSArrayM"), @selector(replaceObjectAtIndex:withObject:), @selector(hookReplaceObjectAtIndex:withObject:));
+    swizzleInstanceMethod(NSClassFromString(@"__NSArrayM"), @selector(setObject:atIndexedSubscript:), @selector(hookSetObject:atIndexedSubscript:));
     swizzleInstanceMethod(NSClassFromString(@"__NSArrayM"), @selector(removeObjectsInRange:), @selector(hookRemoveObjectsInRange:));
     
     swizzleInstanceMethod(NSClassFromString(@"__NSCFArray"), @selector(objectAtIndex:), @selector(hookObjectAtIndex:));
@@ -80,6 +81,14 @@ JJSYNTH_DUMMY_CLASS(NSMutableArray_MutableArrayHook)
         [self hookReplaceObjectAtIndex:index withObject:anObject];
     }else{
         handleCrashException(JJExceptionGuardArrayContainer,[NSString stringWithFormat:@"NSMutableArray replaceObjectAtIndex invalid index:%tu total:%tu replace object:%@",index,self.count,anObject]);
+    }
+}
+
+- (void) hookSetObject:(id)object atIndexedSubscript:(NSUInteger)index {
+    if (index < self.count && object) {
+        [self hookSetObject:object atIndexedSubscript:index];
+    }else{
+        handleCrashException(JJExceptionGuardArrayContainer,[NSString stringWithFormat:@"NSMutableArray setObject invalid object:%@ atIndexedSubscript:%tu total:%tu",object,index,self.count]);
     }
 }
 
