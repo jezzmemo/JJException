@@ -82,6 +82,7 @@
 - (void) removeObjectAtIndex:(NSUInteger)index;
 - (void) replaceObjectAtIndex:(NSUInteger)index withObject:(id)anObject;
 - (void) removeObjectsInRange:(NSRange)range;
+- (void) setObject:(id)object atIndexedSubscript:(NSUInteger)index;
 ```
 
 * NSDictionary
@@ -96,6 +97,7 @@
 ```
 - (void) setObject:(id)anObject forKey:(id)aKey;
 - (void) removeObjectForKey:(id)aKey;
+- (void) setObject:(id)object forKeyedSubscript:(id<NSCopying>)key;
 ```
 
 * NSSet
