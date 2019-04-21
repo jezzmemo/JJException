@@ -122,7 +122,16 @@ void jj_swizzleDeallocIfNeeded(Class class)
         objc_setAssociatedObject(class, &jjSwizzledDeallocKey, @(YES), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     
-    Method dealloc = class_getInstanceMethod(class, deallocSEL);
+    Method dealloc = NULL;
+    
+    unsigned int count = 0;
+    Method* method = class_copyMethodList(class, &count);
+    for (unsigned int i = 0; i < count; i++) {
+        if (method_getName(method[i]) == deallocSEL) {
+            dealloc = method[i];
+            break;
+        }
+    }
     
     if ( dealloc == NULL ) {
         Class superclass = class_getSuperclass(class);
