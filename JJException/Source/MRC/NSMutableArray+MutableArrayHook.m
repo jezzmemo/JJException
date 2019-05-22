@@ -85,7 +85,7 @@ JJSYNTH_DUMMY_CLASS(NSMutableArray_MutableArrayHook)
 }
 
 - (void) hookSetObject:(id)object atIndexedSubscript:(NSUInteger)index {
-    if (index < self.count && object) {
+    if (index <= self.count && object) {
         [self hookSetObject:object atIndexedSubscript:index];
     }else{
         handleCrashException(JJExceptionGuardArrayContainer,[NSString stringWithFormat:@"NSMutableArray setObject invalid object:%@ atIndexedSubscript:%tu total:%tu",object,index,self.count]);
