@@ -95,6 +95,8 @@
     NSMutableDictionary *forKeyedSubscript = @{@"name" : @"text"}.mutableCopy;
     NSString *subscript = nil;
     forKeyedSubscript[subscript] = @(25);
+    forKeyedSubscript[@"name"] = nil;
+    XCTAssert(forKeyedSubscript.count == 0);
 }
 
 - (void)testZombieException{

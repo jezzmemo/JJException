@@ -38,7 +38,7 @@ JJSYNTH_DUMMY_CLASS(NSMutableDictionary_MutableDictionaryHook)
 }
 
 - (void) hookSetObject:(id)object forKeyedSubscript:(id<NSCopying>)key {
-    if (object && key ) {
+    if (key) {
         [self hookSetObject:object forKeyedSubscript:key];
     } else {
         handleCrashException(JJExceptionGuardDictionaryContainer,[NSString stringWithFormat:@"NSMutableDictionary setObject object:%@ and forKeyedSubscript:%@",object,key],self);
