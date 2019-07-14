@@ -292,6 +292,12 @@ static const char ObserverDeallocKVOKey;
         return;
     }
     
+    /*
+     * Fix observer associated bug,disconnect the self and observer,
+     * bug link:https://github.com/jezzmemo/JJException/issues/68
+     */
+    objc_setAssociatedObject(observer, &ObserverDeallocKVOKey, nil, OBJC_ASSOCIATION_RETAIN);
+    
     KVOObjectItem* item = [[KVOObjectItem alloc] init];
     item.observer = observer;
     item.keyPath = keyPath;
