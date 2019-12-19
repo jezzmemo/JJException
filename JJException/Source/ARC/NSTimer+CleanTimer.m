@@ -54,10 +54,16 @@
         return;
     }
     if ([self.target respondsToSelector:self.selector]) {
-        #pragma clang diagnostic push
-        #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        [self.target performSelector:self.selector withObject:self.timer];
-        #pragma clang diagnostic pop
+        // Fix performSelector maybe some memmory leak or return object crash
+        NSMethodSignature* signature = [NSMethodSignature methodSignatureForSelector:self.selector];
+        NSInvocation* invocation = [NSInvocation invocationWithMethodSignature:signature];
+        invocation.target = self.target;
+        invocation.selector = self.selector;
+        if (signature.numberOfArguments > 2) {
+            [invocation setArgument:(__bridge void * _Nonnull)(self.timer) atIndex:2];
+        }
+        [invocation retainArguments];
+        [invocation invoke];
     }
 }
 
