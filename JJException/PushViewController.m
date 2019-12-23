@@ -80,11 +80,11 @@
 #pragma mark - Test Timer
 
 - (void)testTimer{
-   _t = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(scheduledMethod) userInfo:nil repeats:YES];
+    _t = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(scheduledMethod:) userInfo:nil repeats:YES];
 }
 
-- (void)scheduledMethod{
-    NSLog(@"11");
+- (void)scheduledMethod:(NSTimer*)timer{
+    NSLog(@"scheduledMethod:%@",timer);
 }
 
 #pragma mark - Test KVO
