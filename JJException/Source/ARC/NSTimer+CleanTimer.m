@@ -60,7 +60,7 @@
         invocation.target = self.target;
         invocation.selector = self.selector;
         if (signature.numberOfArguments > 2) {
-            [invocation setArgument:(__bridge void * _Nonnull)(self.timer) atIndex:2];
+            [invocation setArgument:&_timer atIndex:2];
         }
         [invocation retainArguments];
         [invocation invoke];
