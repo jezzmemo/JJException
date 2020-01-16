@@ -163,5 +163,8 @@ func handleCrashException(_ exceptionMessage: String, extraInfo info: [AnyHashab
 ## TODO(大家记得给我星哦)
 * 国际化JJException
 
+## Linker
+* [JJSwiftLog](https://github.com/jezzmemo/JJSwiftLog)
+
 ## License
 JJException is released under the MIT license. See LICENSE for details.
