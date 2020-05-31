@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "KVOObjectDemo.h"
 
 @interface PushViewController : UIViewController
+
+@property(nonatomic,readwrite,weak)KVOObjectDemo* kvoObject;
 
 @end

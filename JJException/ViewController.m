@@ -10,8 +10,11 @@
 #import "JJException.h"
 #import <objc/runtime.h>
 #import "PushViewController.h"
+#import "KVOObjectDemo.h"
 
 @interface ViewController ()<JJExceptionHandle>
+
+@property(nonatomic,readwrite,strong)KVOObjectDemo* kvoObject;
 
 @end
 
@@ -62,7 +65,9 @@
 #pragma mark - Test Action
 
 - (void)testKVONotificatinCenterNSTimerAction{
+    self.kvoObject = [[KVOObjectDemo alloc] init];
     PushViewController* push = [[PushViewController alloc] init];
+    push.kvoObject = self.kvoObject;
     [self presentViewController:push animated:YES completion:nil];
 }
 
