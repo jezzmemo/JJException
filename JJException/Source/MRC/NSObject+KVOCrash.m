@@ -52,6 +52,64 @@ static const char ObserverDeallocKVOKey;
 
 @end
 
+@interface JJObserverContainer : NSObject
+
+@property (nonatomic,readwrite,retain) NSHashTable* observers;
+
+/**
+ Associated owner object
+ */
+@property(nonatomic,readwrite,assign) NSObject* whichObject;
+
+- (void)addObserver:(KVOObjectItem *)observer;
+
+- (void)removeObserver:(KVOObjectItem *)observer;
+
+@end
+
+@implementation JJObserverContainer
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        self.observers = [NSHashTable hashTableWithOptions:NSMapTableWeakMemory];
+    }
+    return self;
+}
+
+- (void)addObserver:(KVOObjectItem *)observer
+{
+    @synchronized (self) {
+        [self.observers addObject:observer];
+    }
+}
+
+- (void)removeObserver:(KVOObjectItem *)observer
+{
+    @synchronized (self) {
+        [self.observers removeObject:observer];
+    }
+}
+
+- (void)cleanObservers{
+    for (KVOObjectItem* item in self.observers) {
+        [self.whichObject removeObserver:item.observer forKeyPath:item.keyPath];
+        
+    }
+    @synchronized (self) {
+        [self.observers removeAllObjects];
+    }
+}
+
+- (void)dealloc{
+    self.whichObject = nil;
+    [self.observers release];
+    [super dealloc];
+}
+
+@end
+
 
 @interface KVOObjectContainer : NSObject
 
@@ -131,6 +189,18 @@ static const char ObserverDeallocKVOKey;
     [super dealloc];
 }
 
+/**
+ Clear the observer, when the whichObject dealloc and then release the observer
+ Bug:https://github.com/jezzmemo/JJException/issues/83
+ */
+- (void)cleanObserverData{
+    NSSet* kvoSetCopy = [self.kvoObjectSet copy];
+    for (KVOObjectItem* item in kvoSetCopy) {
+        JJObserverContainer* observerContainer = objc_getAssociatedObject(item.observer, &ObserverDeallocKVOKey);
+        [observerContainer cleanObservers];
+    }
+}
+
 - (void)cleanKVOData{
     for (KVOObjectItem* item in self.kvoObjectSet) {
         #pragma clang diagnostic push
@@ -153,63 +223,6 @@ static const char ObserverDeallocKVOKey;
 
 @end
 
-@interface JJObserverContainer : NSObject
-
-@property (nonatomic,readwrite,retain) NSHashTable* observers;
-
-/**
- Associated owner object
- */
-@property(nonatomic,readwrite,assign) NSObject* whichObject;
-
-- (void)addObserver:(KVOObjectItem *)observer;
-
-- (void)removeObserver:(KVOObjectItem *)observer;
-
-@end
-
-@implementation JJObserverContainer
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        self.observers = [NSHashTable hashTableWithOptions:NSMapTableWeakMemory];
-    }
-    return self;
-}
-
-- (void)addObserver:(KVOObjectItem *)observer
-{
-    @synchronized (self) {
-        [self.observers addObject:observer];
-    }
-}
-
-- (void)removeObserver:(KVOObjectItem *)observer
-{
-    @synchronized (self) {
-        [self.observers removeObject:observer];
-    }
-}
-
-- (void)cleanObservers{
-    for (KVOObjectItem* item in self.observers) {
-        [self.whichObject removeObserver:item.observer forKeyPath:item.keyPath];
-        
-    }
-    @synchronized (self) {
-        [self.observers removeAllObjects];
-    }
-}
-
-- (void)dealloc{
-    self.whichObject = nil;
-    [self.observers release];
-    [super dealloc];
-}
-
-@end
 
 @implementation NSObject (KVOCrash)
 
@@ -349,6 +362,7 @@ static const char ObserverDeallocKVOKey;
     JJObserverContainer* observerContainer = objc_getAssociatedObject(self, &ObserverDeallocKVOKey);
     
     if (objectContainer) {
+        [objectContainer cleanObserverData];
         [objectContainer cleanKVOData];
     }else if(observerContainer){
         [observerContainer cleanObservers];
