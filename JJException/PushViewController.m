@@ -44,27 +44,39 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     
-    _kvoDemo = [KVOObjectDemo new];
-    _kvoObserver = [KVOObserver new];
-    
-    [self testTimer];
-    
-    [self testKVO];
-    
-    [self testNotification];
+//    _kvoDemo = [KVOObjectDemo new];
+//    _kvoObserver = [KVOObserver new];
+//
+//    [self testTimer];
+//
+//    [self testKVO];
+//
+//    [self testNotification];
     
     [self.kvoObject addObserver:self forKeyPath:@"demoString" options:NSKeyValueObservingOptionNew context:nil];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        _kvoObserver = nil;
-        self.demoString1 = @"11";
-    });
+    [self.kvoObject2 addObserver:self forKeyPath:@"demoString2" options:NSKeyValueObservingOptionNew context:nil];
 
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self dismissViewControllerAnimated:YES completion:nil];
-    });
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        _kvoObserver = nil;
+//        self.demoString1 = @"11";
+//    });
+//
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(6 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [self dismissViewControllerAnimated:YES completion:nil];
+//    });
     
+    UIButton* dismissButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [dismissButton setTitle:@"dismiss" forState:UIControlStateNormal];
+    [dismissButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    dismissButton.frame = CGRectMake((self.view.frame.size.width - 100)/2, 260, 100, 50);
+    [dismissButton addTarget:self action:@selector(dismissAction) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:dismissButton];
+}
+
+- (void)dismissAction {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Test Notifiaction

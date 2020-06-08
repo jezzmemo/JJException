@@ -15,6 +15,7 @@
 @interface ViewController ()<JJExceptionHandle>
 
 @property(nonatomic,readwrite,strong)KVOObjectDemo* kvoObject;
+@property(nonatomic,readwrite,strong)KVOObjectDemo* kvoObject2;
 
 @end
 
@@ -44,6 +45,9 @@
     otherButton.frame = CGRectMake(0, 350, self.view.frame.size.width, 50);
     [otherButton addTarget:self action:@selector(testArrayDictionaryUnrecognizedSelector) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:otherButton];
+    
+    self.kvoObject = [[KVOObjectDemo alloc] init];
+    self.kvoObject2 = [[KVOObjectDemo alloc] init];
 }
 #pragma mark - Exception Delegate
 
@@ -65,10 +69,12 @@
 #pragma mark - Test Action
 
 - (void)testKVONotificatinCenterNSTimerAction{
-    self.kvoObject = [[KVOObjectDemo alloc] init];
     PushViewController* push = [[PushViewController alloc] init];
     push.kvoObject = self.kvoObject;
-    [self presentViewController:push animated:YES completion:nil];
+    push.kvoObject2 = self.kvoObject2;
+    [self presentViewController:push animated:YES completion:^{
+        self.kvoObject = nil;
+    }];
 }
 
 - (void)testArrayDictionaryUnrecognizedSelector{

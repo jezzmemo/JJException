@@ -12,5 +12,6 @@
 @interface PushViewController : UIViewController
 
 @property(nonatomic,readwrite,weak)KVOObjectDemo* kvoObject;
+@property(nonatomic,readwrite,weak)KVOObjectDemo* kvoObject2;
 
 @end
