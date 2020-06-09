@@ -271,6 +271,7 @@ static const char ObserverDeallocKVOKey;
         objc_setAssociatedObject(observer, &ObserverDeallocKVOKey, observerContainer, OBJC_ASSOCIATION_RETAIN);
         [observerContainer release];
     }else{
+        [observerContainer setWhichObject:self];
         [observerContainer addObserver:item];
     }
     
@@ -362,7 +363,7 @@ static const char ObserverDeallocKVOKey;
     JJObserverContainer* observerContainer = objc_getAssociatedObject(self, &ObserverDeallocKVOKey);
     
     if (objectContainer) {
-        [objectContainer cleanObserverData];
+//        [objectContainer cleanObserverData];
         [objectContainer cleanKVOData];
     }else if(observerContainer){
         [observerContainer cleanObservers];
