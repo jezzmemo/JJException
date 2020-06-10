@@ -73,7 +73,7 @@
     push.kvoObject = self.kvoObject;
     push.kvoObject2 = self.kvoObject2;
     [self presentViewController:push animated:YES completion:^{
-        self.kvoObject2 = nil;
+        self.kvoObject = nil;
     }];
 }
 

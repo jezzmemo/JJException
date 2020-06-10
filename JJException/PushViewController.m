@@ -56,7 +56,7 @@
 //    [self testNotification];
     
     [self.kvoObject addObserver:self forKeyPath:@"demoString" options:NSKeyValueObservingOptionNew context:nil];
-    [self.kvoObject2 addObserver:self forKeyPath:@"demoString2" options:NSKeyValueObservingOptionNew context:nil];
+    [self.kvoObject2 addObserver:self forKeyPath:@"demoString" options:NSKeyValueObservingOptionNew context:nil];
 
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
 //        _kvoObserver = nil;
