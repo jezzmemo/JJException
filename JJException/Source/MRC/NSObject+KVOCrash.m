@@ -13,7 +13,6 @@
 #import "JJExceptionProxy.h"
 
 static const char DeallocKVOKey;
-static const char ObserverDeallocKVOKey;
 
 /**
  Record the kvo object
@@ -21,39 +20,71 @@ static const char ObserverDeallocKVOKey;
  */
 @interface KVOObjectItem : NSObject
 
+/** 观察者 (如果是weak，当observer被dealloc时做清理操作，读取item的observer，此时item的被weak修饰的observer属性已经被置nil了) */
 @property(nonatomic,readwrite,assign)NSObject* observer;
+/** 被观察者 */
+@property(nonatomic,readwrite,assign)NSObject* whichObject;
+
 @property(nonatomic,readwrite,copy)NSString* keyPath;
 @property(nonatomic,readwrite,assign)NSKeyValueObservingOptions options;
 @property(nonatomic,readwrite,assign)void* context;
 
 /**
- * Fix issue: https://github.com/jezzmemo/JJException/issues/83
- * Every kvo have dependancy object
+ NSMutableSet safe-thread
  */
-@property(nonatomic,readwrite,assign)NSObject* whichObject;
-
+#if OS_OBJECT_HAVE_OBJC_SUPPORT
+@property(nonatomic,readwrite,retain)dispatch_semaphore_t safeLock;
+#else
+@property(nonatomic,readwrite,assign)dispatch_semaphore_t safeLock;
+#endif
 @end
 
 @implementation KVOObjectItem
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        
+    }
+    return self;
+}
+
 - (BOOL)isEqual:(KVOObjectItem*)object{
-    if ([self.observer isEqual:object.observer] && [self.keyPath isEqualToString:object.keyPath]) {
+    // self.observer可能已释放
+    if ([self.observer isEqual:object.observer] && [self.whichObject isEqual:object.whichObject] && [self.keyPath isEqualToString:object.keyPath]) {
         return YES;
     }
     return NO;
 }
 
 - (NSUInteger)hash{
-    return [self.observer hash] ^ [self.keyPath hash];
+    return [self.observer hash] ^ [self.whichObject hash] ^ [self.keyPath hash];
+}
+
+- (void)changeObserver:(NSObject*)observer whichObject:(NSObject*)whichObject {
+    dispatch_semaphore_wait(self.safeLock, DISPATCH_TIME_FOREVER);
+    self.observer = observer;
+    self.whichObject = whichObject;
+    dispatch_semaphore_signal(self.safeLock);
 }
 
 - (void)dealloc{
     self.observer = nil;
+    self.whichObject = nil;
     self.context = nil;
     if (self.keyPath) {
         [self.keyPath release];
     }
+    dispatch_release(self.safeLock);
     [super dealloc];
+}
+
+- (dispatch_semaphore_t)safeLock{
+    if (!_safeLock) {
+        _safeLock = dispatch_semaphore_create(1);
+        return _safeLock;
+    }
+    return _safeLock;
 }
 
 @end
@@ -65,11 +96,6 @@ static const char ObserverDeallocKVOKey;
  KVO object array set
  */
 @property(nonatomic,readwrite,retain)NSMutableSet* kvoObjectSet;
-
-/**
- Associated owner object
- */
-@property(nonatomic,readwrite,unsafe_unretained)NSObject* whichObject;
 
 /**
  NSMutableSet safe-thread
@@ -132,21 +158,27 @@ static const char ObserverDeallocKVOKey;
  */
 - (void)dealloc{
     [self.kvoObjectSet release];
-    self.whichObject = nil;
     dispatch_release(self.kvoLock);
     [super dealloc];
 }
 
 - (void)cleanKVOData{
+    dispatch_semaphore_wait(self.kvoLock, DISPATCH_TIME_FOREVER);
     for (KVOObjectItem* item in self.kvoObjectSet) {
         #pragma clang diagnostic push
         #pragma clang diagnostic ignored "-Wundeclared-selector"
-        @try {
-            ((void(*)(id,SEL,id,NSString*))objc_msgSend)(self.whichObject,@selector(hookRemoveObserver:forKeyPath:),item.observer,item.keyPath);
-        }@catch (NSException *exception) {
+        if (item.observer) {
+            @try {
+                ((void(*)(id,SEL,id,NSString*))objc_msgSend)(item.whichObject,@selector(hookRemoveObserver:forKeyPath:),item.observer,item.keyPath);
+            }@catch (NSException *exception) {
+            }
+            item.observer = nil;
+            item.whichObject = nil;
         }
         #pragma clang diagnostic pop
     }
+    [self.kvoObjectSet removeAllObjects];
+    dispatch_semaphore_signal(self.kvoLock);
 }
 
 - (NSMutableSet*)kvoObjectSet{
@@ -159,66 +191,13 @@ static const char ObserverDeallocKVOKey;
 
 @end
 
-@interface JJObserverContainer : NSObject
-
-@property (nonatomic,readwrite,retain) NSHashTable* observers;
-
-- (void)addObserver:(KVOObjectItem *)observer;
-
-- (void)removeObserver:(KVOObjectItem *)observer;
-
-@end
-
-@implementation JJObserverContainer
-
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        self.observers = [NSHashTable hashTableWithOptions:NSMapTableWeakMemory];
-    }
-    return self;
-}
-
-- (void)addObserver:(KVOObjectItem *)observer
-{
-    @synchronized (self) {
-        [self.observers addObject:observer];
-    }
-}
-
-- (void)removeObserver:(KVOObjectItem *)observer
-{
-    @synchronized (self) {
-        [self.observers removeObject:observer];
-    }
-}
-
-- (void)cleanObservers{
-    for (KVOObjectItem* item in self.observers) {
-        @try {
-            [item.whichObject removeObserver:item.observer forKeyPath:item.keyPath];
-        }@catch (NSException *exception) {
-        }
-    }
-    @synchronized (self) {
-        [self.observers removeAllObjects];
-    }
-}
-
-- (void)dealloc{
-    [self.observers release];
-    [super dealloc];
-}
-
-@end
-
 @implementation NSObject (KVOCrash)
 
 + (void)jj_swizzleKVOCrash{
     swizzleInstanceMethod([self class], @selector(addObserver:forKeyPath:options:context:), @selector(hookAddObserver:forKeyPath:options:context:));
     swizzleInstanceMethod([self class], @selector(removeObserver:forKeyPath:), @selector(hookRemoveObserver:forKeyPath:));
     swizzleInstanceMethod([self class], @selector(removeObserver:forKeyPath:context:), @selector(hookRemoveObserver:forKeyPath:context:));
+    swizzleInstanceMethod([self class], @selector(observeValueForKeyPath:ofObject:change:context:), @selector(hookObserveValueForKeyPath:ofObject:change:context:));
 }
 
 - (void)hookAddObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath options:(NSKeyValueObservingOptions)options context:(void *)context{
@@ -231,40 +210,40 @@ static const char ObserverDeallocKVOKey;
         return;
     }
 
-    KVOObjectContainer* objectContainer = objc_getAssociatedObject(self,&DeallocKVOKey);
-
+    // item记录关系
     KVOObjectItem* item = [[KVOObjectItem alloc] init];
     item.observer = observer;
     item.keyPath = keyPath;
     item.options = options;
     item.context = context;
     item.whichObject = self;
-
+    
+    // 被观察者self：记录谁观察了自己
+    KVOObjectContainer* objectContainer = objc_getAssociatedObject(self,&DeallocKVOKey);
     if (!objectContainer) {
         objectContainer = [KVOObjectContainer new];
-        [objectContainer setWhichObject:self];
         objc_setAssociatedObject(self, &DeallocKVOKey, objectContainer, OBJC_ASSOCIATION_RETAIN);
         [objectContainer release];
     }
-
     if (![objectContainer checkKVOItemExist:item]) {
         [objectContainer addKVOObjectItem:item];
         [self hookAddObserver:observer forKeyPath:keyPath options:options context:context];
     }
-
-    JJObserverContainer* observerContainer = objc_getAssociatedObject(observer,&ObserverDeallocKVOKey);
-
+    
+    // 观察者observer：记录自己观察了谁
+    KVOObjectContainer* observerContainer = objc_getAssociatedObject(observer,&DeallocKVOKey);
     if (!observerContainer) {
-        observerContainer = [JJObserverContainer new];
-        [observerContainer addObserver:item];
-        objc_setAssociatedObject(observer, &ObserverDeallocKVOKey, observerContainer, OBJC_ASSOCIATION_RETAIN);
+        observerContainer = [KVOObjectContainer new];
+        objc_setAssociatedObject(observer, &DeallocKVOKey, observerContainer, OBJC_ASSOCIATION_RETAIN);
         [observerContainer release];
-    }else{
-        [observerContainer addObserver:item];
+    }
+    if (![observerContainer checkKVOItemExist:item]) {
+        [observerContainer addKVOObjectItem:item];
     }
 
     [item release];
 
+    // 观察者和被观察者都需要：要在dealloc之前清理和自己相关的观察关系jj_cleanKVO
     jj_swizzleDeallocIfNeeded(self.class);
     jj_swizzleDeallocIfNeeded(observer.class);
 }
@@ -283,13 +262,14 @@ static const char ObserverDeallocKVOKey;
         [self hookRemoveObserver:observer forKeyPath:keyPath];
         return;
     }
-
-    KVOObjectContainer* objectContainer = objc_getAssociatedObject(self, &DeallocKVOKey);
-
+    
     if (!observer) {
         return;
     }
 
+    // 被观察者removeObserver(观察者)：清理被观察者的关系
+    // (观察者dealloc的时候会去清理自己的,当然被观察者delloc时也会去清理,针对不同场景处理。)
+    KVOObjectContainer* objectContainer = objc_getAssociatedObject(self, &DeallocKVOKey);
     if (!objectContainer) {
         return;
     }
@@ -298,21 +278,40 @@ static const char ObserverDeallocKVOKey;
      * Fix observer associated bug,disconnect the self and observer,
      * bug link:https://github.com/jezzmemo/JJException/issues/68
      */
-    objc_setAssociatedObject(observer, &ObserverDeallocKVOKey, nil, OBJC_ASSOCIATION_RETAIN);
-
-    KVOObjectItem* item = [[KVOObjectItem alloc] init];
-    item.observer = observer;
-    item.keyPath = keyPath;
-
-    if ([objectContainer checkKVOItemExist:item]) {
+    KVOObjectItem* targetItem = [[KVOObjectItem alloc] init];
+    targetItem.observer = observer;
+    targetItem.whichObject = self;
+    targetItem.keyPath = keyPath;
+    
+    KVOObjectItem* resultItem = nil;
+    for (KVOObjectItem* item in objectContainer.kvoObjectSet) {
+        if ([item isEqual:targetItem]) {
+            resultItem = item;
+            break;
+        }
+    }
+    if (resultItem) {
         @try {
             [self hookRemoveObserver:observer forKeyPath:keyPath];
         }@catch (NSException *exception) {
         }
-        [objectContainer removeKVOObjectItem:item];
+        resultItem.observer = nil;
+        resultItem.whichObject = nil;
+        [objectContainer removeKVOObjectItem:resultItem];
     }
+}
 
-    [item release];
+- (void)hookObserveValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    if ([self ignoreKVOInstanceClass:object]) {
+        [self hookObserveValueForKeyPath:keyPath ofObject:object change:change context:context];
+        return;
+    }
+    
+    @try {
+        [self hookObserveValueForKeyPath:keyPath ofObject:object change:change context:context];
+    } @catch (NSException *exception) {
+        handleCrashException(JJExceptionGuardKVOCrash, exception.description);
+    }
 }
 
 /**
@@ -341,19 +340,14 @@ static const char ObserverDeallocKVOKey;
     return NO;
 }
 
-
 /**
  * Hook the kvo object dealloc and to clean the kvo array
  */
 - (void)jj_cleanKVO{
-
     KVOObjectContainer* objectContainer = objc_getAssociatedObject(self, &DeallocKVOKey);
-    JJObserverContainer* observerContainer = objc_getAssociatedObject(self, &ObserverDeallocKVOKey);
-
-    if (objectContainer) {
+    
+    if (objectContainer) { // 清理和自己相关的观察关系
         [objectContainer cleanKVOData];
-    }else if(observerContainer){
-        [observerContainer cleanObservers];
     }
 }
 
