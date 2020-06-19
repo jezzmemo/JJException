@@ -29,14 +29,6 @@ static const char DeallocKVOKey;
 @property(nonatomic,readwrite,assign)NSKeyValueObservingOptions options;
 @property(nonatomic,readwrite,assign)void* context;
 
-/**
- NSMutableSet safe-thread
- */
-#if OS_OBJECT_HAVE_OBJC_SUPPORT
-@property(nonatomic,readwrite,retain)dispatch_semaphore_t safeLock;
-#else
-@property(nonatomic,readwrite,assign)dispatch_semaphore_t safeLock;
-#endif
 @end
 
 @implementation KVOObjectItem
@@ -61,13 +53,6 @@ static const char DeallocKVOKey;
     return [self.observer hash] ^ [self.whichObject hash] ^ [self.keyPath hash];
 }
 
-- (void)changeObserver:(NSObject*)observer whichObject:(NSObject*)whichObject {
-    dispatch_semaphore_wait(self.safeLock, DISPATCH_TIME_FOREVER);
-    self.observer = observer;
-    self.whichObject = whichObject;
-    dispatch_semaphore_signal(self.safeLock);
-}
-
 - (void)dealloc{
     self.observer = nil;
     self.whichObject = nil;
@@ -75,16 +60,7 @@ static const char DeallocKVOKey;
     if (self.keyPath) {
         [self.keyPath release];
     }
-    dispatch_release(self.safeLock);
     [super dealloc];
-}
-
-- (dispatch_semaphore_t)safeLock{
-    if (!_safeLock) {
-        _safeLock = dispatch_semaphore_create(1);
-        return _safeLock;
-    }
-    return _safeLock;
 }
 
 @end
@@ -174,6 +150,7 @@ static const char DeallocKVOKey;
             }
             item.observer = nil;
             item.whichObject = nil;
+            item.keyPath = nil;
         }
         #pragma clang diagnostic pop
     }
@@ -226,8 +203,8 @@ static const char DeallocKVOKey;
         [objectContainer release];
     }
     if (![objectContainer checkKVOItemExist:item]) {
-        [objectContainer addKVOObjectItem:item];
         [self hookAddObserver:observer forKeyPath:keyPath options:options context:context];
+        [objectContainer addKVOObjectItem:item];
     }
     
     // 观察者observer：记录自己观察了谁
@@ -278,26 +255,30 @@ static const char DeallocKVOKey;
      * Fix observer associated bug,disconnect the self and observer,
      * bug link:https://github.com/jezzmemo/JJException/issues/68
      */
-    KVOObjectItem* targetItem = [[KVOObjectItem alloc] init];
-    targetItem.observer = observer;
-    targetItem.whichObject = self;
-    targetItem.keyPath = keyPath;
-    
-    KVOObjectItem* resultItem = nil;
-    for (KVOObjectItem* item in objectContainer.kvoObjectSet) {
-        if ([item isEqual:targetItem]) {
-            resultItem = item;
-            break;
+    @synchronized (objectContainer.kvoObjectSet) {
+        KVOObjectItem* targetItem = [[KVOObjectItem alloc] init];
+        targetItem.observer = observer;
+        targetItem.whichObject = self;
+        targetItem.keyPath = keyPath;
+
+        KVOObjectItem* resultItem = nil;
+        NSSet *set = [objectContainer.kvoObjectSet copy];
+        for (KVOObjectItem* item in set) {
+            if ([item isEqual:targetItem]) {
+                resultItem = item;
+                break;
+            }
         }
-    }
-    if (resultItem) {
-        @try {
-            [self hookRemoveObserver:observer forKeyPath:keyPath];
-        }@catch (NSException *exception) {
+        if (resultItem) {
+            @try {
+                [self hookRemoveObserver:observer forKeyPath:keyPath];
+            }@catch (NSException *exception) {
+            }
+            resultItem.observer = nil;
+            resultItem.whichObject = nil;
+            resultItem.keyPath = nil;
+            [objectContainer removeKVOObjectItem:resultItem];
         }
-        resultItem.observer = nil;
-        resultItem.whichObject = nil;
-        [objectContainer removeKVOObjectItem:resultItem];
     }
 }
 
