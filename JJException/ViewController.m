@@ -215,12 +215,22 @@
 - (void)testKVOCrash5 {
     dispatch_queue_t queue = dispatch_queue_create("testkvo", DISPATCH_QUEUE_CONCURRENT);
     
-    for (int i = 0; i < 50; i++) {
+    for (int i = 0; i < 200; i++) {
+        NSString *str = [NSString stringWithFormat:@"name%d", i];
         dispatch_async(queue, ^{
-            [self.objc addObserver:self forKeyPath:@"name" options:NSKeyValueObservingOptionNew context:NULL];
+            [self.objc addObserver:self forKeyPath:str options:NSKeyValueObservingOptionNew context:nil];
         });
         dispatch_async(queue, ^{
-            [self.objc removeObserver:self forKeyPath:@"name"];
+            [self.objc removeObserver:self forKeyPath:str context:nil];
+        });
+        dispatch_async(queue, ^{
+            self.objc.name = str;
+        });
+        dispatch_async(queue, ^{
+            self.objc = nil;
+        });
+        dispatch_async(queue, ^{
+            self.objc = [[KVOCrashObject alloc] init];
         });
     }
     dispatch_barrier_async(queue, ^{
@@ -257,7 +267,7 @@
 #pragma mark - observe
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void *)context {
-    NSLog(@"object = %@, keyPath = %@", object, keyPath);
+    NSLog(@"object = %@, keyPath = %@, change = %@", object, keyPath, change[@"new"]);
 }
 
 #pragma mark - Start

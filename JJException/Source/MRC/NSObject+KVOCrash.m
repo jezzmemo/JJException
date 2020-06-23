@@ -82,42 +82,34 @@ static const char DeallocKVOKey;
 @property(nonatomic,readwrite,assign)dispatch_semaphore_t kvoLock;
 #endif
 
-- (void)addKVOObjectItem:(KVOObjectItem*)item;
-
-- (void)removeKVOObjectItem:(KVOObjectItem*)item;
-
-- (BOOL)checkKVOItemExist:(KVOObjectItem*)item;
+- (void)checkAddKVOItemExist:(KVOObjectItem*)item blk:(void (^)(void))blk;
 
 @end
 
 @implementation KVOObjectContainer
 
-- (void)addKVOObjectItem:(KVOObjectItem*)item{
-    if (item) {
-        dispatch_semaphore_wait(self.kvoLock, DISPATCH_TIME_FOREVER);
-        [self.kvoObjectSet addObject:item];
-        dispatch_semaphore_signal(self.kvoLock);
-    }
-}
-
-- (void)removeKVOObjectItem:(KVOObjectItem*)item{
-    if (item) {
-        dispatch_semaphore_wait(self.kvoLock, DISPATCH_TIME_FOREVER);
-        [self.kvoObjectSet removeObject:item];
-        dispatch_semaphore_signal(self.kvoLock);
-    }
-}
-
-- (BOOL)checkKVOItemExist:(KVOObjectItem*)item{
+- (void)checkAddKVOItemExist:(KVOObjectItem*)item blk:(void (^)(void))blk{
     dispatch_semaphore_wait(self.kvoLock, DISPATCH_TIME_FOREVER);
-    BOOL exist = NO;
     if (!item) {
         dispatch_semaphore_signal(self.kvoLock);
-        return exist;
+        return;
     }
-    exist = [self.kvoObjectSet containsObject:item];
+    BOOL exist = [self.kvoObjectSet containsObject:item];
+    if (!exist) {
+        if (blk) {
+            blk();
+        }
+        [self.kvoObjectSet addObject:item];
+    }
     dispatch_semaphore_signal(self.kvoLock);
-    return exist;
+}
+
+- (void)lock:(void (^)(NSMutableSet *kvoObjectSet))blk {
+    if (blk) {
+        dispatch_semaphore_wait(self.kvoLock, DISPATCH_TIME_FOREVER);
+        blk(self.kvoObjectSet);
+        dispatch_semaphore_signal(self.kvoLock);
+    }
 }
 
 - (dispatch_semaphore_t)kvoLock{
@@ -202,10 +194,9 @@ static const char DeallocKVOKey;
         objc_setAssociatedObject(self, &DeallocKVOKey, objectContainer, OBJC_ASSOCIATION_RETAIN);
         [objectContainer release];
     }
-    if (![objectContainer checkKVOItemExist:item]) {
+    [objectContainer checkAddKVOItemExist:item blk:^{
         [self hookAddObserver:observer forKeyPath:keyPath options:options context:context];
-        [objectContainer addKVOObjectItem:item];
-    }
+    }];
     
     // 观察者observer：记录自己观察了谁
     KVOObjectContainer* observerContainer = objc_getAssociatedObject(observer,&DeallocKVOKey);
@@ -214,9 +205,7 @@ static const char DeallocKVOKey;
         objc_setAssociatedObject(observer, &DeallocKVOKey, observerContainer, OBJC_ASSOCIATION_RETAIN);
         [observerContainer release];
     }
-    if (![observerContainer checkKVOItemExist:item]) {
-        [observerContainer addKVOObjectItem:item];
-    }
+    [observerContainer checkAddKVOItemExist:item blk:nil];
 
     [item release];
 
@@ -255,14 +244,14 @@ static const char DeallocKVOKey;
      * Fix observer associated bug,disconnect the self and observer,
      * bug link:https://github.com/jezzmemo/JJException/issues/68
      */
-    @synchronized (objectContainer.kvoObjectSet) {
+    [objectContainer lock:^(NSMutableSet *kvoObjectSet) {
         KVOObjectItem* targetItem = [[KVOObjectItem alloc] init];
         targetItem.observer = observer;
         targetItem.whichObject = self;
         targetItem.keyPath = keyPath;
 
         KVOObjectItem* resultItem = nil;
-        NSSet *set = [objectContainer.kvoObjectSet copy];
+        NSSet *set = [kvoObjectSet copy];
         for (KVOObjectItem* item in set) {
             if ([item isEqual:targetItem]) {
                 resultItem = item;
@@ -277,9 +266,9 @@ static const char DeallocKVOKey;
             resultItem.observer = nil;
             resultItem.whichObject = nil;
             resultItem.keyPath = nil;
-            [objectContainer removeKVOObjectItem:resultItem];
+            [kvoObjectSet removeObject:resultItem];
         }
-    }
+    }];
 }
 
 - (void)hookObserveValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
