@@ -18,6 +18,7 @@
 						options:(NSKeyValueObservingOptions)options context:(void *)context;
 - (void) removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath;
 - (void) removeObserver:(NSObject *)observer forKeyPath:(NSString *)keyPath context:(nullable void *)context;
+- (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context;
 ```
 
 * NSString
