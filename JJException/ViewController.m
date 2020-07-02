@@ -214,8 +214,8 @@
  */
 - (void)testKVOCrash5 {
     dispatch_queue_t queue = dispatch_queue_create("testkvo", DISPATCH_QUEUE_CONCURRENT);
-    
-    for (int i = 0; i < 200; i++) {
+
+    for (int i = 0; i < 1000; i++) {
         NSString *str = [NSString stringWithFormat:@"name%d", i];
         dispatch_async(queue, ^{
             [self.objc addObserver:self forKeyPath:str options:NSKeyValueObservingOptionNew context:nil];
