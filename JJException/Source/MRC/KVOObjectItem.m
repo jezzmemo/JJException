@@ -10,6 +10,10 @@
 
 @implementation KVOObjectItem
 
+- (BOOL)isEqual:(KVOObjectItem *)object {
+    return self.hash == object.hash;
+}
+
 - (NSUInteger)hash {
     return [self.observer hash] ^ [self.whichObject hash] ^ [self.keyPath hash];
 }

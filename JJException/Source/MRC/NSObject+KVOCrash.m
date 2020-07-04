@@ -59,13 +59,7 @@
         [self.kvoLock unlock];
         return;
     }
-        
-    [self hookAddObserver:observer forKeyPath:keyPath options:options context:context];
-    
-    // 观察者和被观察者都需要：要在dealloc之前清理和自己相关的观察关系jj_cleanKVO
-    jj_swizzleDeallocIfNeeded(self.class);
-    jj_swizzleDeallocIfNeeded(observer.class);
-    
+                
     // item记录关系
     KVOObjectItem* item = [[KVOObjectItem alloc] init];
     item.observer = observer;
@@ -74,10 +68,16 @@
     item.options = options;
     item.context = context;
     // 被观察者self：记录谁观察了自己
-    [self addKVOItem:item];
+    if ([self addKVOItem:item]) {
+        [self hookAddObserver:observer forKeyPath:keyPath options:options context:context];
+    };
     // 观察者observer：记录自己观察了谁
     [observer addKVOItem:item];
-//    [item release];
+    
+    // 观察者和被观察者都需要：要在dealloc之前清理和自己相关的观察关系jj_cleanKVO
+    jj_swizzleDeallocIfNeeded(self.class);
+    jj_swizzleDeallocIfNeeded(observer.class);
+
     [self.kvoLock unlock];
 
 }
@@ -141,13 +141,19 @@
 }
 
 
-- (void)addKVOItem:(KVOObjectItem *)item {
+- (BOOL)addKVOItem:(KVOObjectItem *)item {
     if ([self deallocating]) {
-        return;
+        return NO;
     }
+    NSMutableSet *set = self.kvoObjectSet;
+    if ([set containsObject:item]) {
+        return NO;
+    }
+    
     [self.kvoLock lock];
-    [self.kvoObjectSet addObject:item];
+    [set addObject:item];
     [self.kvoLock unlock];
+    return YES;
 }
 
 - (BOOL)removeItemWithObject:(NSObject *)object observer:(NSObject *)observer forKeyPath:(NSString *)keyPath {
