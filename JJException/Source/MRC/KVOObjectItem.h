@@ -17,9 +17,9 @@
 @interface KVOObjectItem : NSObject
 
 /** 观察者 (如果是weak，当observer被dealloc时做清理操作，读取item的observer，此时item的被weak修饰的observer属性已经被置nil了) */
-@property(nonatomic,readwrite,assign)NSObject* observer;
+@property(nonatomic,readwrite,weak)NSObject* observer;
 /** 被观察者 */
-@property(nonatomic,readwrite,assign)NSObject* whichObject;
+@property(nonatomic,readwrite,weak)NSObject* whichObject;
 
 @property(nonatomic,readwrite,copy)NSString* keyPath;
 @property(nonatomic,readwrite,assign)NSKeyValueObservingOptions options;

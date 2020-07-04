@@ -7,9 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+@class KVOObjectItem;
 
 @interface NSObject (KVOCrash)
 
 + (void)jj_swizzleKVOCrash;
+
+- (BOOL)removeItemWithObject:(NSObject *)object observer:(NSObject *)observer forKeyPath:(NSString *)keyPath;
 
 @end

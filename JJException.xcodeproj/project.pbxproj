@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		438E9DC624AE197A0001E9F7 /* KVOObjectContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 438E9DC524AE197A0001E9F7 /* KVOObjectContainer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		438E9DC924AE19D60001E9F7 /* KVOObjectItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 438E9DC824AE19D60001E9F7 /* KVOObjectItem.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		438E9DC924AE19D60001E9F7 /* KVOObjectItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 438E9DC824AE19D60001E9F7 /* KVOObjectItem.m */; };
 		61025B4D2153E36100191522 /* NSAttributedString+AttributedStringHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61025B4C2153E36100191522 /* NSAttributedString+AttributedStringHook.m */; };
 		61025B502153E58F00191522 /* NSMutableAttributedString+MutableAttributedStringHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61025B4F2153E58F00191522 /* NSMutableAttributedString+MutableAttributedStringHook.m */; };
 		61025B6921563A6400191522 /* NSObject+DeallocBlock.h in Sources */ = {isa = PBXBuildFile; fileRef = 613E0AAB214FF41B00B8D0DF /* NSObject+DeallocBlock.h */; };
@@ -66,7 +65,7 @@
 		613E0ABA21514E2E00B8D0DF /* NSMutableString+MutableStringHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 613E0AB921514E2E00B8D0DF /* NSMutableString+MutableStringHook.m */; };
 		61A7F51C213B859300C87FA1 /* PushViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F51B213B859300C87FA1 /* PushViewController.m */; };
 		61A7F54021427E4100C87FA1 /* NSObject+UnrecognizedSelectorHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F53F21427E4100C87FA1 /* NSObject+UnrecognizedSelectorHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		61A7F54321427E7F00C87FA1 /* NSObject+KVOCrash.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F54221427E7F00C87FA1 /* NSObject+KVOCrash.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		61A7F54321427E7F00C87FA1 /* NSObject+KVOCrash.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F54221427E7F00C87FA1 /* NSObject+KVOCrash.m */; };
 		61A7F54C21427EB700C87FA1 /* NSArray+ArrayHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F54421427EB600C87FA1 /* NSArray+ArrayHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		61A7F54D21427EB700C87FA1 /* NSDictionary+DictionaryHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F54621427EB600C87FA1 /* NSDictionary+DictionaryHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		61A7F54E21427EB700C87FA1 /* NSMutableArray+MutableArrayHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F54921427EB600C87FA1 /* NSMutableArray+MutableArrayHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -91,8 +90,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		438E9DC424AE197A0001E9F7 /* KVOObjectContainer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KVOObjectContainer.h; sourceTree = "<group>"; };
-		438E9DC524AE197A0001E9F7 /* KVOObjectContainer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KVOObjectContainer.m; sourceTree = "<group>"; };
 		438E9DC724AE19D60001E9F7 /* KVOObjectItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KVOObjectItem.h; sourceTree = "<group>"; };
 		438E9DC824AE19D60001E9F7 /* KVOObjectItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KVOObjectItem.m; sourceTree = "<group>"; };
 		61025B4B2153E36100191522 /* NSAttributedString+AttributedStringHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+AttributedStringHook.h"; sourceTree = "<group>"; };
@@ -283,8 +280,6 @@
 				61A7F54221427E7F00C87FA1 /* NSObject+KVOCrash.m */,
 				438E9DC724AE19D60001E9F7 /* KVOObjectItem.h */,
 				438E9DC824AE19D60001E9F7 /* KVOObjectItem.m */,
-				438E9DC424AE197A0001E9F7 /* KVOObjectContainer.h */,
-				438E9DC524AE197A0001E9F7 /* KVOObjectContainer.m */,
 				61A7F53E21427E4100C87FA1 /* NSObject+UnrecognizedSelectorHook.h */,
 				61A7F53F21427E4100C87FA1 /* NSObject+UnrecognizedSelectorHook.m */,
 			);
@@ -525,7 +520,6 @@
 				61A7F54F21427EB700C87FA1 /* NSMutableDictionary+MutableDictionaryHook.m in Sources */,
 				61196D4A20F261C800022DDC /* ViewController.m in Sources */,
 				613E0ABA21514E2E00B8D0DF /* NSMutableString+MutableStringHook.m in Sources */,
-				438E9DC624AE197A0001E9F7 /* KVOObjectContainer.m in Sources */,
 				613E0A95214974B800B8D0DF /* JJExceptionProxy.m in Sources */,
 				61A7F55E2144ED9D00C87FA1 /* NSTimer+CleanTimer.m in Sources */,
 				61A7F5602144ED9D00C87FA1 /* NSNotificationCenter+ClearNotification.m in Sources */,
