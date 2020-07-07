@@ -10,8 +10,34 @@
 #import "NSObject+SwizzleHook.h"
 #import <objc/runtime.h>
 #import "JJExceptionProxy.h"
-#import "KVOObjectItem.h"
 
+/**
+ Record the kvo object
+ Override the isEqual and hash method
+ */
+@interface KVOObjectItem : NSObject
+
+/// KVO observer
+@property(nonatomic,readwrite,weak)NSObject* observer;
+/// KVO which object
+@property(nonatomic,readwrite,weak)NSObject* whichObject;
+
+@property(nonatomic,readwrite,copy)NSString* keyPath;
+@property(nonatomic,readwrite,assign)NSKeyValueObservingOptions options;
+@property(nonatomic,readwrite,assign)void* context;
+
+@end
+
+@implementation KVOObjectItem
+
+- (BOOL)isEqual:(KVOObjectItem *)object {
+    return self.hash == object.hash;
+}
+
+- (NSUInteger)hash {
+    return [self.observer hash] ^ [self.whichObject hash] ^ [self.keyPath hash];
+}
+@end
 
 @interface NSObject ()
 /**
@@ -60,21 +86,21 @@
         return;
     }
                 
-    // item记录关系
+    // Record the kvo relation
     KVOObjectItem* item = [[KVOObjectItem alloc] init];
     item.observer = observer;
     item.whichObject = self;
     item.keyPath = keyPath;
     item.options = options;
     item.context = context;
-    // 被观察者self：记录谁观察了自己
+    // Observer current self
     if ([self addKVOItem:item]) {
         [self hookAddObserver:observer forKeyPath:keyPath options:options context:context];
     };
-    // 观察者observer：记录自己观察了谁
+    // Observer observer
     [observer addKVOItem:item];
     
-    // 观察者和被观察者都需要：要在dealloc之前清理和自己相关的观察关系jj_cleanKVO
+    // clean the self and observer
     jj_swizzleDeallocIfNeeded(self.class);
     jj_swizzleDeallocIfNeeded(observer.class);
 
@@ -167,9 +193,8 @@
     }
     
     [self.kvoLock lock];
-    // 被观察者removeObserver(观察者)：清理被观察者的关系
-    // (观察者dealloc的时候会去清理自己的,当然被观察者delloc时也会去清理,针对不同场景处理。)
 
+    // Clean the reference
     NSMutableSet *tmpSet = [[NSMutableSet alloc] init];
     for (KVOObjectItem* objc in kvoObjectSet) {
         if ([objc.observer isEqual:observer] && [objc.whichObject isEqual:object] && [objc.keyPath isEqualToString:keyPath]) {
