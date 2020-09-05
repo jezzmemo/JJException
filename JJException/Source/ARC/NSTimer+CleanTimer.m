@@ -55,7 +55,10 @@
     }
     if ([self.target respondsToSelector:self.selector]) {
         // Fix performSelector maybe some memmory leak or return object crash
-        NSMethodSignature* signature = [NSMethodSignature methodSignatureForSelector:self.selector];
+        NSMethodSignature* signature = [self.target methodSignatureForSelector:self.selector];
+        if (!signature) {
+            return;
+        }
         NSInvocation* invocation = [NSInvocation invocationWithMethodSignature:signature];
         invocation.target = self.target;
         invocation.selector = self.selector;

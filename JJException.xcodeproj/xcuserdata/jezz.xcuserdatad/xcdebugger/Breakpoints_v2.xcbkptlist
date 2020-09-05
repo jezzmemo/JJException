@@ -42,16 +42,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "686135FF-BE97-41C9-9404-E7D8D4CACAE7"
+            uuid = "959905DE-6FFA-4662-97FB-D8E38DF29E0C"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JJException/PushViewController.m"
+            filePath = "JJException/Source/ARC/NSTimer+CleanTimer.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "+hookScheduledTimerWithTimeInterval:target:selector:userInfo:repeats:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3C27DA8F-A770-4B16-BA11-077EA5F726A9"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JJException/Source/ARC/NSTimer+CleanTimer.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
+            landmarkName = "-fireTimer"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
