@@ -74,17 +74,15 @@ JJSYNTH_DUMMY_CLASS(NSMutableAttributedString_MutableAttributedStringHook)
     }
 }
 
-- (void)hookSetAttributes:(NSDictionary<NSString *,id> *)attrs range:(NSRange)range{
+- (void)hookSetAttributes:(NSDictionary<NSString *,id> *)attrs range:(NSRange)range {
     if (!range.length) {
         [self hookSetAttributes:attrs range:range];
-    }else if (attrs){
+    } else {
         if (range.location + range.length <= self.length) {
             [self hookSetAttributes:attrs range:range];
         }else{
             handleCrashException(JJExceptionGuardNSStringContainer,[NSString stringWithFormat:@"NSMutableAttributedString setAttributes:range: attrs:%@ range:%@",attrs,NSStringFromRange(range)]);
         }
-    }else{
-        handleCrashException(JJExceptionGuardNSStringContainer,@"NSMutableAttributedString setAttributes:range: attrs nil");
     }
 }
 

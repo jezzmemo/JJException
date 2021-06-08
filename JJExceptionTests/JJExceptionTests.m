@@ -175,6 +175,8 @@
     
     [attribute2 setAttributes:nilDic range:NSMakeRange(100, 100)];
     [attribute2 setAttributes:nilDic range:NSMakeRange(100, 0)];
+    [attribute2 addAttribute:NSFontAttributeName value:[UIFont systemFontOfSize:12] range:NSMakeRange(0, 1)];
+    [attribute2 setAttributes:nilDic range:NSMakeRange(0, 1)];
     [attribute2 setAttributes:@{} range:NSMakeRange(100, 100)];
     [attribute2 addAttribute:nilString value:@(2) range:NSMakeRange(0, 1)];
     
