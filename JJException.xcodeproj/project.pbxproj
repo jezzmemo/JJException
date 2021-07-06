@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		045886C72693063E002CFECC /* NSJSONSerialization+JSONSerializationHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 045886C62693063E002CFECC /* NSJSONSerialization+JSONSerializationHook.m */; };
 		61025B4D2153E36100191522 /* NSAttributedString+AttributedStringHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61025B4C2153E36100191522 /* NSAttributedString+AttributedStringHook.m */; };
 		61025B502153E58F00191522 /* NSMutableAttributedString+MutableAttributedStringHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61025B4F2153E58F00191522 /* NSMutableAttributedString+MutableAttributedStringHook.m */; };
 		61025B6921563A6400191522 /* NSObject+DeallocBlock.h in Sources */ = {isa = PBXBuildFile; fileRef = 613E0AAB214FF41B00B8D0DF /* NSObject+DeallocBlock.h */; };
@@ -89,6 +90,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		045886C52693063E002CFECC /* NSJSONSerialization+JSONSerializationHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSJSONSerialization+JSONSerializationHook.h"; sourceTree = "<group>"; };
+		045886C62693063E002CFECC /* NSJSONSerialization+JSONSerializationHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSJSONSerialization+JSONSerializationHook.m"; sourceTree = "<group>"; };
 		61025B4B2153E36100191522 /* NSAttributedString+AttributedStringHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+AttributedStringHook.h"; sourceTree = "<group>"; };
 		61025B4C2153E36100191522 /* NSAttributedString+AttributedStringHook.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+AttributedStringHook.m"; sourceTree = "<group>"; };
 		61025B4E2153E58F00191522 /* NSMutableAttributedString+MutableAttributedStringHook.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+MutableAttributedStringHook.h"; sourceTree = "<group>"; };
@@ -309,6 +312,8 @@
 				6109EE792198244A00CB15E6 /* NSSet+SetHook.m */,
 				6109EE7B2198264F00CB15E6 /* NSMutableSet+MutableSetHook.h */,
 				6109EE7C2198264F00CB15E6 /* NSMutableSet+MutableSetHook.m */,
+				045886C52693063E002CFECC /* NSJSONSerialization+JSONSerializationHook.h */,
+				045886C62693063E002CFECC /* NSJSONSerialization+JSONSerializationHook.m */,
 			);
 			path = ARC;
 			sourceTree = "<group>";
@@ -531,6 +536,7 @@
 				6109EE7A2198244A00CB15E6 /* NSSet+SetHook.m in Sources */,
 				61A7F5562144D0FA00C87FA1 /* NSObject+SwizzleHook.m in Sources */,
 				61A7F54E21427EB700C87FA1 /* NSMutableArray+MutableArrayHook.m in Sources */,
+				045886C72693063E002CFECC /* NSJSONSerialization+JSONSerializationHook.m in Sources */,
 				61A7F54D21427EB700C87FA1 /* NSDictionary+DictionaryHook.m in Sources */,
 				613E0AB321510A8B00B8D0DF /* NSString+StringHook.m in Sources */,
 			);
