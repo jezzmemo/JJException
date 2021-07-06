@@ -41,6 +41,13 @@
     otherButton.frame = CGRectMake(0, 350, self.view.frame.size.width, 50);
     [otherButton addTarget:self action:@selector(testArrayDictionaryUnrecognizedSelector) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:otherButton];
+    
+    UIButton* JSONSerializationButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [JSONSerializationButton setTitle:@"Test NSJSONSerialization" forState:UIControlStateNormal];
+    [JSONSerializationButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    JSONSerializationButton.frame = CGRectMake(0, 400, self.view.frame.size.width, 50);
+    [JSONSerializationButton addTarget:self action:@selector(testNSJSONSerialization) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:JSONSerializationButton];
 }
 #pragma mark - Exception Delegate
 
@@ -71,6 +78,24 @@
     [self testSimpleDictionary];
     [self testUnrecognizedSelector];
     [self testNull];
+}
+
+- (void)testNSJSONSerialization{
+    ///case1, obj is nil
+    NSObject *obj;
+    [NSJSONSerialization dataWithJSONObject:obj options:0 error:nil];
+    
+    ///case2, data is nil
+    NSData *data;
+    [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+    
+    ///case3, obj is nil or stream is not available
+    NSOutputStream *oStream;
+    [NSJSONSerialization writeJSONObject:obj toStream:oStream options:0 error:nil];
+    
+    ///case4, stream is not available
+    NSInputStream *iStream = [[NSInputStream alloc] initWithData:NSData.new];
+    [NSJSONSerialization JSONObjectWithStream:iStream options:NSJSONReadingMutableContainers error:nil];
 }
 
 - (void)testSampleArray{
