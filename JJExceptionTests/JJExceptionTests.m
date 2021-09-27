@@ -159,6 +159,7 @@
     
     [noramlAttribute enumerateAttribute:@"test" inRange:NSMakeRange(100, 1001) options:NSAttributedStringEnumerationReverse usingBlock:nil];
     [noramlAttribute enumerateAttributesInRange:NSMakeRange(0, 1000) options:NSAttributedStringEnumerationReverse usingBlock:nil];
+    [noramlAttribute enumerateAttributesInRange:NSMakeRange(NSNotFound, 0) options:NSAttributedStringEnumerationReverse usingBlock:nil];
 }
 
 - (void)testMutableAttributedString{

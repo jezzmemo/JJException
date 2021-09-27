@@ -41,6 +41,11 @@
     otherButton.frame = CGRectMake(0, 350, self.view.frame.size.width, 50);
     [otherButton addTarget:self action:@selector(testArrayDictionaryUnrecognizedSelector) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:otherButton];
+    
+    UITextField* textField = [[UITextField alloc] initWithFrame:CGRectMake((CGRectGetWidth(self.view.frame) - 100)/2 , 400, 100, 20)];
+    textField.secureTextEntry = YES;
+    textField.backgroundColor = UIColor.lightGrayColor;
+    [self.view addSubview:textField];
 }
 #pragma mark - Exception Delegate
 

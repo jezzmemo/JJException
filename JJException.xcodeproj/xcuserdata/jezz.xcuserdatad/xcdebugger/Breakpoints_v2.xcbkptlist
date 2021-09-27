@@ -26,64 +26,64 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "959905DE-6FFA-4662-97FB-D8E38DF29E0C"
+            uuid = "4403CC7D-AAA4-463C-A33E-556233213B08"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JJException/Source/ARC/NSTimer+CleanTimer.m"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
-            landmarkName = "+hookScheduledTimerWithTimeInterval:target:selector:userInfo:repeats:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "3C27DA8F-A770-4B16-BA11-077EA5F726A9"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JJException/Source/ARC/NSTimer+CleanTimer.m"
+            filePath = "JJException/Source/ARC/NSMutableAttributedString+MutableAttributedStringHook.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "51"
             endingLineNumber = "51"
-            landmarkName = "-fireTimer"
+            landmarkName = "-hookAddAttribute:value:range:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "80ACC3B4-2863-4CDF-A9D2-81148DD14139"
+            uuid = "D0B1F0B7-3AA6-4690-ADC6-24E449103438"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JJExceptionTests/JJExceptionTests.m"
+            filePath = "JJException/Source/MRC/NSObject+UnrecognizedSelectorHook.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "180"
-            endingLineNumber = "180"
-            landmarkName = "-testMutableAttributedString"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "NSObject(UnrecognizedSelectorHook)"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AE36729D-70AF-4C17-BBCC-4CAE860EDE90"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JJException/Source/ARC/NSAttributedString+AttributedStringHook.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
+            landmarkName = "-hookEnumerateAttributesInRange:options:usingBlock:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "BED5BE22-789D-4467-905F-A72EE745E1D6"
+            uuid = "1EFAC455-3A03-4E4B-85CD-EDE56984EFD2"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JJExceptionTests/JJExceptionTests.m"
+            filePath = "JJException/Source/ARC/NSAttributedString+AttributedStringHook.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "179"
-            endingLineNumber = "179"
-            landmarkName = "-testMutableAttributedString"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "-hookEnumerateAttributesInRange:options:usingBlock:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
