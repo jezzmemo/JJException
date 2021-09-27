@@ -60,7 +60,7 @@ JJSYNTH_DUMMY_CLASS(NSAttributedString_AttributedStringHook)
 }
 
 - (void)hookEnumerateAttributesInRange:(NSRange)range options:(NSAttributedStringEnumerationOptions)opts usingBlock:(void (^)(NSDictionary<NSString*,id> * _Nonnull, NSRange, BOOL * _Nonnull))block{
-    if (range.location + range.length <= self.length) {
+    if ((range.location + range.length <= self.length) || ((range.location == NSNotFound) && (range.length == 0))) {
         [self hookEnumerateAttributesInRange:range options:opts usingBlock:block];
     }else{
         handleCrashException(JJExceptionGuardNSStringContainer,[NSString stringWithFormat:@"NSAttributedString enumerateAttributesInRange range:%@",NSStringFromRange(range)]);
