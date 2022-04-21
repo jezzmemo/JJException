@@ -6,6 +6,9 @@
 //  Copyright © 2018年 Jezz. All rights reserved.
 //
 
+#import <objc/runtime.h>
+#import <objc/message.h>
+
 #import "NSTimer+CleanTimer.h"
 #import "NSObject+SwizzleHook.h"
 #import "JJExceptionProxy.h"
@@ -54,19 +57,9 @@
         return;
     }
     if ([self.target respondsToSelector:self.selector]) {
-        // Fix performSelector maybe some memmory leak or return object crash
-        NSMethodSignature* signature = [self.target methodSignatureForSelector:self.selector];
-        if (!signature) {
-            return;
-        }
-        NSInvocation* invocation = [NSInvocation invocationWithMethodSignature:signature];
-        invocation.target = self.target;
-        invocation.selector = self.selector;
-        if (signature.numberOfArguments > 2) {
-            [invocation setArgument:&_timer atIndex:2];
-        }
-        [invocation retainArguments];
-        [invocation invoke];
+        // Fix swift case, the parent class is SwiftObject, did not invoke the methodSignatureForSelector method
+        // https://github.com/jezzmemo/JJException/issues/123
+        ((void(*)(id, SEL, NSTimer*))objc_msgSend)(self.target, self.selector, _timer);
     }
 }
 
