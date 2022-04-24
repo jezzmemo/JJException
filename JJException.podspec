@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "JJException"
-  s.version      = "0.2.12"
+  s.version      = "0.2.13"
   s.summary      = "Handle the objective-c crash exception."
 
   # This description is used to generate tags and improve search results.
