@@ -20,8 +20,6 @@ Common problems will not crash by the JJException,Hook the Unrecognized Selector
 
 - [x] KVO(忘记移除keypath导致闪退)
 
-- [x] Zombie Pointer(野指针)
-
 - [x] NSTimer(忘记移除导致内存泄漏)
 
 - [x] NSNotification(忘记移除导致异常)
@@ -54,20 +52,18 @@ __手动导入代码__
 
 ## 如何使用
 
-* 所有异常的分类,根据自身需要，自由组合，__如果没用到Zombie功能，建议使用JJExceptionGuardAllExceptZombie__
+* 所有异常的分类,根据自身需要，自由组合
 ```objc
 typedef NS_OPTIONS(NSInteger,JJExceptionGuardCategory){
     JJExceptionGuardNone = 0,
     JJExceptionGuardUnrecognizedSelector = 1 << 1,
     JJExceptionGuardDictionaryContainer = 1 << 2,
     JJExceptionGuardArrayContainer = 1 << 3,
-    JJExceptionGuardZombie = 1 << 4,
-    JJExceptionGuardKVOCrash = 1 << 5,
-    JJExceptionGuardNSTimer = 1 << 6,
-    JJExceptionGuardNSNotificationCenter = 1 << 7,
-    JJExceptionGuardNSStringContainer = 1 << 8,
-    JJExceptionGuardAllExceptZombie = JJExceptionGuardUnrecognizedSelector | JJExceptionGuardDictionaryContainer | JJExceptionGuardArrayContainer | JJExceptionGuardKVOCrash | JJExceptionGuardNSTimer | JJExceptionGuardNSNotificationCenter | JJExceptionGuardNSStringContainer,
-    JJExceptionGuardAll = JJExceptionGuardUnrecognizedSelector | JJExceptionGuardDictionaryContainer | JJExceptionGuardArrayContainer | JJExceptionGuardZombie | JJExceptionGuardKVOCrash | JJExceptionGuardNSTimer | JJExceptionGuardNSNotificationCenter | JJExceptionGuardNSStringContainer,
+    JJExceptionGuardKVOCrash = 1 << 4,
+    JJExceptionGuardNSTimer = 1 << 5,
+    JJExceptionGuardNSNotificationCenter = 1 << 6,
+    JJExceptionGuardNSStringContainer = 1 << 7,
+    JJExceptionGuardAll = JJExceptionGuardUnrecognizedSelector | JJExceptionGuardDictionaryContainer | JJExceptionGuardArrayContainer | JJExceptionGuardKVOCrash | JJExceptionGuardNSTimer | JJExceptionGuardNSNotificationCenter | JJExceptionGuardNSStringContainer,
 };
 ```
 
@@ -81,11 +77,6 @@ typedef NS_OPTIONS(NSInteger,JJExceptionGuardCategory){
 ```objc
     //Default value:NO
     JJException.exceptionWhenTerminate = YES;
-```
-
-* Zombie使用黑名单机制，只有加入这个名单的才有作用,示例如下:
-```objc
-    [JJException addZombieObjectArray:@[TestZombie.class]];
 ```
 
 * 如果需要记录日志，只需要实现`JJExceptionHandle`协议，并注册:
@@ -135,7 +126,6 @@ Bugly可以帮我们解决重复信息和CallStack信息，以及状态维护。
 * NSNotification
 * NSString,NSMutableString,NSAttributedString,NSMutableAttributedString(__注意不是String__)
 * NSArray,NSMutableArray,NSDictonary,NSMutableDictionary(__注意不是Array__)
-* Zombie Pointer
 
 这里贴下Swift的初始化代码示例:
 ```swift
@@ -145,7 +135,7 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
 }
     
 func registerJJException(){
-    JJException.configExceptionCategory(.allExceptZombie)
+    JJException.configExceptionCategory(.all)
     JJException.startGuard()
     JJException.register(self);
 }
