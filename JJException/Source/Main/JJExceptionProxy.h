@@ -77,51 +77,6 @@ __attribute__((overloadable)) void handleCrashException(JJExceptionGuardCategory
  */
 @property(nonatomic,readwrite,assign)JJExceptionGuardCategory exceptionGuardCategory;
 
-#pragma mark - Zombie collection
-
-/**
- Real addZombieObjectArray invoke
-
- @param objects class array
- */
-- (void)addZombieObjectArray:(NSArray*)objects;
-
-/**
- Zombie only process the Set class
- */
-@property(nonatomic,readonly,strong)NSSet* blackClassesSet;
-
-/**
- Record the all Set class size
- */
-@property(nonatomic,readonly,assign)NSInteger currentClassSize;
-
-/**
- Add object to the currentClassesSet
- 
- @param object NSObject
- */
-- (void)addCurrentZombieClass:(Class)object;
-
-/**
- Remove object from the currentClassesSet
-
- @param object NSObject
- */
-- (void)removeCurrentZombieClass:(Class)object;
-
-/**
- Record the objc_destructInstance instance object
- */
-@property(nonatomic,readonly,strong)NSSet* currentClassesSet;
-
-/**
- Random get the object from blackClassesSet
-
- @return NSObject
- */
-- (nullable id)objectFromCurrentClassesSet;
-
 @end
 
 NS_ASSUME_NONNULL_END

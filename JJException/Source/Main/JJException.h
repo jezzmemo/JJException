@@ -17,12 +17,10 @@ NS_ASSUME_NONNULL_BEGIN
  - JJExceptionGuardUnrecognizedSelector: Unrecognized Selector Exception
  - JJExceptionGuardDictionaryContainer: NSDictionary,NSMutableDictionary
  - JJExceptionGuardArrayContainer: NSArray,NSMutableArray
- - JJExceptionGuardZombie: Zombie
  - JJExceptionGuardKVOCrash: KVO exception
  - JJExceptionGuardNSTimer: NSTimer
  - JJExceptionGuardNSNotificationCenter: NSNotificationCenter
  - JJExceptionGuardNSStringContainer:NSString,NSMutableString,NSAttributedString,NSMutableAttributedString
- - JJExceptionGuardAllExceptZombie:Above All except Zombie
  - JJExceptionGuardAll: Above All
  */
 typedef NS_OPTIONS(NSInteger,JJExceptionGuardCategory){
@@ -30,13 +28,11 @@ typedef NS_OPTIONS(NSInteger,JJExceptionGuardCategory){
     JJExceptionGuardUnrecognizedSelector = 1 << 1,
     JJExceptionGuardDictionaryContainer = 1 << 2,
     JJExceptionGuardArrayContainer = 1 << 3,
-    JJExceptionGuardZombie = 1 << 4,
-    JJExceptionGuardKVOCrash = 1 << 5,
-    JJExceptionGuardNSTimer = 1 << 6,
-    JJExceptionGuardNSNotificationCenter = 1 << 7,
-    JJExceptionGuardNSStringContainer = 1 << 8,
-    JJExceptionGuardAllExceptZombie = JJExceptionGuardUnrecognizedSelector | JJExceptionGuardDictionaryContainer | JJExceptionGuardArrayContainer | JJExceptionGuardKVOCrash | JJExceptionGuardNSTimer | JJExceptionGuardNSNotificationCenter | JJExceptionGuardNSStringContainer,
-    JJExceptionGuardAll = JJExceptionGuardUnrecognizedSelector | JJExceptionGuardDictionaryContainer | JJExceptionGuardArrayContainer | JJExceptionGuardZombie | JJExceptionGuardKVOCrash | JJExceptionGuardNSTimer | JJExceptionGuardNSNotificationCenter | JJExceptionGuardNSStringContainer,
+    JJExceptionGuardKVOCrash = 1 << 4,
+    JJExceptionGuardNSTimer = 1 << 5,
+    JJExceptionGuardNSNotificationCenter = 1 << 6,
+    JJExceptionGuardNSStringContainer = 1 << 7,
+    JJExceptionGuardAll = JJExceptionGuardUnrecognizedSelector | JJExceptionGuardDictionaryContainer | JJExceptionGuardArrayContainer | JJExceptionGuardKVOCrash | JJExceptionGuardNSTimer | JJExceptionGuardNSNotificationCenter | JJExceptionGuardNSStringContainer,
 };
 
 /**
@@ -109,17 +105,6 @@ typedef NS_OPTIONS(NSInteger,JJExceptionGuardCategory){
  @param exceptionHandle JJExceptionHandle
  */
 + (void)registerExceptionHandle:(id<JJExceptionHandle>)exceptionHandle;
-
-/**
- Only handle the black list zombie object
- 
- Sample Code:
- 
-    [JJException addZombieObjectArray:@[TestZombie.class]];
-
- @param objects Class Array
- */
-+ (void)addZombieObjectArray:(NSArray*)objects;
 
 @end
 

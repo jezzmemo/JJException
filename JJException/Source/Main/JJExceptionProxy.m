@@ -155,10 +155,6 @@ uintptr_t get_slide_address(void) {
             [NSObject performSelector:@selector(jj_swizzleUnrecognizedSelector)];
         }
         
-        if (self.exceptionGuardCategory & JJExceptionGuardZombie) {
-            [NSObject performSelector:@selector(jj_swizzleZombie)];
-        }
-        
         if (self.exceptionGuardCategory & JJExceptionGuardKVOCrash) {
             [NSObject performSelector:@selector(jj_swizzleKVOCrash)];
         }
@@ -186,55 +182,6 @@ uintptr_t get_slide_address(void) {
     if (_exceptionGuardCategory != exceptionGuardCategory) {
         _exceptionGuardCategory = exceptionGuardCategory;
     }
-}
-
-
-
-- (void)addZombieObjectArray:(NSArray*)objects{
-    if (!objects) {
-        return;
-    }
-    dispatch_semaphore_wait(_classArrayLock, DISPATCH_TIME_FOREVER);
-    [_blackClassesSet addObjectsFromArray:objects];
-    dispatch_semaphore_signal(_classArrayLock);
-}
-
-- (NSSet*)blackClassesSet{
-    return _blackClassesSet;
-}
-
-- (void)addCurrentZombieClass:(Class)object{
-    if (object) {
-        dispatch_semaphore_wait(_classArrayLock, DISPATCH_TIME_FOREVER);
-        _currentClassSize = _currentClassSize + class_getInstanceSize(object);
-        [_currentClassesSet addObject:object];
-        dispatch_semaphore_signal(_classArrayLock);
-    }
-}
-
-- (void)removeCurrentZombieClass:(Class)object{
-    if (object) {
-        dispatch_semaphore_wait(_classArrayLock, DISPATCH_TIME_FOREVER);
-        _currentClassSize = _currentClassSize - class_getInstanceSize(object);
-        [_currentClassesSet removeObject:object];
-        dispatch_semaphore_signal(_classArrayLock);
-    }
-}
-
-- (NSSet*)currentClassesSet{
-    return _currentClassesSet;
-}
-
-- (NSInteger)currentClassSize{
-    return _currentClassSize;
-}
-
-- (nullable id)objectFromCurrentClassesSet{
-    NSEnumerator* objectEnum = [_currentClassesSet objectEnumerator];
-    for (id object in objectEnum) {
-        return object;
-    }
-    return nil;
 }
 
 @end

@@ -29,8 +29,6 @@
 		61025B7A21563A6400191522 /* NSMutableAttributedString+MutableAttributedStringHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61025B4F2153E58F00191522 /* NSMutableAttributedString+MutableAttributedStringHook.m */; };
 		61025B7B21563A6400191522 /* NSObject+SwizzleHook.h in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F5542144D0FA00C87FA1 /* NSObject+SwizzleHook.h */; };
 		61025B7C21563A6400191522 /* NSObject+SwizzleHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F5552144D0FA00C87FA1 /* NSObject+SwizzleHook.m */; };
-		61025B7D21563A6400191522 /* NSObject+ZombieHook.h in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F55121427F5200C87FA1 /* NSObject+ZombieHook.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		61025B7E21563A6400191522 /* NSObject+ZombieHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F55021427F5100C87FA1 /* NSObject+ZombieHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		61025B7F21563A6400191522 /* NSArray+ArrayHook.h in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F54721427EB600C87FA1 /* NSArray+ArrayHook.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		61025B8021563A6400191522 /* NSArray+ArrayHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F54421427EB600C87FA1 /* NSArray+ArrayHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		61025B8121563A6400191522 /* NSDictionary+DictionaryHook.h in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F54821427EB600C87FA1 /* NSDictionary+DictionaryHook.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -69,7 +67,6 @@
 		61A7F54D21427EB700C87FA1 /* NSDictionary+DictionaryHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F54621427EB600C87FA1 /* NSDictionary+DictionaryHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		61A7F54E21427EB700C87FA1 /* NSMutableArray+MutableArrayHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F54921427EB600C87FA1 /* NSMutableArray+MutableArrayHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		61A7F54F21427EB700C87FA1 /* NSMutableDictionary+MutableDictionaryHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F54B21427EB700C87FA1 /* NSMutableDictionary+MutableDictionaryHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		61A7F55221427F5200C87FA1 /* NSObject+ZombieHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F55021427F5100C87FA1 /* NSObject+ZombieHook.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		61A7F5562144D0FA00C87FA1 /* NSObject+SwizzleHook.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F5552144D0FA00C87FA1 /* NSObject+SwizzleHook.m */; };
 		61A7F55E2144ED9D00C87FA1 /* NSTimer+CleanTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F5582144ED9C00C87FA1 /* NSTimer+CleanTimer.m */; };
 		61A7F5602144ED9D00C87FA1 /* NSNotificationCenter+ClearNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 61A7F55D2144ED9C00C87FA1 /* NSNotificationCenter+ClearNotification.m */; };
@@ -135,8 +132,6 @@
 		61A7F54921427EB600C87FA1 /* NSMutableArray+MutableArrayHook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+MutableArrayHook.m"; sourceTree = "<group>"; };
 		61A7F54A21427EB600C87FA1 /* NSMutableArray+MutableArrayHook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+MutableArrayHook.h"; sourceTree = "<group>"; };
 		61A7F54B21427EB700C87FA1 /* NSMutableDictionary+MutableDictionaryHook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+MutableDictionaryHook.m"; sourceTree = "<group>"; };
-		61A7F55021427F5100C87FA1 /* NSObject+ZombieHook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+ZombieHook.m"; sourceTree = "<group>"; };
-		61A7F55121427F5200C87FA1 /* NSObject+ZombieHook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+ZombieHook.h"; sourceTree = "<group>"; };
 		61A7F5542144D0FA00C87FA1 /* NSObject+SwizzleHook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SwizzleHook.h"; sourceTree = "<group>"; };
 		61A7F5552144D0FA00C87FA1 /* NSObject+SwizzleHook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SwizzleHook.m"; sourceTree = "<group>"; };
 		61A7F5582144ED9C00C87FA1 /* NSTimer+CleanTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimer+CleanTimer.m"; sourceTree = "<group>"; };
@@ -263,8 +258,6 @@
 		61A7F53D21427E4100C87FA1 /* MRC */ = {
 			isa = PBXGroup;
 			children = (
-				61A7F55121427F5200C87FA1 /* NSObject+ZombieHook.h */,
-				61A7F55021427F5100C87FA1 /* NSObject+ZombieHook.m */,
 				61A7F54721427EB600C87FA1 /* NSArray+ArrayHook.h */,
 				61A7F54421427EB600C87FA1 /* NSArray+ArrayHook.m */,
 				61A7F54821427EB600C87FA1 /* NSDictionary+DictionaryHook.h */,
@@ -487,8 +480,6 @@
 				61025B7A21563A6400191522 /* NSMutableAttributedString+MutableAttributedStringHook.m in Sources */,
 				61025B7B21563A6400191522 /* NSObject+SwizzleHook.h in Sources */,
 				61025B7C21563A6400191522 /* NSObject+SwizzleHook.m in Sources */,
-				61025B7D21563A6400191522 /* NSObject+ZombieHook.h in Sources */,
-				61025B7E21563A6400191522 /* NSObject+ZombieHook.m in Sources */,
 				61025B7F21563A6400191522 /* NSArray+ArrayHook.h in Sources */,
 				61025B8021563A6400191522 /* NSArray+ArrayHook.m in Sources */,
 				61025B8121563A6400191522 /* NSDictionary+DictionaryHook.h in Sources */,
@@ -520,7 +511,6 @@
 				61A7F5602144ED9D00C87FA1 /* NSNotificationCenter+ClearNotification.m in Sources */,
 				61A7F54C21427EB700C87FA1 /* NSArray+ArrayHook.m in Sources */,
 				61196D5520F261CC00022DDC /* main.m in Sources */,
-				61A7F55221427F5200C87FA1 /* NSObject+ZombieHook.m in Sources */,
 				61A7F51C213B859300C87FA1 /* PushViewController.m in Sources */,
 				612EED3A21C154C6000E2820 /* PlayerViewController.m in Sources */,
 				613E0AAD214FF41B00B8D0DF /* NSObject+DeallocBlock.m in Sources */,
