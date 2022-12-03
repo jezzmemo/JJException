@@ -279,6 +279,12 @@ static const char DeallocKVOKey;
             resultItem.keyPath = nil;
             [kvoObjectSet removeObject:resultItem];
         }
+        /*
+         * Fix memory leak,
+         * bug link:https://github.com/jezzmemo/JJException/issues/131
+         */
+        [targetItem release];
+        [set release];
     }];
 }
 
